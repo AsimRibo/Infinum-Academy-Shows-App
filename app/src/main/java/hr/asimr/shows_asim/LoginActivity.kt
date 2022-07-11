@@ -2,7 +2,12 @@ package hr.asimr.shows_asim
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import androidx.core.widget.addTextChangedListener
 import hr.asimr.shows_asim.databinding.ActivityLoginBinding
+
+const val MIN_PASSWORD_LENGTH = 6
+const val  EMAIL_ERROR = "Please provide a valid email address"
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -11,5 +16,42 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initListeners()
+    }
+
+    private fun initListeners() {
+        initEditTextListeners()
+        initButtonListeners()
+    }
+
+    private fun initButtonListeners() {
+    }
+
+    private fun initEditTextListeners() {
+        binding.etEmail.addTextChangedListener { handleLoginButton() }
+        binding.etPassword.addTextChangedListener { handleLoginButton() }
+    }
+
+    private fun handleLoginButton() {
+        showEmailMessage("")
+
+        var enable: Boolean
+
+        (!binding.etEmail.text?.toString().isNullOrEmpty()
+                && (binding.etPassword.text?.length ?: 0) >= MIN_PASSWORD_LENGTH).also { enable = it }
+
+
+        handleButtonOpacity(enable, binding.btnLogin)
+
+        binding.btnLogin.isEnabled = enable
+    }
+
+    private fun showEmailMessage(message: String) {
+        binding.tilEmail.error = message
+    }
+
+    private fun handleButtonOpacity(enabled: Boolean, button: Button){
+        if(enabled) button.alpha = 1f else button.alpha = 0.5f
     }
 }
