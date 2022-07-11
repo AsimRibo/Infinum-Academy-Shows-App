@@ -47,4 +47,29 @@
         app:layout_constraintStart_toEndOf="@id/ivTriangle"
         app:layout_constraintTop_toTopOf="@id/ivTriangle" />
 
+    <TextView
+        android:id="@+id/tvLoginHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_24dp"
+        android:layout_marginTop="@dimen/margin_100dp"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_34sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivTriangle" />
+
+    <TextView
+        android:id="@+id/tvLoginMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_24dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:text="@string/login_message"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLoginHeader" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
