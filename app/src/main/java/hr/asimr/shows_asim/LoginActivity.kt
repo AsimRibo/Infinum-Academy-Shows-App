@@ -1,10 +1,12 @@
 package hr.asimr.shows_asim
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import hr.asimr.shows_asim.databinding.ActivityLoginBinding
+import hr.asimr.shows_asim.utils.isEmailValid
 
 const val MIN_PASSWORD_LENGTH = 6
 const val  EMAIL_ERROR = "Please provide a valid email address"
@@ -26,6 +28,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initButtonListeners() {
+        binding.btnLogin.setOnClickListener{
+            if(isEmailValid(binding.etEmail.text.toString())){
+                val intent = Intent(this, WelcomeActivity::class.java)
+                intent.putExtra("Email", binding.etEmail.text.toString())
+                startActivity(intent)
+            }
+            else{
+                showEmailMessage(EMAIL_ERROR)
+            }
+        }
     }
 
     private fun initEditTextListeners() {
