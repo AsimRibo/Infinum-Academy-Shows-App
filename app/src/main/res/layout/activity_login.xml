@@ -125,4 +125,21 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <android.widget.Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_24dp"
+        android:layout_marginEnd="@dimen/margin_24dp"
+        android:layout_marginBottom="@dimen/margin_31dp"
+        android:background="@drawable/button_background"
+        android:alpha="0.5"
+        android:enabled="false"
+        android:textStyle="bold"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

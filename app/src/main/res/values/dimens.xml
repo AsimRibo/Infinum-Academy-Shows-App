@@ -10,4 +10,6 @@
     <dimen name="margin_25dp">25dp</dimen>
     <dimen name="margin_26dp">26dp</dimen>
     <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="margin_31dp">31dp</dimen>
+    <dimen name="radius_22dp">22dp</dimen>
 </resources>
