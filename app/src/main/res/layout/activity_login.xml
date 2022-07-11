@@ -23,4 +23,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ivTriangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_56dp"
+        android:contentDescription="@string/background_image"
+        android:src="@drawable/small_play"
+        app:layout_constraintBottom_toBottomOf="@id/ivTopRight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivTopLeft" />
+
+    <TextView
+        android:id="@+id/tvShowsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_19dp"
+        android:text="@string/shows"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/ivTriangle"
+        app:layout_constraintStart_toEndOf="@id/ivTriangle"
+        app:layout_constraintTop_toTopOf="@id/ivTriangle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
