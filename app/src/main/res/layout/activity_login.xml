@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    android:background="@color/purple_background">
+    android:background="@color/purple_background"
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/ivTopLeft"
@@ -78,13 +78,13 @@
         android:id="@+id/tilEmail"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        app:boxStrokeColor="@color/white"
-        android:textColorHint="@color/white"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_25dp"
         android:layout_marginTop="@dimen/margin_26dp"
         android:layout_marginEnd="@dimen/margin_25dp"
         android:hint="@string/email"
+        android:textColorHint="@color/white"
+        app:boxStrokeColor="@color/white"
         app:errorEnabled="true"
         app:hintTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,19 +104,19 @@
         android:id="@+id/tilPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        app:boxStrokeColor="@color/white"
-        app:passwordToggleTint="@color/white"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_25dp"
         android:layout_marginTop="@dimen/margin_26dp"
         android:layout_marginEnd="@dimen/margin_25dp"
         android:hint="@string/password"
         android:textColorHint="@color/white"
+        app:boxStrokeColor="@color/white"
         app:hintTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilEmail"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"

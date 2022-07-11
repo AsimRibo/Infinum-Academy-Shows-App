@@ -9,7 +9,7 @@ import hr.asimr.shows_asim.databinding.ActivityLoginBinding
 import hr.asimr.shows_asim.utils.isEmailValid
 
 const val MIN_PASSWORD_LENGTH = 6
-const val  EMAIL_ERROR = "Please provide a valid email address"
+const val EMAIL_ERROR = "Please provide a valid email address"
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -28,13 +28,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initButtonListeners() {
-        binding.btnLogin.setOnClickListener{
-            if(isEmailValid(binding.etEmail.text.toString())){
+        binding.btnLogin.setOnClickListener {
+            if (isEmailValid(binding.etEmail.text.toString())) {
                 val intent = Intent(this, WelcomeActivity::class.java)
                 intent.putExtra("Email", binding.etEmail.text.toString())
                 startActivity(intent)
-            }
-            else{
+            } else {
                 showEmailMessage(EMAIL_ERROR)
             }
         }
@@ -51,7 +50,9 @@ class LoginActivity : AppCompatActivity() {
         var enable: Boolean
 
         (!binding.etEmail.text?.toString().isNullOrEmpty()
-                && (binding.etPassword.text?.length ?: 0) >= MIN_PASSWORD_LENGTH).also { enable = it }
+                && (binding.etPassword.text?.length ?: 0) >= MIN_PASSWORD_LENGTH).also {
+            enable = it
+        }
 
 
         handleButtonOpacity(enable, binding.btnLogin)
@@ -63,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         binding.tilEmail.error = message
     }
 
-    private fun handleButtonOpacity(enabled: Boolean, button: Button){
-        if(enabled) button.alpha = 1f else button.alpha = 0.5f
+    private fun handleButtonOpacity(enabled: Boolean, button: Button) {
+        if (enabled) button.alpha = 1f else button.alpha = 0.5f
     }
 }

@@ -24,7 +24,7 @@ class WelcomeActivity : AppCompatActivity() {
         name?.let { changeWelcomeMessage(it) }
     }
 
-    private fun changeWelcomeMessage(name: String){
+    private fun changeWelcomeMessage(name: String) {
         binding.tvWelcome.text = WELCOME.plus(", ").plus(name)
     }
 }
