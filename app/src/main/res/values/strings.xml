@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Shows-Asim</string>
+    <string name="background_image">Background image</string>
+    <string name="shows">Shows</string>
+    <string name="login_message">In order to continue please log in</string>
+    <string name="login_header">Login</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="play_button_image">Play button image</string>
 </resources>
