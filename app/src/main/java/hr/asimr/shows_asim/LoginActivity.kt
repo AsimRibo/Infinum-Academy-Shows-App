@@ -65,6 +65,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleButtonOpacity(enabled: Boolean, button: Button) {
-        if (enabled) button.alpha = 1f else button.alpha = 0.5f
+        button.alpha = if (enabled) 1f else 0.5f
     }
 }
