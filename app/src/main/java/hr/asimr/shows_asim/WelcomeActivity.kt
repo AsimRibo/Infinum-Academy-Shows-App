@@ -20,7 +20,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun checkIntentForExtras() {
-        val name = intent.extras?.getString(EMAIL_KEY)?.let { loseEmailDomain(it) }
+        val name = intent.extras?.getString(EMAIL_KEY)?.let { it.loseEmailDomain() }
         name?.let { changeWelcomeMessage(it) }
     }
 

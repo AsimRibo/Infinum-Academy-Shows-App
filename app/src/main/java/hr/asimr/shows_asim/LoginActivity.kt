@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initButtonListeners() {
         binding.btnLogin.setOnClickListener {
-            if (isEmailValid(binding.etEmail.text.toString())) {
+            if (binding.etEmail.text.toString().isEmailValid()) {
                 val intent = Intent(this, WelcomeActivity::class.java)
                 intent.putExtra("Email", binding.etEmail.text.toString())
                 startActivity(intent)
