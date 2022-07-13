@@ -47,13 +47,8 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLoginButton() {
         showEmailMessage("")
 
-        var enable: Boolean
-
-        (!binding.etEmail.text?.toString().isNullOrEmpty()
-                && (binding.etPassword.text?.length ?: 0) >= MIN_PASSWORD_LENGTH).also {
-            enable = it
-        }
-
+        val enable = !binding.etEmail.text?.toString().isNullOrEmpty()
+                && (binding.etPassword.text?.length ?: 0) >= MIN_PASSWORD_LENGTH
 
         handleButtonOpacity(enable, binding.btnLogin)
 
