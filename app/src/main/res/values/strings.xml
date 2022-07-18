@@ -8,4 +8,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="play_button_image">Play button image</string>
+    <string name="toggle_shows">Toggle shows</string>
+    <string name="empty_shows_statement">Your shows are not showing. Get it?</string>
+    <string name="no_shows_image">No shows image</string>
+    <string name="show_image">Show image</string>
 </resources>

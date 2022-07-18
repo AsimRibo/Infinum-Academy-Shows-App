@@ -13,4 +13,13 @@
     <dimen name="margin_31dp">31dp</dimen>
     <dimen name="radius_22dp">22dp</dimen>
     <dimen name="zero_dp">0dp</dimen>
+    <dimen name="margin_64dp">64dp</dimen>
+    <dimen name="text_size_36sp">36sp</dimen>
+    <dimen name="margin_40dp">40dp</dimen>
+    <dimen name="margin_240dp">240dp</dimen>
+    <dimen name="padding_8dp">8dp</dimen>
+    <dimen name="radius_8dp">8dp</dimen>
+    <dimen name="show_item_height">192dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="text_size_24sp">24sp</dimen>
 </resources>
