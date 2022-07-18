@@ -5,8 +5,10 @@
       <map>
         <entry key="..\:/Users/asim2/Desktop/Infinum-Android-Homework/app/src/main/res/drawable/button_background.xml" value="0.1975" />
         <entry key="..\:/Users/asim2/Desktop/Infinum-Android-Homework/app/src/main/res/drawable/button_text.xml" value="0.1975" />
+        <entry key="..\:/Users/asim2/Desktop/Infinum-Android-Homework/app/src/main/res/drawable/ic_no_shows.xml" value="0.121" />
         <entry key="..\:/Users/asim2/Desktop/Infinum-Android-Homework/app/src/main/res/layout/activity_login.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/asim2/Desktop/Infinum-Android-Homework/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/asim2/Desktop/Infinum-Android-Homework/app/src/main/res/layout/activity_shows.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/asim2/Desktop/Infinum-Android-Homework/app/src/main/res/layout/activity_welcome.xml" value="0.22826086956521738" />
       </map>
     </option>
