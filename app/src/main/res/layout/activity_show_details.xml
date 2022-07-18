@@ -36,8 +36,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_80dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivShow"
+                app:shapeAppearanceOverlay="@style/RoundedImageCorners"
                 android:contentDescription="@string/show_image"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="@dimen/show_details_image_height"
