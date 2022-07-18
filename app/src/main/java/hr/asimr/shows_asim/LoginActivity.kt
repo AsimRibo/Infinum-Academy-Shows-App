@@ -10,6 +10,7 @@ import hr.asimr.shows_asim.utils.isEmailValid
 
 const val MIN_PASSWORD_LENGTH = 6
 const val EMAIL_ERROR = "Please provide a valid email address"
+const val EMAIL = "Email"
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -31,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             if (binding.etEmail.text.toString().isEmailValid()) {
                 val intent = Intent(this, ShowsActivity::class.java)
-                intent.putExtra("Email", binding.etEmail.text.toString())
+                intent.putExtra(EMAIL, binding.etEmail.text.toString())
                 startActivity(intent)
             } else {
                 showEmailMessage(EMAIL_ERROR)
