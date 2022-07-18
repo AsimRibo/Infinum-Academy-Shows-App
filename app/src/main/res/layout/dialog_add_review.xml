@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,7 +15,7 @@
         android:text="@string/write_a_review"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <RatingBar
         android:id="@+id/rbReview"
@@ -23,7 +24,7 @@
         android:layout_marginTop="@dimen/margin_40dp"
         android:numStars="5"
         android:stepSize="1"
-        android:theme="@style/RatingBar" />
+        android:theme="@style/RatingBar"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilComment"
@@ -41,9 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"/>
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <Button
         android:id="@+id/btnSubmit"
@@ -52,6 +52,6 @@
         android:layout_margin="@dimen/margin_24dp"
         android:background="@drawable/button_background"
         android:text="@string/submit"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"/>
 
 </LinearLayout>

@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
         showEmailMessage("")
 
         val enable = !binding.etEmail.text?.toString().isNullOrEmpty()
-                && (binding.etPassword.text?.length ?: 0) >= MIN_PASSWORD_LENGTH
+            && (binding.etPassword.text?.length ?: 0) >= MIN_PASSWORD_LENGTH
 
         handleButtonOpacity(enable, binding.btnLogin)
 

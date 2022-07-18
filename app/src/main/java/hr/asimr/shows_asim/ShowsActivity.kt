@@ -13,6 +13,7 @@ import java.util.*
 
 const val USERNAME = "USERNAME"
 const val SHOW = "SHOW"
+
 class ShowsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShowsBinding
     private lateinit var adapter: ShowsAdapter
@@ -30,7 +31,7 @@ class ShowsActivity : AppCompatActivity() {
             UUID.randomUUID().toString(),
             "Stranger Things",
             "Stranger Things is an American science fiction horror drama television series " +
-                    "created by the Duffer Brothers that is streaming on Netflix. The brothers serve as showrunners and are executive producers along with Shawn Levy and Dan Cohen. The first season of the series was released on Netflix on July 15, 2016.",
+                "created by the Duffer Brothers that is streaming on Netflix. The brothers serve as showrunners and are executive producers along with Shawn Levy and Dan Cohen. The first season of the series was released on Netflix on July 15, 2016.",
             R.drawable.ic_stranger_things,
             mutableListOf()
         ),
@@ -61,7 +62,7 @@ class ShowsActivity : AppCompatActivity() {
     }
 
     private fun initButtonListeners() {
-        binding.btnToggleShows.setOnClickListener{
+        binding.btnToggleShows.setOnClickListener {
             binding.groupEmptyState.isVisible = !binding.groupEmptyState.isVisible
             binding.groupFullState.isVisible = !binding.groupFullState.isVisible
         }

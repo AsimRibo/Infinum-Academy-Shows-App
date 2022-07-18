@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -38,17 +38,17 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivShow"
-                app:shapeAppearanceOverlay="@style/RoundedImageCorners"
-                android:contentDescription="@string/show_image"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="@dimen/show_details_image_height"
                 android:layout_marginStart="@dimen/margin_24dp"
                 android:layout_marginEnd="@dimen/margin_24dp"
+                android:contentDescription="@string/show_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_office" />
+                app:shapeAppearanceOverlay="@style/RoundedImageCorners"
+                tools:src="@drawable/ic_office"/>
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -60,7 +60,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivShow"
-                tools:text="Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers that is streaming on Netflix. The brothers serve as showrunners and are executive producers along with Shawn Levy and Dan Cohen. The first season of the series was released on Netflix on July 15, 2016." />
+                tools:text="Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers that is streaming on Netflix. The brothers serve as showrunners and are executive producers along with Shawn Levy and Dan Cohen. The first season of the series was released on Netflix on July 15, 2016."/>
 
             <TextView
                 android:id="@+id/tvReviewHeader"
@@ -74,7 +74,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+                app:layout_constraintTop_toBottomOf="@id/tvDescription"/>
 
             <TextView
                 android:id="@+id/tvReviewStats"
@@ -88,7 +88,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvReviewHeader"
-                tools:text="3 REVIEWS, 3.67 AVERAGE" />
+                tools:text="3 REVIEWS, 3.67 AVERAGE"/>
 
             <RatingBar
                 android:id="@+id/rbShow"
@@ -103,17 +103,17 @@
                 android:theme="@style/RatingBar"
                 android:stepSize="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvReviewStats" />
+                app:layout_constraintTop_toBottomOf="@id/tvReviewStats"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvReview"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rbShow"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:listitem="@layout/item_review" />
+                tools:listitem="@layout/item_review"/>
 
             <TextView
                 android:id="@+id/tvNoReview"
@@ -124,21 +124,21 @@
                 android:textSize="@dimen/text_size_16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvReviewHeader" />
+                app:layout_constraintTop_toBottomOf="@id/tvReviewHeader"/>
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupNoReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:constraint_referenced_ids="tvNoReview" />
+                app:constraint_referenced_ids="tvNoReview"/>
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupReviews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
-                app:constraint_referenced_ids="tvReviewStats, rbShow, rvReview" />
+                app:constraint_referenced_ids="tvReviewStats, rbShow, rvReview"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -158,7 +158,7 @@
             android:layout_margin="@dimen/margin_24dp"
             android:background="@drawable/button_background"
             android:text="@string/write_a_review"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"/>
     </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

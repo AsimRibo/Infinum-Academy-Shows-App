@@ -21,7 +21,6 @@ class ShowDetailsActivity : AppCompatActivity() {
     private lateinit var show: Show
     private lateinit var username: String
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShowDetailsBinding.inflate(layoutInflater)

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,12 +11,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvShow"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         app:cardCornerRadius="@dimen/radius_8dp">
 
         <LinearLayout
@@ -24,13 +25,12 @@
             android:orientation="vertical">
 
             <ImageView
-                android:contentDescription="@string/show_image"
                 android:id="@+id/ivShow"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/show_item_height"
+                android:contentDescription="@string/show_image"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/ic_office" />
-
+                tools:src="@drawable/ic_office"/>
 
             <TextView
                 android:id="@+id/tvName"
@@ -42,7 +42,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_24sp"
                 android:textStyle="bold"
-                tools:text="Show name" />
+                tools:text="Show name"/>
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -54,7 +54,7 @@
                 android:ellipsize="end"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_16sp"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor" />
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"/>
 
         </LinearLayout>
 

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginActivity" >
+    tools:context=".LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_background" >
+        android:background="@color/purple_background">
 
         <ImageView
             android:id="@+id/ivTopLeft"
@@ -19,7 +20,7 @@
             android:contentDescription="@string/background_image"
             android:src="@drawable/top_left"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/ivTopRight"
@@ -28,7 +29,7 @@
             android:contentDescription="@string/background_image"
             android:src="@drawable/top_right"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/ivTriangle"
@@ -39,7 +40,7 @@
             android:src="@drawable/small_play"
             app:layout_constraintBottom_toBottomOf="@id/ivTopRight"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivTopLeft" />
+            app:layout_constraintTop_toBottomOf="@id/ivTopLeft"/>
 
         <TextView
             android:id="@+id/tvShowsHeader"
@@ -52,7 +53,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/ivTriangle"
             app:layout_constraintStart_toEndOf="@id/ivTriangle"
-            app:layout_constraintTop_toTopOf="@id/ivTriangle" />
+            app:layout_constraintTop_toTopOf="@id/ivTriangle"/>
 
         <TextView
             android:id="@+id/tvLoginHeader"
@@ -65,7 +66,7 @@
             android:textSize="@dimen/text_size_34sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivTriangle" />
+            app:layout_constraintTop_toBottomOf="@id/ivTriangle"/>
 
         <TextView
             android:id="@+id/tvLoginMessage"
@@ -77,7 +78,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_17sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLoginHeader" />
+            app:layout_constraintTop_toBottomOf="@id/tvLoginHeader"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmail"
@@ -102,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_16sp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -129,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,13 +149,12 @@
             android:textAllCaps="false"
             android:textColor="@drawable/button_text"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tilPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilPassword"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </ScrollView>
 
