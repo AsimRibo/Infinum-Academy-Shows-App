@@ -26,4 +26,6 @@
     <dimen name="app_bar_height">136dp</dimen>
     <dimen name="show_details_image_height">352dp</dimen>
     <dimen name="margin_36dp">36dp</dimen>
+    <dimen name="margin_32dp">32dp</dimen>
+    <dimen name="padding_24dp">24dp</dimen>
 </resources>
