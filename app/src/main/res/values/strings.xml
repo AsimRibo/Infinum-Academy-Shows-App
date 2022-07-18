@@ -12,4 +12,6 @@
     <string name="empty_shows_statement">Your shows are not showing. Get it?</string>
     <string name="no_shows_image">No shows image</string>
     <string name="show_image">Show image</string>
+    <string name="user_image">User image</string>
+    <string name="star">Star</string>
 </resources>
