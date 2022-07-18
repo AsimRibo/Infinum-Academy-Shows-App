@@ -10,6 +10,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvShow"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_16dp"
