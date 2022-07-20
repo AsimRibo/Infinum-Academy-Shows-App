@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main.xml">
+    android:id="@+id/main.xml" app:startDestination="@id/loginFragment">
 
+    <fragment android:id="@+id/loginFragment" android:name="hr.asimr.shows_asim.LoginFragment" android:label="LoginFragment"/>
+    <fragment android:id="@+id/showsFragment" android:name="hr.asimr.shows_asim.ShowsFragment" android:label="ShowsFragment"/>
+    <fragment android:id="@+id/showDetailsFragment" android:name="hr.asimr.shows_asim.ShowDetailsFragment"
+        android:label="ShowDetailsFragment"/>
 </navigation>
