@@ -1,7 +1,9 @@
 package hr.asimr.shows_asim
 
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -94,8 +96,10 @@ class ShowDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateGroupsVisibility() {
-        binding.groupNoReview.isVisible = false
-        binding.groupReviews.isVisible = true
+        binding.groupReviews.visibility = View.VISIBLE
+        binding.groupNoReview.visibility = View.GONE
+//        binding.groupNoReview.isVisible = false
+//        binding.groupReviews.isVisible = true
     }
 
     private fun updateShowRatings() {
