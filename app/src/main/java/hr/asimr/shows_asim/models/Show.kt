@@ -5,7 +5,7 @@ import androidx.annotation.DrawableRes
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class Show(
+data class Show(
     val id: String,
     val name: String,
     val description: String,
