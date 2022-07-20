@@ -71,6 +71,10 @@ class ShowsFragment : Fragment() {
             binding.groupEmptyState.isVisible = !binding.groupEmptyState.isVisible
             binding.groupFullState.isVisible = !binding.groupFullState.isVisible
         }
+
+        binding.imgBtnLogout.setOnClickListener{
+            findNavController().navigate(R.id.action_showsFragment_to_loginFragment)
+        }
     }
 
     private fun initShowsRecycler() {
