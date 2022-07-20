@@ -72,7 +72,7 @@ class ShowsActivity : AppCompatActivity() {
         adapter = ShowsAdapter(shows) { show ->
             showClicked(show)
         }
-        
+
         binding.rvShows.adapter = adapter
     }
 

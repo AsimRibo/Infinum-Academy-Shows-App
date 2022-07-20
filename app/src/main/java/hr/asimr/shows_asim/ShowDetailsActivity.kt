@@ -36,9 +36,6 @@ class ShowDetailsActivity : AppCompatActivity() {
     private fun initReviewsRecycler() {
         reviewsAdapter = ReviewsAdapter(show.reviews)
 
-        binding.rvReview.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
         binding.rvReview.adapter = reviewsAdapter
 
         binding.rvReview.addItemDecoration(
