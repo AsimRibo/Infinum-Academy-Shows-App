@@ -7,7 +7,7 @@
         android:id="@+id/loginFragment"
         android:name="hr.asimr.shows_asim.LoginFragment"
         android:label="LoginFragment">
-        
+
         <action
             android:id="@+id/action_loginFragment_to_showsFragment"
             app:destination="@id/showsFragment"/>
