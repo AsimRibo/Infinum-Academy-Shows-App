@@ -2,6 +2,7 @@ package hr.asimr.shows_asim
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -110,7 +111,7 @@ class ShowDetailsActivity : AppCompatActivity() {
         binding.tvReviewStats.text = "$size REVIEWS, $average AVERAGE"
     }
 
-    private fun initToolbar(toolbar: androidx.appcompat.widget.Toolbar) {
+    private fun initToolbar(toolbar: Toolbar) {
         toolbar.setNavigationIcon(R.drawable.ic_back_button)
         toolbar.setNavigationOnClickListener {
             finish()
