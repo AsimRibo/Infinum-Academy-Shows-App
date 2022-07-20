@@ -72,7 +72,7 @@ class ShowsFragment : Fragment() {
             binding.groupFullState.isVisible = !binding.groupFullState.isVisible
         }
 
-        binding.imgBtnLogout.setOnClickListener{
+        binding.imgBtnLogout.setOnClickListener {
             findNavController().navigate(R.id.action_showsFragment_to_loginFragment)
         }
     }

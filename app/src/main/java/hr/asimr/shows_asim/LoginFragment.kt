@@ -16,7 +16,6 @@ const val EMAIL_ERROR = "Please provide a valid email address"
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,7 +36,7 @@ class LoginFragment : Fragment() {
 
     private fun initButtonListeners() {
         binding.btnLogin.setOnClickListener {
-            if(binding.etEmail.text.toString().isEmailValid()){
+            if (binding.etEmail.text.toString().isEmailValid()) {
                 findNavController().navigate(
                     LoginFragmentDirections.actionLoginFragmentToShowsFragment(
                         binding.etEmail.text.toString()
