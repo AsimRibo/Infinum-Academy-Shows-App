@@ -10,45 +10,46 @@
 
         <action
             android:id="@+id/action_loginFragment_to_showsFragment"
-            app:destination="@id/showsFragment"/>
+            app:destination="@id/navigation"/>
     </fragment>
 
-    <fragment
-        android:id="@+id/showsFragment"
-        android:name="hr.asimr.shows_asim.ShowsFragment"
-        android:label="ShowsFragment">
+    <navigation android:id="@+id/navigation" app:startDestination="@id/showsFragment">
+        <fragment
+            android:id="@+id/showsFragment"
+            android:name="hr.asimr.shows_asim.ShowsFragment"
+            android:label="ShowsFragment">
 
-        <action
-            android:id="@+id/action_showsFragment_to_showDetailsFragment"
-            app:destination="@id/showDetailsFragment"/>
-        <action
-            android:id="@+id/action_showsFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"/>
-        <argument
-            android:name="email"
-            app:argType="string"/>
-    </fragment>
+            <action
+                android:id="@+id/action_showsFragment_to_showDetailsFragment"
+                app:destination="@id/showDetailsFragment"/>
+            <action
+                android:id="@+id/action_showsFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:popUpTo="@id/loginFragment"
+                app:popUpToInclusive="true"/>
+            <argument
+                android:name="email"
+                app:argType="string"/>
+        </fragment>
+        <fragment
+            android:id="@+id/showDetailsFragment"
+            android:name="hr.asimr.shows_asim.ShowDetailsFragment"
+            android:label="ShowDetailsFragment">
 
-    <fragment
-        android:id="@+id/showDetailsFragment"
-        android:name="hr.asimr.shows_asim.ShowDetailsFragment"
-        android:label="ShowDetailsFragment">
+            <action
+                android:id="@+id/action_showDetailsFragment_to_showsFragment"
+                app:destination="@id/showsFragment"
+                app:popUpTo="@id/showsFragment"
+                app:popUpToInclusive="true"/>
 
-        <action
-            android:id="@+id/action_showDetailsFragment_to_showsFragment"
-            app:destination="@id/showsFragment"
-            app:popUpTo="@id/showsFragment"
-            app:popUpToInclusive="true"/>
+            <argument
+                android:name="email"
+                app:argType="string"/>
 
-        <argument
-            android:name="email"
-            app:argType="string"/>
-
-        <argument
-            android:name="show"
-            app:argType="hr.asimr.shows_asim.models.Show"/>
-    </fragment>
+            <argument
+                android:name="show"
+                app:argType="hr.asimr.shows_asim.models.Show"/>
+        </fragment>
+    </navigation>
 
 </navigation>
