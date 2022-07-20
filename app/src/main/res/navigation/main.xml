@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="hr.asimr.shows_asim.LoginFragment"
+        android:name="hr.asimr.shows_asim.fragments.LoginFragment"
         android:label="LoginFragment">
 
         <action
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/showsFragment"
-        android:name="hr.asimr.shows_asim.ShowsFragment"
+        android:name="hr.asimr.shows_asim.fragments.ShowsFragment"
         android:label="ShowsFragment">
 
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/showDetailsFragment"
-        android:name="hr.asimr.shows_asim.ShowDetailsFragment"
+        android:name="hr.asimr.shows_asim.fragments.ShowDetailsFragment"
         android:label="ShowDetailsFragment">
 
         <action

@@ -1,4 +1,4 @@
-package hr.asimr.shows_asim
+package hr.asimr.shows_asim.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package hr.asimr.shows_asim
+package hr.asimr.shows_asim.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show

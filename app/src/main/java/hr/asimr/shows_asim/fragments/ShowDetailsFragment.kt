@@ -1,4 +1,4 @@
-package hr.asimr.shows_asim
+package hr.asimr.shows_asim.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
