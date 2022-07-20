@@ -72,11 +72,7 @@ class ShowsActivity : AppCompatActivity() {
         adapter = ShowsAdapter(shows) { show ->
             showClicked(show)
         }
-
-        binding.rvShows.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-
+        
         binding.rvShows.adapter = adapter
     }
 

@@ -34,6 +34,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvShows"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        app:reverseLayout="false"
         android:layout_width="@dimen/zero_dp"
         android:layout_height="@dimen/zero_dp"
         android:layout_marginTop="@dimen/margin_40dp"
