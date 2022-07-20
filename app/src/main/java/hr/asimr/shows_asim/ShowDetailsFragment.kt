@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
@@ -22,6 +24,7 @@ class ShowDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var reviewsAdapter: ReviewsAdapter
 
+    private val args by navArgs<ShowDetailsFragmentArgs>()
     private lateinit var show: Show
     private lateinit var email: String
 
@@ -110,7 +113,11 @@ class ShowDetailsFragment : Fragment() {
     private fun initToolbar(toolbar: Toolbar) {
         toolbar.setNavigationIcon(R.drawable.ic_back_button)
         toolbar.setNavigationOnClickListener {
-            finish()
+            findNavController().navigate(
+                ShowDetailsFragmentDirections.actionShowDetailsFragmentToShowsFragment(
+                    email
+                )
+            )
         }
     }
 }

@@ -13,7 +13,6 @@ import hr.asimr.shows_asim.utils.isEmailValid
 
 const val MIN_PASSWORD_LENGTH = 6
 const val EMAIL_ERROR = "Please provide a valid email address"
-const val EMAIL = "Email"
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null

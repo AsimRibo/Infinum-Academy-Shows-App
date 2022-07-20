@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
@@ -19,6 +20,7 @@ class ShowsFragment : Fragment() {
     private lateinit var adapter: ShowsAdapter
     private lateinit var email: String
 
+    private val args by navArgs<ShowsFragmentArgs>()
 
     private val shows = listOf(
         Show(
@@ -78,7 +80,12 @@ class ShowsFragment : Fragment() {
     }
 
     private fun showClicked(show: Show) {
-
+        findNavController().navigate(
+            ShowsFragmentDirections.actionShowsFragmentToShowDetailsFragment(
+                email,
+                show
+            )
+        )
     }
 
     override fun onDestroyView() {
