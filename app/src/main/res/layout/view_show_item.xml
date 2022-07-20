@@ -6,18 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:padding="@dimen/padding_8dp"
+    android:padding="@dimen/spacing_8"
     >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvShow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginStart="@dimen/spacing_16"
+        android:layout_marginEnd="@dimen/spacing_16"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
-        app:cardCornerRadius="@dimen/radius_8dp">
+        app:cardCornerRadius="@dimen/spacing_8">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             <ImageView
                 android:id="@+id/ivShow"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/show_item_height"
+                android:layout_height="@dimen/spacing_192"
                 android:contentDescription="@string/show_image"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/ic_office"/>
@@ -37,8 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginStart="@dimen/margin_16dp"
-                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/spacing_16"
+                android:layout_marginTop="@dimen/spacing_8"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_24sp"
                 android:textStyle="bold"
@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_margin="@dimen/margin_16dp"
+                android:layout_margin="@dimen/spacing_16"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:textColor="@android:color/black"

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="24dp">
+    android:padding="@dimen/spacing_24">
 
     <ImageView
         android:id="@+id/ivUser"
@@ -18,9 +18,9 @@
 
     <TextView
         android:id="@+id/tvUsername"
-        android:layout_width="@dimen/zero_dp"
+        android:layout_width="@dimen/spacing_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginStart="@dimen/spacing_16"
         android:textStyle="bold"
         android:textColor="@color/purple_text"
         app:layout_constraintBottom_toBottomOf="@id/ivUser"
@@ -32,7 +32,7 @@
         android:id="@+id/tvRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_8dp"
+        android:layout_marginEnd="@dimen/spacing_8"
         app:layout_constraintEnd_toStartOf="@+id/ivStar"
         app:layout_constraintTop_toTopOf="@id/tvUsername"
         tools:text="3"/>
@@ -49,9 +49,9 @@
 
     <TextView
         android:id="@+id/tvComment"
-        android:layout_width="@dimen/zero_dp"
+        android:layout_width="@dimen/spacing_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/spacing_16"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
