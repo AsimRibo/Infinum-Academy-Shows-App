@@ -1,24 +1,32 @@
 package hr.asimr.shows_asim
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.widget.addTextChangedListener
-import hr.asimr.shows_asim.databinding.ActivityLoginBinding
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import hr.asimr.shows_asim.databinding.FragmentLoginBinding
 import hr.asimr.shows_asim.utils.isEmailValid
 
 const val MIN_PASSWORD_LENGTH = 6
 const val EMAIL_ERROR = "Please provide a valid email address"
 const val EMAIL = "Email"
 
-class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
+class LoginFragment : Fragment() {
+    private var _binding: FragmentLoginBinding? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private val binding get() = _binding!!
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentLoginBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initListeners()
     }
@@ -30,10 +38,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initButtonListeners() {
         binding.btnLogin.setOnClickListener {
-            if (binding.etEmail.text.toString().isEmailValid()) {
-                val intent = Intent(this, ShowsActivity::class.java)
-                intent.putExtra(EMAIL, binding.etEmail.text.toString())
-                startActivity(intent)
+            if(binding.etEmail.text.toString().isEmailValid()){
+                findNavController().navigate(
+                    LoginFragmentDirections.actionLoginFragmentToShowsFragment(
+                        binding.etEmail.text.toString()
+                    )
+                )
             } else {
                 showEmailMessage(EMAIL_ERROR)
             }
@@ -62,5 +72,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun handleButtonOpacity(enabled: Boolean, button: Button) {
         button.alpha = if (enabled) 1f else 0.5f
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
