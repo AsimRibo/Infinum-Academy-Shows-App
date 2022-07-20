@@ -25,9 +25,6 @@
         <activity
             android:name=".ShowDetailsActivity"
             android:exported="true"/>
-        <activity
-            android:name=".ShowsActivity"
-            android:exported="true"/>
     </application>
 
 </manifest>
