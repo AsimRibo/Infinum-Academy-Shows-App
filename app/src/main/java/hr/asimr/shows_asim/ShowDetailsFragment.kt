@@ -36,6 +36,9 @@ class ShowDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        email = args.email
+        show = args.show
+
         initToolbar(binding.toolbar)
         initListeners()
         initShowDetails()
