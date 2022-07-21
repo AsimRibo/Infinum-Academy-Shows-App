@@ -61,16 +61,16 @@ class ShowsFragment : Fragment() {
 
         initShowsRecycler()
         initListeners()
-        initToolbarMenuItems()
     }
 
-    private fun initToolbarMenuItems() {
+    private fun initToolbarMenuItemListeners() {
         binding.toolbarShows.menu.findItem(R.id.logout).setOnMenuItemClickListener {
             findNavController().popBackStack()
         }
     }
 
     private fun initListeners() {
+        initToolbarMenuItemListeners()
         initButtonListeners()
     }
 

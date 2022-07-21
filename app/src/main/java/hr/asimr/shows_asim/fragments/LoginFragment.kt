@@ -42,10 +42,16 @@ class LoginFragment : Fragment() {
                         binding.etEmail.text.toString()
                     )
                 )
+                resetEditTexts()
             } else {
                 showEmailMessage(EMAIL_ERROR)
             }
         }
+    }
+
+    private fun resetEditTexts() {
+        binding.etEmail.text?.clear()
+        binding.etPassword.text?.clear()
     }
 
     private fun initEditTextListeners() {
