@@ -1,23 +1,27 @@
-package hr.asimr.shows_asim
+package hr.asimr.shows_asim.fragments
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ShowsAdapter
-import hr.asimr.shows_asim.databinding.ActivityShowsBinding
+import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
-import hr.asimr.shows_asim.utils.loseEmailDomain
 import java.util.*
 
-const val USERNAME = "USERNAME"
-const val SHOW = "SHOW"
+class ShowsFragment : Fragment() {
+    private var _binding: FragmentShowsBinding? = null
+    private val binding get() = _binding!!
 
-class ShowsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityShowsBinding
     private lateinit var adapter: ShowsAdapter
-    private lateinit var username: String
+    private lateinit var email: String
+
+    private val args by navArgs<ShowsFragmentArgs>()
 
     private val shows = listOf(
         Show(
@@ -44,14 +48,16 @@ class ShowsActivity : AppCompatActivity() {
         )
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
-        binding = ActivityShowsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        _binding = FragmentShowsBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
-        intent.getStringExtra(EMAIL)?.let {
-            username = it.loseEmailDomain()
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        email = args.email
 
         initShowsRecycler()
         initListeners()
@@ -66,6 +72,10 @@ class ShowsActivity : AppCompatActivity() {
             binding.groupEmptyState.isVisible = !binding.groupEmptyState.isVisible
             binding.groupFullState.isVisible = !binding.groupFullState.isVisible
         }
+
+        binding.imgBtnLogout.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun initShowsRecycler() {
@@ -77,9 +87,16 @@ class ShowsActivity : AppCompatActivity() {
     }
 
     private fun showClicked(show: Show) {
-        val intent = Intent(this, ShowDetailsActivity::class.java)
-        intent.putExtra(SHOW, show)
-        intent.putExtra(USERNAME, username)
-        startActivity(intent)
+        findNavController().navigate(
+            ShowsFragmentDirections.actionShowsFragmentToShowDetailsFragment(
+                email,
+                show
+            )
+        )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -1,33 +1,44 @@
-package hr.asimr.shows_asim
+package hr.asimr.shows_asim.fragments
 
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
-import hr.asimr.shows_asim.databinding.ActivityShowDetailsBinding
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
+import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
 import hr.asimr.shows_asim.models.Review
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.utils.loseEmailDomain
 import java.text.DecimalFormat
 import java.util.*
 
-class ShowDetailsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityShowDetailsBinding
+class ShowDetailsFragment : Fragment() {
+    private var _binding: FragmentShowDetailsBinding? = null
+    private val binding get() = _binding!!
     private lateinit var reviewsAdapter: ReviewsAdapter
 
+    private val args by navArgs<ShowDetailsFragmentArgs>()
     private lateinit var show: Show
-    private lateinit var username: String
+    private lateinit var email: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityShowDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentShowDetailsBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        email = args.email
+        show = args.show
 
         initToolbar(binding.toolbar)
         initListeners()
@@ -41,7 +52,7 @@ class ShowDetailsActivity : AppCompatActivity() {
         binding.rvReview.adapter = reviewsAdapter
 
         binding.rvReview.addItemDecoration(
-            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
     }
 
@@ -51,7 +62,7 @@ class ShowDetailsActivity : AppCompatActivity() {
 
     private fun initButtonListeners() {
         binding.btnWriteReview.setOnClickListener {
-            val dialog = BottomSheetDialog(this)
+            val dialog = BottomSheetDialog(requireContext())
             val bottomSheet = DialogAddReviewBinding.inflate(layoutInflater)
             dialog.setContentView(bottomSheet.root)
 
@@ -69,16 +80,9 @@ class ShowDetailsActivity : AppCompatActivity() {
     }
 
     private fun initShowDetails() {
-        intent.getParcelableExtra<Show>(SHOW)?.let {
-            binding.ivShow.setImageResource(it.imageResourceId)
-            binding.tvDescription.text = it.description
-            binding.toolbar.title = it.name
-            show = it
-        }
-
-        intent.getStringExtra(USERNAME)?.let {
-            username = it
-        }
+        binding.ivShow.setImageResource(show.imageResourceId)
+        binding.tvDescription.text = show.description
+        binding.toolbar.title = show.name
     }
 
     private fun addReview(rating: Int, review: String) {
@@ -87,7 +91,7 @@ class ShowDetailsActivity : AppCompatActivity() {
                 UUID.randomUUID().toString(),
                 rating,
                 review,
-                username
+                email.loseEmailDomain()
             )
         )
         reviewsAdapter.notifyItemInserted(show.reviews.lastIndex)
@@ -98,8 +102,6 @@ class ShowDetailsActivity : AppCompatActivity() {
     private fun updateGroupsVisibility() {
         binding.groupReviews.visibility = View.VISIBLE
         binding.groupNoReview.visibility = View.GONE
-//        binding.groupNoReview.isVisible = false
-//        binding.groupReviews.isVisible = true
     }
 
     private fun updateShowRatings() {
@@ -115,7 +117,12 @@ class ShowDetailsActivity : AppCompatActivity() {
     private fun initToolbar(toolbar: Toolbar) {
         toolbar.setNavigationIcon(R.drawable.ic_back_button)
         toolbar.setNavigationOnClickListener {
-            finish()
+            findNavController().popBackStack()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
