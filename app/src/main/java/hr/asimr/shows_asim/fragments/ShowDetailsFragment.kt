@@ -117,11 +117,7 @@ class ShowDetailsFragment : Fragment() {
     private fun initToolbar(toolbar: Toolbar) {
         toolbar.setNavigationIcon(R.drawable.ic_back_button)
         toolbar.setNavigationOnClickListener {
-            findNavController().navigate(
-                ShowDetailsFragmentDirections.actionShowDetailsFragmentToShowsFragment(
-                    email
-                )
-            )
+            findNavController().popBackStack()
         }
     }
 

@@ -74,7 +74,7 @@ class ShowsFragment : Fragment() {
         }
 
         binding.imgBtnLogout.setOnClickListener {
-            findNavController().navigate(R.id.action_showsFragment_to_loginFragment)
+            findNavController().popBackStack()
         }
     }
 
