@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main.xml" app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
+        tools:layout="@layout/fragment_login"
         android:name="hr.asimr.shows_asim.fragments.LoginFragment"
         android:label="LoginFragment">
 
@@ -22,6 +23,7 @@
     <navigation android:id="@+id/showsNav" app:startDestination="@id/showsFragment">
         <fragment
             android:id="@+id/showsFragment"
+            tools:layout="@layout/fragment_shows"
             android:name="hr.asimr.shows_asim.fragments.ShowsFragment"
             android:label="ShowsFragment">
 
@@ -42,6 +44,7 @@
         </fragment>
         <fragment
             android:id="@+id/showDetailsFragment"
+            tools:layout="@layout/fragment_show_details"
             android:name="hr.asimr.shows_asim.fragments.ShowDetailsFragment"
             android:label="ShowDetailsFragment">
 
