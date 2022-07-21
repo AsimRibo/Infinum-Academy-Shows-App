@@ -14,8 +14,11 @@
         android:theme="@style/Theme.ShowsAsim"
         tools:targetApi="31">
         <activity
-            android:name=".WelcomeActivity"
-            android:exported="false" />
+            android:name=".ShowDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ShowsActivity"
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
