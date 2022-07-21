@@ -12,49 +12,57 @@
             android:id="@+id/action_loginFragment_to_showsFragment"
             app:enterAnim="@anim/slide_up"
             app:popEnterAnim="@anim/slide_up"
-            app:destination="@id/showsFragment"/>
+            app:destination="@id/showsNav">
+            <argument
+                android:name="email"
+                app:argType="string"/>
+        </action>
     </fragment>
 
-    <fragment
-        android:id="@+id/showsFragment"
-        android:name="hr.asimr.shows_asim.fragments.ShowsFragment"
-        android:label="ShowsFragment">
+    <navigation android:id="@+id/showsNav" app:startDestination="@id/showsFragment">
+        <fragment
+            android:id="@+id/showsFragment"
+            android:name="hr.asimr.shows_asim.fragments.ShowsFragment"
+            android:label="ShowsFragment">
 
-        <action
-            android:id="@+id/action_showsFragment_to_showDetailsFragment"
-            app:enterAnim="@anim/slide_up"
-            app:popEnterAnim="@anim/slide_up"
-            app:destination="@id/showDetailsFragment"/>
-        <action
-            android:id="@+id/action_showsFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/slide_up"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"/>
-        <argument
-            android:name="email"
-            app:argType="string"/>
-    </fragment>
-    <fragment
-        android:id="@+id/showDetailsFragment"
-        android:name="hr.asimr.shows_asim.fragments.ShowDetailsFragment"
-        android:label="ShowDetailsFragment">
+            <action
+                android:id="@+id/action_showsFragment_to_showDetailsFragment"
+                app:destination="@id/showDetailsFragment"
+                app:enterAnim="@anim/slide_up"
+                app:popEnterAnim="@anim/slide_up"/>
+            <action
+                android:id="@+id/action_showsFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:enterAnim="@anim/slide_up"
+                app:popUpTo="@id/loginFragment"
+                app:popUpToInclusive="true"/>
+            <argument
+                android:name="email"
+                app:argType="string"/>
+        </fragment>
+        <fragment
+            android:id="@+id/showDetailsFragment"
+            android:name="hr.asimr.shows_asim.fragments.ShowDetailsFragment"
+            android:label="ShowDetailsFragment">
 
-        <action
-            android:id="@+id/action_showDetailsFragment_to_showsFragment"
-            app:destination="@id/showsFragment"
-            app:popUpTo="@id/showsFragment"
-            app:enterAnim="@anim/slide_up"
-            app:popEnterAnim="@anim/slide_up"
-            app:popUpToInclusive="true"/>
+            <action
+                android:id="@+id/action_showDetailsFragment_to_showsFragment"
+                app:destination="@id/showsFragment"
+                app:enterAnim="@anim/slide_up"
+                app:popEnterAnim="@anim/slide_up"
+                app:popUpTo="@id/showsFragment"
+                app:popUpToInclusive="true">
 
-        <argument
-            android:name="email"
-            app:argType="string"/>
+            </action>
 
-        <argument
-            android:name="show"
-            app:argType="hr.asimr.shows_asim.models.Show"/>
-    </fragment>
+            <argument
+                android:name="email"
+                app:argType="string"/>
+
+            <argument
+                android:name="show"
+                app:argType="hr.asimr.shows_asim.models.Show"/>
+        </fragment>
+    </navigation>
 
 </navigation>
