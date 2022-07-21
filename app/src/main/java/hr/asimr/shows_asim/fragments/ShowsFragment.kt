@@ -61,6 +61,13 @@ class ShowsFragment : Fragment() {
 
         initShowsRecycler()
         initListeners()
+        initToolbarMenuItems()
+    }
+
+    private fun initToolbarMenuItems() {
+        binding.toolbarShows.menu.findItem(R.id.logout).setOnMenuItemClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun initListeners() {
@@ -71,10 +78,6 @@ class ShowsFragment : Fragment() {
         binding.btnToggleShows.setOnClickListener {
             binding.groupEmptyState.isVisible = !binding.groupEmptyState.isVisible
             binding.groupFullState.isVisible = !binding.groupFullState.isVisible
-        }
-
-        binding.imgBtnLogout.setOnClickListener {
-            findNavController().popBackStack()
         }
     }
 

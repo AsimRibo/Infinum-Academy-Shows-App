@@ -6,15 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageButton
-        android:id="@+id/imgBtnLogout"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarShows"
+        android:layout_width="@dimen/spacing_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/shows_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/transparent"
-        android:layout_marginTop="@dimen/spacing_16"
-        android:src="@drawable/ic_logout"
-        android:layout_marginEnd="@dimen/spacing_16"
         android:layout_height="wrap_content" />
 
     <TextView
