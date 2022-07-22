@@ -41,6 +41,7 @@ class ShowDetailsFragment : Fragment() {
         email = args.email
         show = args.show
 
+//        show.copy(reviews = mutableListOf(show.reviews).a)
         initToolbar(binding.toolbar)
         initListeners()
         initShowDetails()

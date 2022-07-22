@@ -1,6 +1,7 @@
 package hr.asimr.shows_asim.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,8 +65,15 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initToolbarMenuItemListeners() {
-        binding.toolbarShows.menu.findItem(R.id.logout).setOnMenuItemClickListener {
-            findNavController().popBackStack()
+        binding.toolbarShows.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.logout -> findNavController().popBackStack()
+
+                else -> {
+                    Log.i("menuItem", "Unknown id")
+                    false
+                }
+            }
         }
     }
 
