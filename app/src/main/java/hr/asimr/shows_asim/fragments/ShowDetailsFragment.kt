@@ -41,7 +41,6 @@ class ShowDetailsFragment : Fragment() {
         email = args.email
         show = args.show
 
-//        show.copy(reviews = mutableListOf(show.reviews).a)
         initToolbar(binding.toolbar)
         initListeners()
         initShowDetails()
@@ -96,6 +95,7 @@ class ShowDetailsFragment : Fragment() {
                 email.loseEmailDomain()
             )
         )
+
         reviewsAdapter.notifyItemInserted(show.reviews.lastIndex)
         updateGroupsVisibility()
         updateShowRatings()
