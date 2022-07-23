@@ -1,11 +1,13 @@
 package hr.asimr.shows_asim.fragments
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.edit
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -14,19 +16,35 @@ import hr.asimr.shows_asim.utils.isEmailValid
 
 const val MIN_PASSWORD_LENGTH = 6
 const val EMAIL_ERROR = "Please provide a valid email address"
+const val LOGIN_PREFERENCES = "LoginPreferences"
+const val REMEMBER_ME = "RememberMe"
+const val USER_EMAIL = "UserEmail"
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var loginPreferences: SharedPreferences
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
+        loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
+        if (loginPreferences.getBoolean(REMEMBER_ME, false)){
+            goToShows(loginPreferences.getString(USER_EMAIL, "")!!)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    private fun goToShows(email: String) {
+        findNavController().navigate(
+            LoginFragmentDirections.actionLoginFragmentToShowsFragment(
+                email
+            )
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,11 +61,11 @@ class LoginFragment : Fragment() {
     private fun initButtonListeners() {
         binding.btnLogin.setOnClickListener {
             if (binding.etEmail.text.toString().isEmailValid()) {
-                findNavController().navigate(
-                    LoginFragmentDirections.actionLoginFragmentToShowsFragment(
-                        binding.etEmail.text.toString()
-                    )
-                )
+                loginPreferences.edit {
+                    putBoolean(REMEMBER_ME, binding.chbRememberMe.isChecked)
+                    putString(USER_EMAIL, binding.etEmail.text.toString())
+                }
+                goToShows(binding.etEmail.text.toString())
                 resetEditTexts()
             } else {
                 showEmailMessage(EMAIL_ERROR)
