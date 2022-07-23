@@ -133,6 +133,18 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <CheckBox
+            android:id="@+id/chbRememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_24"
+            android:layout_marginTop="@dimen/spacing_24"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:text="@string/remember_me"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilPassword"/>
+
         <android.widget.Button
             android:id="@+id/btnLogin"
             android:layout_width="@dimen/spacing_0"
@@ -140,7 +152,6 @@
             android:layout_marginStart="@dimen/spacing_24"
             android:layout_marginEnd="@dimen/spacing_24"
             android:layout_marginBottom="@dimen/spacing_32"
-            android:layout_marginTop="@dimen/spacing_56"
             android:alpha="0.5"
             android:background="@drawable/button_background"
             android:enabled="false"
@@ -151,7 +162,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilPassword"/>
+            app:layout_constraintTop_toBottomOf="@id/chbRememberMe"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
