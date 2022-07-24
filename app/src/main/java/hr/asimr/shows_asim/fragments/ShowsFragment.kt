@@ -11,8 +11,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ShowsAdapter
+import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
+import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
 import java.util.*
@@ -67,11 +70,11 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initToolbarMenuItemListeners() {
-        binding.toolbarShows.menu.findItem(R.id.logout).setIcon(R.drawable.ic_profile_placeholder)
+        binding.toolbarShows.menu.findItem(R.id.userProfile).setIcon(R.drawable.ic_profile_placeholder)
 
         binding.toolbarShows.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.logout -> logout()
+                R.id.userProfile -> initUserProfileBottomSheet()
 
                 else -> {
                     Log.i("menuItem", "Unknown id")
@@ -79,6 +82,26 @@ class ShowsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun initUserProfileBottomSheet(): Boolean {
+        val dialog = BottomSheetDialog(requireContext())
+        val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
+        dialog.setContentView(bottomSheet.root)
+
+        bottomSheet.tvEmail.text = email
+        bottomSheet.btnLogout.setOnClickListener{
+            logout()
+        }
+        bottomSheet.btnChangeImage.setOnClickListener{
+            changeUserImage()
+        }
+
+        return true
+    }
+
+    private fun changeUserImage() {
+        TODO("Not yet implemented")
     }
 
     private fun logout(): Boolean {
