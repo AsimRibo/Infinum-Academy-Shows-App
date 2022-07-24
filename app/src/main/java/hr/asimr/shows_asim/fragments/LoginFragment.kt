@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-        if (loginPreferences.getBoolean(REMEMBER_ME, false)){
+        if (loginPreferences.getBoolean(REMEMBER_ME, false)) {
             goToShows(loginPreferences.getString(USER_EMAIL, "")!!)
         }
     }
@@ -63,19 +63,22 @@ class LoginFragment : Fragment() {
             if (binding.etEmail.text.toString().isEmailValid()) {
                 loginPreferences.edit {
                     putBoolean(REMEMBER_ME, binding.chbRememberMe.isChecked)
-                    putString(USER_EMAIL, binding.etEmail.text.toString())
+                    if (binding.chbRememberMe.isChecked) {
+                        putString(USER_EMAIL, binding.etEmail.text.toString())
+                    }
                 }
                 goToShows(binding.etEmail.text.toString())
-                resetEditTexts()
+                resetValues()
             } else {
                 showEmailMessage(EMAIL_ERROR)
             }
         }
     }
 
-    private fun resetEditTexts() {
+    private fun resetValues() {
         binding.etEmail.text?.clear()
         binding.etPassword.text?.clear()
+        binding.chbRememberMe.isChecked = false
     }
 
     private fun initEditTextListeners() {

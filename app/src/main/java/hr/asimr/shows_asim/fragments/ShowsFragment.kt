@@ -1,10 +1,12 @@
 package hr.asimr.shows_asim.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -67,7 +69,7 @@ class ShowsFragment : Fragment() {
     private fun initToolbarMenuItemListeners() {
         binding.toolbarShows.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.logout -> findNavController().popBackStack()
+                R.id.logout -> logout()
 
                 else -> {
                     Log.i("menuItem", "Unknown id")
@@ -75,6 +77,15 @@ class ShowsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun logout(): Boolean {
+        val loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
+        loginPreferences.edit{
+            putBoolean(REMEMBER_ME, false)
+            remove(USER_EMAIL)
+        }
+        return findNavController().popBackStack()
     }
 
     private fun initListeners() {
