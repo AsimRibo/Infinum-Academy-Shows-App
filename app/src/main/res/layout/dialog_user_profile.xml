@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivUserProfile"
         android:layout_width="@dimen/spacing_96"
         android:layout_height="@dimen/spacing_96"
         android:layout_gravity="center"
@@ -18,6 +19,7 @@
         app:shapeAppearanceOverlay="@style/RoundImage"/>
 
     <TextView
+        android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,6 +30,7 @@
         tools:text="user@mail.com"/>
 
     <Button
+        android:id="@+id/btnChangeImage"
         style="@style/OutlinedWhiteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,6 +41,7 @@
         android:textAllCaps="false"/>
 
     <Button
+        android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_24"

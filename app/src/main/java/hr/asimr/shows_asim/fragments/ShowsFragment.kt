@@ -67,6 +67,8 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initToolbarMenuItemListeners() {
+        binding.toolbarShows.menu.findItem(R.id.logout).setIcon(R.drawable.ic_profile_placeholder)
+
         binding.toolbarShows.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.logout -> logout()
