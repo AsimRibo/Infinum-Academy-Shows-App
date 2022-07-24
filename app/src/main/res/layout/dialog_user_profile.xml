@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/spacing_96"
+        android:layout_height="@dimen/spacing_96"
         android:layout_gravity="center"
+        app:strokeColor="@color/purple_background"
+        app:strokeWidth="@dimen/spacing_2"
         android:layout_marginTop="@dimen/spacing_40"
         android:src="@drawable/ic_profile_placeholder"
-        android:layout_height="wrap_content" />
+        app:shapeAppearanceOverlay="@style/RoundImage"/>
 
     <TextView
         android:layout_width="wrap_content"
-        tools:text="user@mail.com"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textSize="@dimen/text_size_24sp"
+        android:textStyle="bold"
         android:layout_marginTop="@dimen/spacing_32"
         android:textColor="@color/black"
-        android:layout_height="wrap_content" />
+        tools:text="user@mail.com"/>
 
     <Button
-        android:layout_width="match_parent"
         style="@style/OutlinedWhiteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_24"
         android:layout_marginTop="@dimen/spacing_24"
         android:layout_marginEnd="@dimen/spacing_24"
         android:text="@string/change_profile_photo"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content"/>
+        android:textAllCaps="false"/>
 
     <Button
-        android:background="@drawable/button_background"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_24"
         android:layout_marginEnd="@dimen/spacing_24"
         android:layout_marginTop="@dimen/spacing_16"
+        android:background="@drawable/button_background"
         android:text="@string/logout"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content"/>
+        android:textAllCaps="false"/>
 </LinearLayout>
