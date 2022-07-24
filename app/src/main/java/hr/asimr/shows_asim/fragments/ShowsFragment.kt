@@ -94,7 +94,7 @@ class ShowsFragment : Fragment() {
             logout()
             dialog.dismiss()
         }
-        bottomSheet.btnChangeImage.setOnClickListener{
+        bottomSheet.btnChangeProfilePhoto.setOnClickListener{
             changeUserImage()
             dialog.dismiss()
         }

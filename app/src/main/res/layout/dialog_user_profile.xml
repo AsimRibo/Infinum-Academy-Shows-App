@@ -30,7 +30,7 @@
         tools:text="user@mail.com"/>
 
     <Button
-        android:id="@+id/btnChangeImage"
+        android:id="@+id/btnChangeProfilePhoto"
         style="@style/OutlinedWhiteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
