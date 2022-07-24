@@ -15,12 +15,10 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ShowsAdapter
-import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.viewModels.ShowsViewModel
-import java.util.*
 
 class ShowsFragment : Fragment() {
     private var _binding: FragmentShowsBinding? = null
