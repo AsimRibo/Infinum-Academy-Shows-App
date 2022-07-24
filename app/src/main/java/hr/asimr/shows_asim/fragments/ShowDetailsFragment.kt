@@ -69,7 +69,7 @@ class ShowDetailsFragment : Fragment() {
 
             bottomSheet.btnSubmit.setOnClickListener {
                 if (bottomSheet.rbReview.rating != 0f) {
-                    addReview(
+                    prepareReview(
                         bottomSheet.rbReview.rating.toInt(),
                         bottomSheet.etComment.text.toString()
                     )
@@ -86,17 +86,20 @@ class ShowDetailsFragment : Fragment() {
         binding.toolbar.title = show.name
     }
 
-    private fun addReview(rating: Int, review: String) {
-        show.reviews.add(
-            Review(
-                UUID.randomUUID().toString(),
-                rating,
-                review,
-                email.loseEmailDomain()
-            )
+    private fun prepareReview(rating: Int, reviewDetails: String) {
+        val review = Review(
+            UUID.randomUUID().toString(),
+            rating,
+            reviewDetails,
+            email.loseEmailDomain()
         )
 
-        reviewsAdapter.notifyItemInserted(show.reviews.lastIndex)
+        reviewsAdapter.addReview(review)
+
+        val reviews = show.reviews.toMutableList()
+        reviews.add(review)
+        show = show.copy(reviews = reviews)
+
         updateGroupsVisibility()
         updateShowRatings()
     }
