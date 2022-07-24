@@ -92,11 +92,13 @@ class ShowsFragment : Fragment() {
         bottomSheet.tvEmail.text = email
         bottomSheet.btnLogout.setOnClickListener{
             logout()
+            dialog.dismiss()
         }
         bottomSheet.btnChangeImage.setOnClickListener{
             changeUserImage()
+            dialog.dismiss()
         }
-
+        dialog.show()
         return true
     }
 
@@ -104,13 +106,13 @@ class ShowsFragment : Fragment() {
         TODO("Not yet implemented")
     }
 
-    private fun logout(): Boolean {
+    private fun logout() {
         val loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
         loginPreferences.edit{
             putBoolean(REMEMBER_ME, false)
             remove(USER_EMAIL)
         }
-        return findNavController().popBackStack()
+        findNavController().popBackStack()
     }
 
     private fun initListeners() {
