@@ -47,6 +47,7 @@
         android:layout_marginStart="@dimen/spacing_24"
         android:layout_marginEnd="@dimen/spacing_24"
         android:layout_marginTop="@dimen/spacing_16"
+        android:layout_marginBottom="@dimen/spacing_24"
         android:background="@drawable/button_background"
         android:text="@string/logout"
         android:textAllCaps="false"/>
