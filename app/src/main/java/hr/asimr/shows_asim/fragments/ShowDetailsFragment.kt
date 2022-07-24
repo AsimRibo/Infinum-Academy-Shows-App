@@ -94,11 +94,10 @@ class ShowDetailsFragment : Fragment() {
             email.loseEmailDomain()
         )
 
-        reviewsAdapter.addReview(review)
-
         val reviews = show.reviews.toMutableList()
         reviews.add(review)
         show = show.copy(reviews = reviews)
+        reviewsAdapter.addReviews(show.reviews)
 
         updateGroupsVisibility()
         updateShowRatings()

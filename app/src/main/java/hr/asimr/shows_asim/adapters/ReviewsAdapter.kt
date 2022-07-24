@@ -17,9 +17,9 @@ class ReviewsAdapter(private var reviews: List<Review>) : RecyclerView.Adapter<R
         holder.bind(reviews[position])
     }
 
-    fun addReview(review: Review){
-        reviews += review
-        notifyItemInserted(reviews.lastIndex)
+    fun addReviews(newReviews: List<Review>){
+        reviews = newReviews
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = reviews.size
