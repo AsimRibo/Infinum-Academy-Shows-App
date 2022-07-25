@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="hr.asimr.shows_asim">
 
+    <uses-feature android:name="android.hardware.camera"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
