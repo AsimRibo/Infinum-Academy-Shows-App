@@ -1,5 +1,6 @@
 package hr.asimr.shows_asim.fragments
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -69,11 +70,17 @@ class ShowsFragment : Fragment() {
         bottomSheet.tvEmail.text = email
         bottomSheet.btnLogout.setOnClickListener{
             dialog.dismiss()
-            logout()
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle(R.string.logout)
+                setMessage(R.string.logout_confirm_message)
+                setNegativeButton(R.string.cancel, null)
+                setPositiveButton(R.string.logout){_, _ -> logout()}
+                show()
+            }
         }
         bottomSheet.btnChangeProfilePhoto.setOnClickListener{
-            changeUserImage()
             dialog.dismiss()
+            changeUserImage()
         }
         dialog.show()
         return true
