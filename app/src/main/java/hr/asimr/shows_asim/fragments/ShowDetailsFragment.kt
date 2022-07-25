@@ -16,13 +16,8 @@ import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
-import hr.asimr.shows_asim.models.Review
-import hr.asimr.shows_asim.models.Show
-import hr.asimr.shows_asim.utils.loseEmailDomain
 import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
 import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
-import java.text.DecimalFormat
-import java.util.*
 
 class ShowDetailsFragment : Fragment() {
     private var _binding: FragmentShowDetailsBinding? = null
@@ -30,10 +25,8 @@ class ShowDetailsFragment : Fragment() {
     private lateinit var reviewsAdapter: ReviewsAdapter
 
     private val args by navArgs<ShowDetailsFragmentArgs>()
-    private lateinit var show: Show
-    private lateinit var email: String
     private val viewModel by viewModels<ShowDetailsViewModel> {
-        ShowDetailsViewModelFactory(show)
+        ShowDetailsViewModelFactory(args.show)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,9 +36,6 @@ class ShowDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        email = args.email
-        show = args.show
 
         initToolbar(binding.toolbar)
         initListeners()
@@ -77,7 +67,7 @@ class ShowDetailsFragment : Fragment() {
 
             bottomSheet.btnSubmit.setOnClickListener {
                 if (bottomSheet.rbReview.rating != 0f) {
-                    prepareReview(
+                    handleReview(
                         bottomSheet.rbReview.rating.toInt(),
                         bottomSheet.etComment.text.toString()
                     )
@@ -85,6 +75,12 @@ class ShowDetailsFragment : Fragment() {
                 }
             }
             dialog.show()
+            viewModel.averageLiveData.observe(viewLifecycleOwner){ average ->
+                binding.rbShow.rating = average
+            }
+            viewModel.reviewStats.observe(viewLifecycleOwner) { stats ->
+                binding.tvReviewStats.text = stats
+            }
         }
     }
 
@@ -96,23 +92,12 @@ class ShowDetailsFragment : Fragment() {
         }
     }
 
-    private fun prepareReview(rating: Int, reviewDetails: String) {
-        val review = Review(
-            UUID.randomUUID().toString(),
-            rating,
-            reviewDetails,
-            email.loseEmailDomain()
-        )
+    private fun handleReview(rating: Int, reviewDetails: String) {
+        viewModel.addReview(rating, reviewDetails, args.email)
 
-        reviewsAdapter.addReviews(review)
+        reviewsAdapter.notifyReviewAdded()
         updateGroupsVisibility()
         viewModel.calculateShowRatings()
-        viewModel.averageLiveData.observe(viewLifecycleOwner){ average ->
-            binding.rbShow.rating = average
-        }
-        viewModel.reviewStats.observe(viewLifecycleOwner) { stats ->
-            binding.tvReviewStats.text = stats
-        }
     }
 
     private fun updateGroupsVisibility() {

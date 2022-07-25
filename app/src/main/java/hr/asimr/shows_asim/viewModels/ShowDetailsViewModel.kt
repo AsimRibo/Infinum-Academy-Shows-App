@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.models.Review
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.utils.loseEmailDomain
 import java.text.DecimalFormat
+import java.util.UUID
 
 class ShowDetailsViewModel(private val show: Show) : ViewModel() {
     private val _showLiveData: MutableLiveData<Show> by lazy {
@@ -29,7 +31,12 @@ class ShowDetailsViewModel(private val show: Show) : ViewModel() {
         _averageLiveData.value = average
     }
 
-    fun addReview(review: Review){
-        _showLiveData.value!!.reviews += review
+    fun addReview(rating: Int, reviewDetails: String, email: String){
+        _showLiveData.value!!.reviews.add(Review(
+            UUID.randomUUID().toString(),
+            rating,
+            reviewDetails,
+            email.loseEmailDomain()
+        ))
     }
 }

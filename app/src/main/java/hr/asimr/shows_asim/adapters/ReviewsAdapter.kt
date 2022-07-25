@@ -17,8 +17,7 @@ class ReviewsAdapter(private var reviews: MutableList<Review>) : RecyclerView.Ad
         holder.bind(reviews[position])
     }
 
-    fun addReviews(review: Review){
-        reviews.add(review)
+    fun notifyReviewAdded(){
         notifyItemInserted(reviews.lastIndex)
     }
 
