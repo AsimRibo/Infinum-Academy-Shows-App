@@ -5,15 +5,17 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        tools:layout="@layout/fragment_login"
         android:name="hr.asimr.shows_asim.fragments.LoginFragment"
-        android:label="LoginFragment">
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
 
         <action
             android:id="@+id/action_loginFragment_to_showsFragment"
+            app:destination="@id/showsNav"
             app:enterAnim="@anim/slide_up"
             app:popEnterAnim="@anim/slide_up"
-            app:destination="@id/showsNav">
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true">
             <argument
                 android:name="email"
                 app:argType="string"/>
@@ -23,9 +25,9 @@
     <navigation android:id="@+id/showsNav" app:startDestination="@id/showsFragment">
         <fragment
             android:id="@+id/showsFragment"
-            tools:layout="@layout/fragment_shows"
             android:name="hr.asimr.shows_asim.fragments.ShowsFragment"
-            android:label="ShowsFragment">
+            android:label="ShowsFragment"
+            tools:layout="@layout/fragment_shows">
 
             <action
                 android:id="@+id/action_showsFragment_to_showDetailsFragment"
@@ -39,9 +41,9 @@
         </fragment>
         <fragment
             android:id="@+id/showDetailsFragment"
-            tools:layout="@layout/fragment_show_details"
             android:name="hr.asimr.shows_asim.fragments.ShowDetailsFragment"
-            android:label="ShowDetailsFragment">
+            android:label="ShowDetailsFragment"
+            tools:layout="@layout/fragment_show_details">
 
             <argument
                 android:name="email"
@@ -51,6 +53,11 @@
                 android:name="show"
                 app:argType="hr.asimr.shows_asim.models.Show"/>
         </fragment>
+        <action
+            android:id="@+id/action_showsFragment_loginFragment"
+            app:popUpTo="@id/showsFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/loginFragment"/>
     </navigation>
 
 </navigation>

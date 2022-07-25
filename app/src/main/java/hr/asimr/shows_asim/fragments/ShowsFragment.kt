@@ -68,8 +68,8 @@ class ShowsFragment : Fragment() {
 
         bottomSheet.tvEmail.text = email
         bottomSheet.btnLogout.setOnClickListener{
-            logout()
             dialog.dismiss()
+            logout()
         }
         bottomSheet.btnChangeProfilePhoto.setOnClickListener{
             changeUserImage()
@@ -89,7 +89,7 @@ class ShowsFragment : Fragment() {
             putBoolean(REMEMBER_ME, false)
             remove(USER_EMAIL)
         }
-        findNavController().popBackStack()
+        findNavController().navigate(R.id.action_showsFragment_loginFragment)
     }
 
     private fun initListeners() {
