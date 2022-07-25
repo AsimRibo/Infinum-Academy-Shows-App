@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import hr.asimr.shows_asim.databinding.ItemReviewBinding
 import hr.asimr.shows_asim.models.Review
 
-class ReviewsAdapter(private var reviews: MutableList<Review>) : RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder>() {
+class ReviewsAdapter(private var reviews: List<Review>) : RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
         val binding = ItemReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
