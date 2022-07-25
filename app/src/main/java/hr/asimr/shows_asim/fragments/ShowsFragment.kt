@@ -1,5 +1,6 @@
 package hr.asimr.shows_asim.fragments
 
+
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -68,17 +69,17 @@ class ShowsFragment : Fragment() {
         dialog.setContentView(bottomSheet.root)
 
         bottomSheet.tvEmail.text = email
-        bottomSheet.btnLogout.setOnClickListener{
+        bottomSheet.btnLogout.setOnClickListener {
             dialog.dismiss()
             AlertDialog.Builder(requireContext()).apply {
                 setTitle(R.string.logout)
                 setMessage(R.string.logout_confirm_message)
                 setNegativeButton(R.string.cancel, null)
-                setPositiveButton(R.string.logout){_, _ -> logout()}
+                setPositiveButton(R.string.logout) { _, _ -> logout() }
                 show()
             }
         }
-        bottomSheet.btnChangeProfilePhoto.setOnClickListener{
+        bottomSheet.btnChangeProfilePhoto.setOnClickListener {
             dialog.dismiss()
             changeUserImage()
         }
@@ -87,12 +88,13 @@ class ShowsFragment : Fragment() {
     }
 
     private fun changeUserImage() {
-        TODO("Not yet implemented")
+//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        startActivity(intent)
     }
 
     private fun logout() {
         val loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-        loginPreferences.edit{
+        loginPreferences.edit {
             putBoolean(REMEMBER_ME, false)
             remove(USER_EMAIL)
         }
@@ -112,7 +114,7 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initShowsRecycler() {
-        viewModel.showsLiveData.observe(viewLifecycleOwner){shows ->
+        viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
             adapter = ShowsAdapter(shows) { show ->
                 showClicked(show)
             }

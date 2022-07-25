@@ -26,4 +26,13 @@
         </activity>
     </application>
 
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="cyour authority"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/path_provider" />
+    </provider>
 </manifest>
