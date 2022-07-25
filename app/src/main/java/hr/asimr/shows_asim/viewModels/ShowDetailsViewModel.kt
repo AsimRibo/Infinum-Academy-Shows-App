@@ -24,15 +24,15 @@ class ShowDetailsViewModel(private val show: Show) : ViewModel() {
 
     fun calculateShowRatings() {
         val df = DecimalFormat("#.##")
-        val sum = _showLiveData.value!!.reviews.sumOf { it.rating }
-        val size = _showLiveData.value!!.reviews.size
+        val sum = show.reviews.sumOf { it.rating }
+        val size = show.reviews.size
         val average = if (size == 0) 0f else df.format((sum.toFloat() / size)).toFloat()
         _reviewStats.value = "$size REVIEWS, $average AVERAGE"
         _averageLiveData.value = average
     }
 
     fun addReview(rating: Int, reviewDetails: String, email: String){
-        _showLiveData.value!!.reviews.add(Review(
+        show.reviews.add(Review(
             UUID.randomUUID().toString(),
             rating,
             reviewDetails,
