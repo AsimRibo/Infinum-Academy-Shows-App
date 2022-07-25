@@ -75,12 +75,16 @@ class ShowDetailsFragment : Fragment() {
                 }
             }
             dialog.show()
-            viewModel.averageLiveData.observe(viewLifecycleOwner){ average ->
-                binding.rbShow.rating = average
-            }
-            viewModel.reviewStats.observe(viewLifecycleOwner) { stats ->
-                binding.tvReviewStats.text = stats
-            }
+            observeRatingAndStats()
+        }
+    }
+
+    private fun observeRatingAndStats() {
+        viewModel.averageLiveData.observe(viewLifecycleOwner){ average ->
+            binding.rbShow.rating = average
+        }
+        viewModel.reviewStats.observe(viewLifecycleOwner) { stats ->
+            binding.tvReviewStats.text = stats
         }
     }
 
