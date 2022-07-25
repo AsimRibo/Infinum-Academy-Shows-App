@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,6 +19,8 @@ import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
 import hr.asimr.shows_asim.models.Review
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.utils.loseEmailDomain
+import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
+import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
 import java.text.DecimalFormat
 import java.util.*
 
@@ -29,6 +32,9 @@ class ShowDetailsFragment : Fragment() {
     private val args by navArgs<ShowDetailsFragmentArgs>()
     private lateinit var show: Show
     private lateinit var email: String
+    private val viewModel by viewModels<ShowDetailsViewModel> {
+        ShowDetailsViewModelFactory(show)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShowDetailsBinding.inflate(layoutInflater, container, false)
@@ -48,13 +54,15 @@ class ShowDetailsFragment : Fragment() {
     }
 
     private fun initReviewsRecycler() {
-        reviewsAdapter = ReviewsAdapter(show.reviews)
+        viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
+            reviewsAdapter = ReviewsAdapter(show.reviews)
 
-        binding.rvReview.adapter = reviewsAdapter
+            binding.rvReview.adapter = reviewsAdapter
 
-        binding.rvReview.addItemDecoration(
-            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-        )
+            binding.rvReview.addItemDecoration(
+                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+            )
+        }
     }
 
     private fun initListeners() {
@@ -81,9 +89,11 @@ class ShowDetailsFragment : Fragment() {
     }
 
     private fun initShowDetails() {
-        binding.ivShow.setImageResource(show.imageResourceId)
-        binding.tvDescription.text = show.description
-        binding.toolbar.title = show.name
+        viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
+            binding.ivShow.setImageResource(show.imageResourceId)
+            binding.tvDescription.text = show.description
+            binding.toolbar.title = show.name
+        }
     }
 
     private fun prepareReview(rating: Int, reviewDetails: String) {
@@ -94,28 +104,20 @@ class ShowDetailsFragment : Fragment() {
             email.loseEmailDomain()
         )
 
-        val reviews = show.reviews.toMutableList()
-        reviews.add(review)
-        show = show.copy(reviews = reviews)
-        reviewsAdapter.addReviews(show.reviews)
-
+        reviewsAdapter.addReviews(review)
         updateGroupsVisibility()
-        updateShowRatings()
+        viewModel.calculateShowRatings()
+        viewModel.averageLiveData.observe(viewLifecycleOwner){ average ->
+            binding.rbShow.rating = average
+        }
+        viewModel.reviewStats.observe(viewLifecycleOwner) { stats ->
+            binding.tvReviewStats.text = stats
+        }
     }
 
     private fun updateGroupsVisibility() {
         binding.groupReviews.isVisible = true
         binding.groupNoReview.isVisible = false
-    }
-
-    private fun updateShowRatings() {
-        val df = DecimalFormat("#.##")
-        val sum = show.reviews.sumOf { it.rating }
-        val average = df.format((sum.toFloat() / show.reviews.size)).toFloat()
-        val size = show.reviews.size
-
-        binding.rbShow.rating = average
-        binding.tvReviewStats.text = "$size REVIEWS, $average AVERAGE"
     }
 
     private fun initToolbar(toolbar: Toolbar) {
