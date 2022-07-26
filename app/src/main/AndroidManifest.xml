@@ -4,9 +4,7 @@
     package="hr.asimr.shows_asim">
 
     <uses-feature android:name="android.hardware.camera"/>
-
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
