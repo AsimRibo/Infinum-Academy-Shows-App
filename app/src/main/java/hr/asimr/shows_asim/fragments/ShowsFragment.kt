@@ -66,10 +66,10 @@ class ShowsFragment : Fragment() {
         initShowsRecycler()
         initListeners()
         loadImage(view.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
-        initDataObserving()
+        initShowsObserving()
     }
 
-    private fun initDataObserving() {
+    private fun initShowsObserving() {
         viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
             adapter.updateShows(shows)
         }
