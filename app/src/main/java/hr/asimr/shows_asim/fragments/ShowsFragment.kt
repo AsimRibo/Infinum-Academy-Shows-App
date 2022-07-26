@@ -12,13 +12,13 @@ import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.imageview.ShapeableImageView
 import hr.asimr.shows_asim.BuildConfig
@@ -42,15 +42,16 @@ class ShowsFragment : Fragment() {
 
     private val args by navArgs<ShowsFragmentArgs>()
 
-    private var imageUri: Uri? = null
 
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
-        if (!isSuccess) {
+        if (isSuccess) {
+            loadImage(view?.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
+        }
+        else{
             Log.e("Image", "Image not taken")
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -63,19 +64,19 @@ class ShowsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         email = args.email
-        imageUri = FileUtils.getImageFile(requireContext())?.toUri()
 
         initShowsRecycler()
         initListeners()
-        val view = view?.findViewById(R.id.toolbarProfileImage) as ShapeableImageView
-        loadImage(view, imageUri)
+        loadImage(view.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
     }
 
-    private fun loadImage(view: ImageView, uri: Uri?) {
-        imageUri?.let { uri ->
+    private fun loadImage(view: ImageView, file: File?) {
+        file?.let { image ->
             Glide
                 .with(requireContext())
-                .load(uri)
+                .load(image)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .centerCrop()
                 .into(view)
         }
@@ -92,7 +93,7 @@ class ShowsFragment : Fragment() {
         val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
         dialog.setContentView(bottomSheet.root)
 
-        loadImage(bottomSheet.ivUserProfile, imageUri)
+        loadImage(bottomSheet.ivUserProfile, FileUtils.getImageFile(requireContext()))
         bottomSheet.tvEmail.text = email
         bottomSheet.btnLogout.setOnClickListener {
             dialog.dismiss()
@@ -111,8 +112,6 @@ class ShowsFragment : Fragment() {
         dialog.show()
     }
 
-    private var uri: Uri? = null
-
     private fun changeUserImage() {
         val photoFile: File? = FileUtils.createImageFile(requireContext())
         photoFile?.also {
@@ -121,7 +120,6 @@ class ShowsFragment : Fragment() {
                 BuildConfig.APPLICATION_ID + ".fileProvider",
                 it
             )
-            uri = photoURI
             takePictureLauncher.launch(photoURI)
         }
     }
