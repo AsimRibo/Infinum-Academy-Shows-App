@@ -14,6 +14,7 @@
         android:layout_gravity="center"
         app:strokeColor="@color/purple_background"
         app:strokeWidth="@dimen/spacing_2"
+        android:padding="@dimen/spacing_2"
         android:layout_marginTop="@dimen/spacing_40"
         android:src="@drawable/ic_profile_placeholder"
         app:shapeAppearanceOverlay="@style/RoundImage"/>

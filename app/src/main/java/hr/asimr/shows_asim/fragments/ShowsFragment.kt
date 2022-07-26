@@ -1,26 +1,35 @@
 package hr.asimr.shows_asim.fragments
 
-
 import android.app.AlertDialog
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.imageview.ShapeableImageView
+import hr.asimr.shows_asim.BuildConfig
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.utils.FileUtils
 import hr.asimr.shows_asim.viewModels.ShowsViewModel
+import java.io.File
 
 class ShowsFragment : Fragment() {
     private var _binding: FragmentShowsBinding? = null
@@ -33,6 +42,17 @@ class ShowsFragment : Fragment() {
 
     private val args by navArgs<ShowsFragmentArgs>()
 
+    private var imageUri: Uri? = null
+
+    private val takePictureLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { isSuccess ->
+        if (!isSuccess) {
+            Log.e("Image", "Image not taken")
+        }
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
         _binding = FragmentShowsBinding.inflate(layoutInflater)
@@ -43,23 +63,27 @@ class ShowsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         email = args.email
+        imageUri = FileUtils.getImageFile(requireContext())?.toUri()
 
         initShowsRecycler()
         initListeners()
+        val view = view?.findViewById(R.id.toolbarProfileImage) as ShapeableImageView
+        loadImage(view, imageUri)
+    }
+
+    private fun loadImage(view: ImageView, uri: Uri?) {
+        imageUri?.let { uri ->
+            Glide
+                .with(requireContext())
+                .load(uri)
+                .centerCrop()
+                .into(view)
+        }
     }
 
     private fun initToolbarMenuItemListeners() {
-        binding.toolbarShows.menu.findItem(R.id.userProfile).setIcon(R.drawable.ic_profile_placeholder)
-
-        binding.toolbarShows.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.userProfile -> initUserProfileBottomSheet()
-
-                else -> {
-                    Log.i("menuItem", "Unknown id")
-                    false
-                }
-            }
+        (view?.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).setOnClickListener {
+            initUserProfileBottomSheet()
         }
     }
 
@@ -68,6 +92,7 @@ class ShowsFragment : Fragment() {
         val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
         dialog.setContentView(bottomSheet.root)
 
+        loadImage(bottomSheet.ivUserProfile, imageUri)
         bottomSheet.tvEmail.text = email
         bottomSheet.btnLogout.setOnClickListener {
             dialog.dismiss()
@@ -87,9 +112,19 @@ class ShowsFragment : Fragment() {
         return true
     }
 
+    private var uri: Uri? = null
+
     private fun changeUserImage() {
-//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        startActivity(intent)
+        val photoFile: File? = FileUtils.createImageFile(requireContext())
+        photoFile?.also {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                requireContext(),
+                BuildConfig.APPLICATION_ID + ".fileProvider",
+                it
+            )
+            uri = photoURI
+            takePictureLauncher.launch(photoURI)
+        }
     }
 
     private fun logout() {

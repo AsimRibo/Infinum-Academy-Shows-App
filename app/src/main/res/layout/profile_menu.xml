@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:padding="@dimen/spacing_8"
+    android:focusable="true"
+    android:clickable="true">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/toolbarProfileImage"
+        android:layout_width="@dimen/spacing_32"
+        app:strokeWidth="@dimen/spacing_2"
+        android:padding="@dimen/spacing_2"
+        app:shapeAppearanceOverlay="@style/RoundImage"
+        android:src="@drawable/ic_profile_placeholder"
+        android:layout_height="@dimen/spacing_32" />
+
+</FrameLayout>
