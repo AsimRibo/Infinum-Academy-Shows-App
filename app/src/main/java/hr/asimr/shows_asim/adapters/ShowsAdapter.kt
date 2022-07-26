@@ -22,6 +22,11 @@ class ShowsAdapter(
         holder.bind(shows[position])
     }
 
+    fun updateShows(newShows: List<Show>){
+        shows = newShows
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount() = shows.size
 
     inner class ShowViewHolder(

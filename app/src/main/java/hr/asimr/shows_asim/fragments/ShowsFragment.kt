@@ -42,14 +42,12 @@ class ShowsFragment : Fragment() {
 
     private val args by navArgs<ShowsFragmentArgs>()
 
-
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
             loadImage(view?.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
-        }
-        else{
+        } else {
             Log.e("Image", "Image not taken")
         }
     }
@@ -68,6 +66,13 @@ class ShowsFragment : Fragment() {
         initShowsRecycler()
         initListeners()
         loadImage(view.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
+        initDataObserving()
+    }
+
+    private fun initDataObserving() {
+        viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
+            adapter.updateShows(shows)
+        }
     }
 
     private fun loadImage(view: ImageView, file: File?) {
@@ -146,13 +151,17 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initShowsRecycler() {
-        viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
-            adapter = ShowsAdapter(shows) { show ->
-                showClicked(show)
-            }
-
-            binding.rvShows.adapter = adapter
+        adapter = ShowsAdapter(listOf()) { show ->
+            showClicked(show)
         }
+        binding.rvShows.adapter = adapter
+        //        viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
+        //            adapter = ShowsAdapter(shows) { show ->
+        //                showClicked(show)
+        //            }
+        //
+        //            binding.rvShows.adapter = adapter
+        //        }
     }
 
     private fun showClicked(show: Show) {
