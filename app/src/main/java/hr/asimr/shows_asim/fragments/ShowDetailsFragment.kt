@@ -41,18 +41,32 @@ class ShowDetailsFragment : Fragment() {
         initListeners()
         initShowDetails()
         initReviewsRecycler()
+        initReviewsObserving()
+    }
+
+    private fun initReviewsObserving() {
+        viewModel.showLiveData.observe(viewLifecycleOwner){ show ->
+            reviewsAdapter.updateReviews(show.reviews)
+        }
     }
 
     private fun initReviewsRecycler() {
-        viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
-            reviewsAdapter = ReviewsAdapter(show.reviews)
+        reviewsAdapter = ReviewsAdapter(listOf())
 
-            binding.rvReview.adapter = reviewsAdapter
+        binding.rvReview.adapter = reviewsAdapter
 
-            binding.rvReview.addItemDecoration(
-                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-            )
-        }
+        binding.rvReview.addItemDecoration(
+            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        )
+        //        viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
+        //            reviewsAdapter = ReviewsAdapter(show.reviews)
+        //
+        //            binding.rvReview.adapter = reviewsAdapter
+        //
+        //            binding.rvReview.addItemDecoration(
+        //                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        //            )
+        //        }
     }
 
     private fun initListeners() {
@@ -80,7 +94,7 @@ class ShowDetailsFragment : Fragment() {
     }
 
     private fun observeRatingAndStats() {
-        viewModel.averageLiveData.observe(viewLifecycleOwner){ average ->
+        viewModel.averageLiveData.observe(viewLifecycleOwner) { average ->
             binding.rbShow.rating = average
         }
         viewModel.reviewStats.observe(viewLifecycleOwner) { stats ->
