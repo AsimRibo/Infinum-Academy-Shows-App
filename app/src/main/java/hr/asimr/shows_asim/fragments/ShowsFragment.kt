@@ -155,13 +155,6 @@ class ShowsFragment : Fragment() {
             showClicked(show)
         }
         binding.rvShows.adapter = adapter
-        //        viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
-        //            adapter = ShowsAdapter(shows) { show ->
-        //                showClicked(show)
-        //            }
-        //
-        //            binding.rvShows.adapter = adapter
-        //        }
     }
 
     private fun showClicked(show: Show) {
