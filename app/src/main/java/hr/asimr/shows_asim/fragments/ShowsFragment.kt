@@ -87,7 +87,7 @@ class ShowsFragment : Fragment() {
         }
     }
 
-    private fun initUserProfileBottomSheet(): Boolean {
+    private fun initUserProfileBottomSheet() {
         val dialog = BottomSheetDialog(requireContext())
         val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
         dialog.setContentView(bottomSheet.root)
@@ -109,7 +109,6 @@ class ShowsFragment : Fragment() {
             changeUserImage()
         }
         dialog.show()
-        return true
     }
 
     private var uri: Uri? = null

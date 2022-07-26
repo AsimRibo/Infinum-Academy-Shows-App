@@ -30,7 +30,7 @@ class LoginFragment : Fragment() {
         super.onAttach(context)
         loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
         if (loginPreferences.getBoolean(REMEMBER_ME, false)) {
-            goToShows(loginPreferences.getString(USER_EMAIL, "")!!)
+            goToShows(loginPreferences.getString(USER_EMAIL, "").orEmpty())
         }
     }
 
