@@ -58,15 +58,6 @@ class ShowDetailsFragment : Fragment() {
         binding.rvReview.addItemDecoration(
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
-        //        viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
-        //            reviewsAdapter = ReviewsAdapter(show.reviews)
-        //
-        //            binding.rvReview.adapter = reviewsAdapter
-        //
-        //            binding.rvReview.addItemDecoration(
-        //                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-        //            )
-        //        }
     }
 
     private fun initListeners() {
