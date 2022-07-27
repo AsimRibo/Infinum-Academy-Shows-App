@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.core.content.edit
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentRegisterBinding
+import hr.asimr.shows_asim.networking.ApiModule
 import hr.asimr.shows_asim.utils.isEmailValid
 import hr.asimr.shows_asim.viewModels.RegisterViewModel
 
@@ -27,6 +25,9 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegisterBinding.inflate(layoutInflater)
+
+        ApiModule.initRetrofit(requireContext())
+
         return binding.root
     }
 
@@ -67,6 +68,7 @@ class RegisterFragment : Fragment() {
     private fun initEditTextListeners() {
         binding.etEmail.addTextChangedListener { handleLoginButton() }
         binding.etPassword.addTextChangedListener { handleLoginButton() }
+        binding.etPasswordRepeat.addTextChangedListener { handleLoginButton() }
     }
 
     private fun handleLoginButton() {
