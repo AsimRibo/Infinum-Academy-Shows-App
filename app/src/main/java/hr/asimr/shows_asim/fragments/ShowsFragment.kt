@@ -46,7 +46,7 @@ class ShowsFragment : Fragment() {
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
-            loadImage(view?.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
+            loadImage(binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
         } else {
             Log.e("Image", "Image not taken")
         }
@@ -65,7 +65,7 @@ class ShowsFragment : Fragment() {
 
         initShowsRecycler()
         initListeners()
-        loadImage(view.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
+        loadImage(binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
         initShowsObserving()
     }
 
@@ -88,7 +88,7 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initToolbarMenuItemListeners() {
-        (view?.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).setOnClickListener {
+        (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).setOnClickListener {
             initUserProfileBottomSheet()
         }
     }
