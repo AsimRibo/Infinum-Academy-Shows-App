@@ -1,5 +1,6 @@
 package hr.asimr.shows_asim.networking
 
+import hr.asimr.shows_asim.models.api.request.RegisterRequest
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
