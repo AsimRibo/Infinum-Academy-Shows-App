@@ -21,6 +21,8 @@
                 app:argType="string"/>
         </action>
         <action android:id="@+id/action_loginFragment_to_registerFragment"
+            app:enterAnim="@anim/slide_up"
+            app:popEnterAnim="@anim/slide_up"
             app:destination="@id/registerFragment"/>
     </fragment>
 
