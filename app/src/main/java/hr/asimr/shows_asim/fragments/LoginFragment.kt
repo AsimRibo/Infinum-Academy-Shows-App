@@ -10,10 +10,14 @@ import android.widget.Button
 import androidx.core.content.edit
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentLoginBinding
 import hr.asimr.shows_asim.utils.isEmailValid
+import hr.asimr.shows_asim.viewModels.LoginViewModel
+import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
+import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
 
 const val MIN_PASSWORD_LENGTH = 6
 const val EMAIL_ERROR = "Please provide a valid email address"
@@ -26,6 +30,8 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var loginPreferences: SharedPreferences
+
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
