@@ -6,14 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentRegisterBinding
 import hr.asimr.shows_asim.utils.isEmailValid
+import hr.asimr.shows_asim.viewModels.RegisterViewModel
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
+
+    private val viewModel: RegisterViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,6 +34,18 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initListeners()
+        initObserving()
+    }
+
+    private fun initObserving() {
+        viewModel.getRegistrationResultLiveData().observe(viewLifecycleOwner){ isSuccess ->
+            if (isSuccess){
+                findNavController().popBackStack()
+            }
+            else{
+                Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT)
+            }
+        }
     }
 
     private fun initListeners() {
@@ -37,7 +57,7 @@ class RegisterFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             if (binding.etEmail.text.toString().isEmailValid()
                 && binding.etPassword.text.toString() == binding.etPasswordRepeat.text.toString()) {
-                //go to login
+                viewModel.registerUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), binding.etPasswordRepeat.text.toString())
             } else {
                 showEmailMessage(EMAIL_ERROR)
             }
