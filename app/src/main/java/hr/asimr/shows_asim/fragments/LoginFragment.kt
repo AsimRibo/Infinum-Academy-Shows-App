@@ -11,6 +11,7 @@ import androidx.core.content.edit
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentLoginBinding
 import hr.asimr.shows_asim.utils.isEmailValid
 
@@ -59,6 +60,18 @@ class LoginFragment : Fragment() {
     }
 
     private fun initButtonListeners() {
+        initButtonLogin()
+        initButtonRegister()
+    }
+
+    private fun initButtonRegister() {
+        binding.btnRegister.setOnClickListener{
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            resetValues()
+        }
+    }
+
+    private fun initButtonLogin() {
         binding.btnLogin.setOnClickListener {
             if (binding.etEmail.text.toString().isEmailValid()) {
                 loginPreferences.edit {
