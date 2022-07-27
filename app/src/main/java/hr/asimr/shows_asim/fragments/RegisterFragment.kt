@@ -10,13 +10,15 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import hr.asimr.shows_asim.databinding.FragmentLoginBinding
 import hr.asimr.shows_asim.databinding.FragmentRegisterBinding
 import hr.asimr.shows_asim.networking.ApiModule
 import hr.asimr.shows_asim.utils.isEmailValid
 import hr.asimr.shows_asim.viewModels.RegisterViewModel
 
 class RegisterFragment : Fragment() {
-    private lateinit var binding: FragmentRegisterBinding
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: RegisterViewModel by viewModels()
 
@@ -24,7 +26,7 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRegisterBinding.inflate(layoutInflater)
+        _binding = FragmentRegisterBinding.inflate(layoutInflater)
 
         ApiModule.initRetrofit(requireContext())
 
@@ -39,11 +41,10 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initObserving() {
-        viewModel.getRegistrationResultLiveData().observe(viewLifecycleOwner){ isSuccess ->
-            if (isSuccess){
+        viewModel.getRegistrationResultLiveData().observe(viewLifecycleOwner) { isSuccess ->
+            if (isSuccess) {
                 findNavController().popBackStack()
-            }
-            else{
+            } else {
                 Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT)
             }
         }
@@ -57,8 +58,13 @@ class RegisterFragment : Fragment() {
     private fun initButtonListeners() {
         binding.btnRegister.setOnClickListener {
             if (binding.etEmail.text.toString().isEmailValid()
-                && binding.etPassword.text.toString() == binding.etPasswordRepeat.text.toString()) {
-                viewModel.registerUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), binding.etPasswordRepeat.text.toString())
+                && binding.etPassword.text.toString() == binding.etPasswordRepeat.text.toString()
+            ) {
+                viewModel.registerUser(
+                    binding.etEmail.text.toString(),
+                    binding.etPassword.text.toString(),
+                    binding.etPasswordRepeat.text.toString()
+                )
             } else {
                 showEmailMessage(EMAIL_ERROR)
             }
@@ -89,5 +95,10 @@ class RegisterFragment : Fragment() {
 
     private fun handleButtonOpacity(enabled: Boolean, button: Button) {
         button.alpha = if (enabled) 1f else 0.5f
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
