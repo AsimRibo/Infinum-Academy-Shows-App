@@ -10,4 +10,18 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8%</item>
     </style>
+
+    <style name="RoundImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="OutlinedWhiteButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="textAllCaps">false</item>
+        <item name="cornerRadius">@dimen/spacing_24</item>
+        <item name="android:padding">@dimen/spacing_14</item>
+        <item name="strokeWidth">@dimen/spacing_2</item>
+        <item name="strokeColor">@color/purple_background</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

@@ -19,4 +19,7 @@
     <dimen name="spacing_352">352dp</dimen>
     <dimen name="spacing_8">8dp</dimen>
     <dimen name="spacing_192">192dp</dimen>
+    <dimen name="spacing_2">2dp</dimen>
+    <dimen name="spacing_96">96dp</dimen>
+    <dimen name="spacing_14">14dp</dimen>
 </resources>

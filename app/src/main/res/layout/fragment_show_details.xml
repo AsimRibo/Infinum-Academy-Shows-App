@@ -109,7 +109,6 @@
                 android:id="@+id/rvReview"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
-                app:reverseLayout="false"
                 android:layout_width="@dimen/spacing_0"
                 android:layout_height="@dimen/spacing_240"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -133,14 +132,13 @@
                 android:id="@+id/groupNoReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
                 app:constraint_referenced_ids="tvNoReview"/>
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupReviews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:constraint_referenced_ids="tvReviewStats, rbShow, rvReview"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
