@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class ReviewRequest (
     @SerialName("comment") val comment: String,
     @SerialName("rating") val rating: Int,
-    @SerialName("show_id") val showId: Int
+    @SerialName("show_id") val showId: String
 )

@@ -89,11 +89,11 @@ class ShowDetailsFragment : Fragment() {
 
             bottomSheet.btnSubmit.setOnClickListener {
                 if (bottomSheet.rbReview.rating != 0f) {
+                    dialog.dismiss()
                     handleReview(
                         bottomSheet.rbReview.rating.toInt(),
                         bottomSheet.etComment.text.toString()
                     )
-                    dialog.dismiss()
                 }
             }
             dialog.show()
@@ -124,11 +124,7 @@ class ShowDetailsFragment : Fragment() {
     }
 
     private fun handleReview(rating: Int, reviewDetails: String) {
-//        viewModel.addReview(rating, reviewDetails, args.email)
-
-        reviewsAdapter.notifyReviewAdded()
-        updateGroupsVisibility()
-//        viewModel.calculateShowRatings()
+        viewModel.addReview(rating, reviewDetails)
     }
 
     private fun updateGroupsVisibility() {

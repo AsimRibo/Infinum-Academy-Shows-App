@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.models.Review
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.models.api.request.ReviewRequest
+import hr.asimr.shows_asim.models.api.response.ReviewResponse
 import hr.asimr.shows_asim.models.api.response.ShowResponse
 import hr.asimr.shows_asim.models.api.response.ShowReviewsResponse
 import hr.asimr.shows_asim.networking.ApiModule
@@ -64,5 +66,20 @@ class ShowDetailsViewModel(private val id: String) : ViewModel() {
                 }
             })
 
+    }
+
+    fun addReview(rating: Int, comment: String){
+        ApiModule.retrofit.addReview(ReviewRequest(comment, rating, id))
+            .enqueue(object: Callback<ReviewResponse>{
+                override fun onResponse(call: Call<ReviewResponse>, response: Response<ReviewResponse>) {
+                    _success.value = true
+                    getShow()
+                    getShowReviews()
+                }
+
+                override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
+                    _success.value = false
+                }
+            })
     }
 }
