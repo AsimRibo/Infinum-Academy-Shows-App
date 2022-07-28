@@ -55,11 +55,15 @@ class ShowDetailsFragment : Fragment() {
         initShowDetails()
         initReviewsRecycler()
         initReviewsObserving()
+        observeRatingAndStats()
     }
 
     private fun initReviewsObserving() {
         viewModel.showReviewsLiveData.observe(viewLifecycleOwner){ reviews ->
-            reviewsAdapter.updateReviews(reviews)
+            if (reviews.isNotEmpty()) {
+                reviewsAdapter.updateReviews(reviews)
+                updateGroupsVisibility()
+            }
         }
     }
 

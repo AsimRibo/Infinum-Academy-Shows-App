@@ -38,6 +38,11 @@ class ShowDetailsViewModel(private val id: String) : ViewModel() {
                 override fun onResponse(call: Call<ShowResponse>, response: Response<ShowResponse>) {
                     _success.value = true
                     _showLiveData.value = response.body()?.show
+                    _averageLiveData.value = response.body()?.show?.averageRating
+                    val numOfReviews = response.body()?.show?.numOfReviews
+                    if (numOfReviews != null && _averageLiveData.value != null){
+                        _reviewStats.value = "$numOfReviews REVIEWS, ${_averageLiveData.value} AVERAGE"
+                    }
                 }
 
                 override fun onFailure(call: Call<ShowResponse>, t: Throwable) {
@@ -47,18 +52,17 @@ class ShowDetailsViewModel(private val id: String) : ViewModel() {
     }
 
     fun getShowReviews() {
-        if (showLiveData.value?.numOfReviews!! != 0) {
-            ApiModule.retrofit.getShowReviews(id)
-                .enqueue(object : Callback<ShowReviewsResponse> {
-                    override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
-                        _success.value = true
-                        _showReviewsLiveData.value = response.body()?.reviews
-                    }
+        ApiModule.retrofit.getShowReviews(id)
+            .enqueue(object : Callback<ShowReviewsResponse> {
+                override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
+                    _success.value = true
+                    _showReviewsLiveData.value = response.body()?.reviews
+                }
 
-                    override fun onFailure(call: Call<ShowReviewsResponse>, t: Throwable) {
-                        _success.value = false
-                    }
-                })
-        }
+                override fun onFailure(call: Call<ShowReviewsResponse>, t: Throwable) {
+                    _success.value = false
+                }
+            })
+
     }
 }
