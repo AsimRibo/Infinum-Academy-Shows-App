@@ -2,8 +2,10 @@ package hr.asimr.shows_asim.networking
 
 import hr.asimr.shows_asim.models.api.request.LoginRequest
 import hr.asimr.shows_asim.models.api.request.RegisterRequest
+import hr.asimr.shows_asim.models.api.request.ReviewRequest
 import hr.asimr.shows_asim.models.api.response.LoginResponse
 import hr.asimr.shows_asim.models.api.response.RegisterResponse
+import hr.asimr.shows_asim.models.api.response.ReviewResponse
 import hr.asimr.shows_asim.models.api.response.ShowResponse
 import hr.asimr.shows_asim.models.api.response.ShowReviewsResponse
 import hr.asimr.shows_asim.models.api.response.ShowsResponse
@@ -28,4 +30,7 @@ interface ShowsApiService {
 
     @GET("/shows/{showId}/reviews")
     fun getShowReviews(@Path("showId") showId: String) : Call<ShowReviewsResponse>
+
+    @POST("/reviews")
+    fun addReview(@Body request : ReviewRequest) : Call<ReviewResponse>
 }
