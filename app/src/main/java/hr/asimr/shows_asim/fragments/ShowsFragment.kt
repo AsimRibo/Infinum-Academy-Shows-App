@@ -154,6 +154,9 @@ class ShowsFragment : Fragment() {
         loginPreferences.edit {
             putBoolean(REMEMBER_ME, false)
             remove(USER_EMAIL)
+            remove(ACCESS_TOKEN)
+            remove(UID)
+            remove(CLIENT)
         }
         findNavController().navigate(R.id.action_showsFragment_loginFragment)
     }
