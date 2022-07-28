@@ -5,6 +5,7 @@ import hr.asimr.shows_asim.models.api.request.RegisterRequest
 import hr.asimr.shows_asim.models.api.response.LoginResponse
 import hr.asimr.shows_asim.models.api.response.RegisterResponse
 import hr.asimr.shows_asim.models.api.response.ShowResponse
+import hr.asimr.shows_asim.models.api.response.ShowReviewsResponse
 import hr.asimr.shows_asim.models.api.response.ShowsResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -24,4 +25,7 @@ interface ShowsApiService {
 
     @GET("/shows/{showId}")
     fun getShow(@Path("showId") showId: String) : Call<ShowResponse>
+
+    @GET("/shows/{showId}/reviews")
+    fun getShowReviews(@Path("showId") showId: String) : Call<ShowReviewsResponse>
 }

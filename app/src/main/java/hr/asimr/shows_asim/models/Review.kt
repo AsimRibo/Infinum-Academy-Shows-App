@@ -1,12 +1,13 @@
 package hr.asimr.shows_asim.models
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class Review(
-    val id: String,
-    val rating: Int,
-    val comment: String,
-    val username: String
-) : Parcelable
+    @SerialName("id") val id: String,
+    @SerialName("comment") val comment: String,
+    @SerialName("rating") val rating: Int,
+    @SerialName("show_id") val showId: Int,
+    @SerialName("user") val user: User
+)
