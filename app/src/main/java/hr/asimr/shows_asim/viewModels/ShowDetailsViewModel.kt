@@ -26,7 +26,7 @@ class ShowDetailsViewModel(private val id: String) : ViewModel() {
     val showReviewsLiveData: LiveData<List<Review>> = _showReviewsLiveData
 
     private val _averageLiveData = MutableLiveData<Float>()
-    val averageLiveData = _averageLiveData
+    val averageLiveData: LiveData<Float> = _averageLiveData
 
     private val _reviewStats = MutableLiveData<String>()
     val reviewStats: LiveData<String> = _reviewStats

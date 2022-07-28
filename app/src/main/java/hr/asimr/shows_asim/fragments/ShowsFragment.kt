@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
@@ -77,6 +78,11 @@ class ShowsFragment : Fragment() {
         viewModel.getAllShows()
         loadImage(binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
         initShowsObserving()
+        initSuccessObserving()
+    }
+
+    private fun initSuccessObserving() {
+        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
     }
 
     private fun initShowsObserving() {
