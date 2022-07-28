@@ -36,9 +36,9 @@ class LoginFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-        if (loginPreferences.getBoolean(REMEMBER_ME, false)) {
-            goToShows(loginPreferences.getString(USER_EMAIL, "").orEmpty())
-        }
+//        if (loginPreferences.getBoolean(REMEMBER_ME, false)) {
+//            goToShows(loginPreferences.getString(USER_EMAIL, "").orEmpty())
+//        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
