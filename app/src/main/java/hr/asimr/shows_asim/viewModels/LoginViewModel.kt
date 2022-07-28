@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.models.api.request.LoginRequest
-import hr.asimr.shows_asim.models.api.response.LoginResponse
+import hr.asimr.shows_asim.models.api.response.UserResponse
 import hr.asimr.shows_asim.networking.ApiModule
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,8 +27,8 @@ class LoginViewModel : ViewModel() {
     fun loginUser(email: String, password: String, preferences: SharedPreferences) {
         val loginRequest = LoginRequest(email, password)
         ApiModule.retrofit.login(loginRequest)
-            .enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+            .enqueue(object : Callback<UserResponse> {
+                override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                     loginResultLiveData.value = response.isSuccessful
                     preferences.edit {
                         putString(ACCESS_TOKEN, response.headers()[ACCESS_TOKEN])
@@ -38,7 +38,7 @@ class LoginViewModel : ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                     loginResultLiveData.value = false
                 }
             })
