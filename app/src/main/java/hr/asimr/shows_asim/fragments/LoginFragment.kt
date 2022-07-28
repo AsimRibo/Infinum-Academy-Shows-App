@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.edit
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentLoginBinding
+import hr.asimr.shows_asim.networking.ApiModule
 import hr.asimr.shows_asim.utils.isEmailValid
 import hr.asimr.shows_asim.viewModels.LoginViewModel
 import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
@@ -43,6 +45,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentLoginBinding.inflate(layoutInflater)
+        ApiModule.initRetrofit(requireContext())
         return binding.root
     }
 
@@ -58,6 +61,24 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initListeners()
+        initObserving()
+    }
+
+    private fun initObserving() {
+        viewModel.getRegistrationResultLiveData().observe(viewLifecycleOwner){ isSuccess ->
+            if (isSuccess){
+                loginPreferences.edit {
+                    putBoolean(REMEMBER_ME, binding.chbRememberMe.isChecked)
+                    if (binding.chbRememberMe.isChecked) {
+                        putString(USER_EMAIL, binding.etEmail.text.toString())
+                    }
+                }
+                goToShows(binding.etEmail.text.toString())
+            }
+            else{
+                Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT)
+            }
+        }
     }
 
     private fun initListeners() {
@@ -80,13 +101,7 @@ class LoginFragment : Fragment() {
     private fun initButtonLogin() {
         binding.btnLogin.setOnClickListener {
             if (binding.etEmail.text.toString().isEmailValid()) {
-                loginPreferences.edit {
-                    putBoolean(REMEMBER_ME, binding.chbRememberMe.isChecked)
-                    if (binding.chbRememberMe.isChecked) {
-                        putString(USER_EMAIL, binding.etEmail.text.toString())
-                    }
-                }
-                goToShows(binding.etEmail.text.toString())
+                viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
                 resetValues()
             } else {
                 showEmailMessage(EMAIL_ERROR)
