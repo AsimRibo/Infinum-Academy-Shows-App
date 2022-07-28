@@ -9,9 +9,9 @@ import hr.asimr.shows_asim.utils.loseEmailDomain
 import java.text.DecimalFormat
 import java.util.UUID
 
-class ShowDetailsViewModel(private val show: Show) : ViewModel() {
+class ShowDetailsViewModel(private val id: Int) : ViewModel() {
     private val _showLiveData: MutableLiveData<Show> by lazy {
-        MutableLiveData<Show>(show)
+        MutableLiveData<Show>()
     }
 
     val showLiveData: LiveData<Show> = _showLiveData

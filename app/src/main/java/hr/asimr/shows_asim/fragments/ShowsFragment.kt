@@ -170,7 +170,7 @@ class ShowsFragment : Fragment() {
     private fun showClicked(show: Show) {
         findNavController().navigate(
             ShowsFragmentDirections.actionShowsFragmentToShowDetailsFragment(
-                email
+                show.id
             )
         )
     }

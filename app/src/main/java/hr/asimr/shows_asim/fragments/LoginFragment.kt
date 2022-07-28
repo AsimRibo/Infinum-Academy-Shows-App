@@ -48,6 +48,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun goToShows(email: String) {
+        resetValues()
         findNavController().navigate(
             LoginFragmentDirections.actionLoginFragmentToShowsFragment(
                 email
@@ -99,7 +100,6 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             if (binding.etEmail.text.toString().isEmailValid()) {
                 viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
-                resetValues()
             } else {
                 showEmailMessage(EMAIL_ERROR)
             }
