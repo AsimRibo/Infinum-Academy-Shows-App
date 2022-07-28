@@ -58,10 +58,6 @@
             <argument
                 android:name="email"
                 app:argType="string"/>
-
-            <argument
-                android:name="show"
-                app:argType="hr.asimr.shows_asim.models.Show"/>
         </fragment>
         <action
             android:id="@+id/action_showsFragment_loginFragment"

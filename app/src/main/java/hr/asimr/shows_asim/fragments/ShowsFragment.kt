@@ -2,6 +2,7 @@ package hr.asimr.shows_asim.fragments
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -27,8 +28,12 @@ import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.networking.ApiModule
 import hr.asimr.shows_asim.utils.FileUtils
+import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN
+import hr.asimr.shows_asim.viewModels.CLIENT
 import hr.asimr.shows_asim.viewModels.ShowsViewModel
+import hr.asimr.shows_asim.viewModels.UID
 import java.io.File
 
 class ShowsFragment : Fragment() {
@@ -38,6 +43,7 @@ class ShowsFragment : Fragment() {
     private lateinit var adapter: ShowsAdapter
     private lateinit var email: String
 
+    private lateinit var loginPreferences: SharedPreferences
     private val viewModel by viewModels<ShowsViewModel>()
 
     private val args by navArgs<ShowsFragmentArgs>()
@@ -55,6 +61,9 @@ class ShowsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
         _binding = FragmentShowsBinding.inflate(layoutInflater)
+        loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
+        ApiModule.initRetrofit(requireContext(), loginPreferences.getString(ACCESS_TOKEN, "")!!, loginPreferences.getString(CLIENT, "")!!,
+        loginPreferences.getString(UID, "")!!)
         return binding.root
     }
 
@@ -65,6 +74,7 @@ class ShowsFragment : Fragment() {
 
         initShowsRecycler()
         initListeners()
+        viewModel.getAllShows()
         loadImage(binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
         initShowsObserving()
     }
@@ -160,8 +170,7 @@ class ShowsFragment : Fragment() {
     private fun showClicked(show: Show) {
         findNavController().navigate(
             ShowsFragmentDirections.actionShowsFragmentToShowDetailsFragment(
-                email,
-                show
+                email
             )
         )
     }

@@ -25,9 +25,7 @@ class ShowDetailsFragment : Fragment() {
     private lateinit var reviewsAdapter: ReviewsAdapter
 
     private val args by navArgs<ShowDetailsFragmentArgs>()
-    private val viewModel by viewModels<ShowDetailsViewModel> {
-        ShowDetailsViewModelFactory(args.show)
-    }
+    private val viewModel by viewModels<ShowDetailsViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShowDetailsBinding.inflate(layoutInflater, container, false)
@@ -41,14 +39,14 @@ class ShowDetailsFragment : Fragment() {
         initListeners()
         initShowDetails()
         initReviewsRecycler()
-        initReviewsObserving()
+//        initReviewsObserving()
     }
 
-    private fun initReviewsObserving() {
-        viewModel.showLiveData.observe(viewLifecycleOwner){ show ->
-            reviewsAdapter.updateReviews(show.reviews)
-        }
-    }
+//    private fun initReviewsObserving() {
+//        viewModel.showLiveData.observe(viewLifecycleOwner){ show ->
+//            reviewsAdapter.updateReviews(show.reviews)
+//        }
+//    }
 
     private fun initReviewsRecycler() {
         reviewsAdapter = ReviewsAdapter(listOf())
@@ -95,18 +93,18 @@ class ShowDetailsFragment : Fragment() {
 
     private fun initShowDetails() {
         viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
-            binding.ivShow.setImageResource(show.imageResourceId)
+//            binding.ivShow.setImageResource(show.imageResourceId)
             binding.tvDescription.text = show.description
-            binding.toolbar.title = show.name
+            binding.toolbar.title = show.title
         }
     }
 
     private fun handleReview(rating: Int, reviewDetails: String) {
-        viewModel.addReview(rating, reviewDetails, args.email)
+//        viewModel.addReview(rating, reviewDetails, args.email)
 
         reviewsAdapter.notifyReviewAdded()
         updateGroupsVisibility()
-        viewModel.calculateShowRatings()
+//        viewModel.calculateShowRatings()
     }
 
     private fun updateGroupsVisibility() {

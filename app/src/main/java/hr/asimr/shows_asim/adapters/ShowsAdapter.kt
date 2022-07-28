@@ -40,7 +40,7 @@ class ShowsAdapter(
             binding.tvName.text = show.title
             binding.tvDescription.text = show.description
             binding.cvShow.setOnClickListener { onClickCallback(show) }
-            show.imageUrl?.let { url ->
+            show.imageUrl.let { url ->
                 Glide
                     .with(binding.root)
                     .load(url)

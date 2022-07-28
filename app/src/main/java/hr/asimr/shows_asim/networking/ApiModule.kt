@@ -26,7 +26,11 @@ object ApiModule {
 
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(
+                Json {
+                    ignoreUnknownKeys = true
+                }.asConverterFactory("application/json".toMediaType())
+            )
             .client(okhttp)
             .build()
             .create(ShowsApiService::class.java)
@@ -36,7 +40,7 @@ object ApiModule {
         val okhttp = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor())
             .addInterceptor(ChuckerInterceptor.Builder(context).build())
-            .addInterceptor{ chain ->
+            .addInterceptor { chain ->
                 chain.request()
                     .newBuilder()
                     .addHeader(TOKEN_TYPE, TOKEN_TYPE_VALUE)
@@ -50,7 +54,9 @@ object ApiModule {
 
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(Json {
+                ignoreUnknownKeys = true
+            }.asConverterFactory("application/json".toMediaType()))
             .client(okhttp)
             .build()
             .create(ShowsApiService::class.java)
