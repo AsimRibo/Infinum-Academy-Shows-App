@@ -50,17 +50,18 @@ class ShowDetailsFragment : Fragment() {
 
         initToolbar(binding.toolbar)
         viewModel.getShow()
+        viewModel.getShowReviews()
         initListeners()
         initShowDetails()
         initReviewsRecycler()
-//        initReviewsObserving()
+        initReviewsObserving()
     }
 
-//    private fun initReviewsObserving() {
-//        viewModel.showLiveData.observe(viewLifecycleOwner){ show ->
-//            reviewsAdapter.updateReviews(show.reviews)
-//        }
-//    }
+    private fun initReviewsObserving() {
+        viewModel.showReviewsLiveData.observe(viewLifecycleOwner){ reviews ->
+            reviewsAdapter.updateReviews(reviews)
+        }
+    }
 
     private fun initReviewsRecycler() {
         reviewsAdapter = ReviewsAdapter(listOf())
