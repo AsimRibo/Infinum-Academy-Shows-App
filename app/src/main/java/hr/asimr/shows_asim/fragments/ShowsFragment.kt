@@ -160,15 +160,8 @@ class ShowsFragment : Fragment() {
 
     private fun initListeners() {
         initToolbarMenuItemListeners()
-        initButtonListeners()
     }
 
-    private fun initButtonListeners() {
-        binding.btnToggleShows.setOnClickListener {
-            binding.groupEmptyState.isVisible = !binding.groupEmptyState.isVisible
-            binding.groupFullState.isVisible = !binding.groupFullState.isVisible
-        }
-    }
 
     private fun initShowsRecycler() {
         adapter = ShowsAdapter(listOf()) { show ->

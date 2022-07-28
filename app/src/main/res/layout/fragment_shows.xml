@@ -28,19 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-
-    <Button
-        android:id="@+id/btnToggleShows"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_24"
-        android:background="@drawable/button_background"
-        android:text="@string/toggle_shows"
-        android:textAllCaps="false"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvShows"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvShows"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -52,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnToggleShows"
+        app:layout_constraintTop_toBottomOf="@id/tvShows"
         tools:listitem="@layout/view_show_item"/>
 
     <ImageView
