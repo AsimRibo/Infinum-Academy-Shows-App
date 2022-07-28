@@ -17,7 +17,7 @@ const val CLIENT = "client"
 const val UID = "uid"
 const val USER_IMAGE = "userImage"
 
-class LoginViewModel() : ViewModel() {
+class LoginViewModel : ViewModel() {
     private val loginResultLiveData: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 
     fun getRegistrationResultLiveData(): LiveData<Boolean> {

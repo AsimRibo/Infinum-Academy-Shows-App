@@ -18,8 +18,6 @@ import hr.asimr.shows_asim.databinding.FragmentLoginBinding
 import hr.asimr.shows_asim.networking.ApiModule
 import hr.asimr.shows_asim.utils.isEmailValid
 import hr.asimr.shows_asim.viewModels.LoginViewModel
-import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
-import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
 
 const val MIN_PASSWORD_LENGTH = 6
 const val EMAIL_ERROR = "Please provide a valid email address"
@@ -65,8 +63,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun initObserving() {
-        viewModel.getRegistrationResultLiveData().observe(viewLifecycleOwner){ isSuccess ->
-            if (isSuccess){
+        viewModel.getRegistrationResultLiveData().observe(viewLifecycleOwner) { isSuccess ->
+            if (isSuccess) {
                 loginPreferences.edit {
                     putBoolean(REMEMBER_ME, binding.chbRememberMe.isChecked)
                     if (binding.chbRememberMe.isChecked) {
@@ -74,8 +72,7 @@ class LoginFragment : Fragment() {
                     }
                 }
                 goToShows(binding.etEmail.text.toString())
-            }
-            else{
+            } else {
                 Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
             }
         }
@@ -92,7 +89,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun initButtonRegister() {
-        binding.btnRegister.setOnClickListener{
+        binding.btnRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             resetValues()
         }
