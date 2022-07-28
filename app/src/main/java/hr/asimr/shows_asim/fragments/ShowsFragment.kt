@@ -82,7 +82,11 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initSuccessObserving() {
-        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+        viewModel.success.observe(viewLifecycleOwner){ success ->
+            if (!success){
+                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun initShowsObserving() {
