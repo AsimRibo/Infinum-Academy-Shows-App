@@ -76,7 +76,7 @@ class LoginFragment : Fragment() {
                 goToShows(binding.etEmail.text.toString())
             }
             else{
-                Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
             }
         }
     }

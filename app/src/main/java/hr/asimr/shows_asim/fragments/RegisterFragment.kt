@@ -45,7 +45,7 @@ class RegisterFragment : Fragment() {
             if (isSuccess) {
                 findNavController().popBackStack()
             } else {
-                Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT).show()
             }
         }
     }
