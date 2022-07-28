@@ -1,5 +1,7 @@
 package hr.asimr.shows_asim.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +13,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
+import hr.asimr.shows_asim.networking.ApiModule
+import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN
+import hr.asimr.shows_asim.viewModels.CLIENT
 import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
+import hr.asimr.shows_asim.viewModels.UID
 import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
 
 class ShowDetailsFragment : Fragment() {
@@ -24,11 +31,17 @@ class ShowDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var reviewsAdapter: ReviewsAdapter
 
+    private lateinit var loginPreferences: SharedPreferences
     private val args by navArgs<ShowDetailsFragmentArgs>()
-    private val viewModel by viewModels<ShowDetailsViewModel>()
+    private val viewModel by viewModels<ShowDetailsViewModel>{
+        ShowDetailsViewModelFactory(args.showId)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShowDetailsBinding.inflate(layoutInflater, container, false)
+        loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
+        ApiModule.initRetrofit(requireContext(), loginPreferences.getString(ACCESS_TOKEN, "")!!, loginPreferences.getString(CLIENT, "")!!,
+            loginPreferences.getString(UID, "")!!)
         return binding.root
     }
 
@@ -36,6 +49,7 @@ class ShowDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initToolbar(binding.toolbar)
+        viewModel.getShow()
         initListeners()
         initShowDetails()
         initReviewsRecycler()
@@ -93,9 +107,14 @@ class ShowDetailsFragment : Fragment() {
 
     private fun initShowDetails() {
         viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
-//            binding.ivShow.setImageResource(show.imageResourceId)
             binding.tvDescription.text = show.description
             binding.toolbar.title = show.title
+            Glide
+                .with(requireContext())
+                .load(show.imageUrl)
+                .placeholder(R.drawable.ic_office)
+                .centerCrop()
+                .into(binding.ivShow)
         }
     }
 
