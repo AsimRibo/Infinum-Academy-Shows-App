@@ -1,14 +1,14 @@
 package hr.asimr.shows_asim.models
 
-import android.os.Parcelable
-import androidx.annotation.DrawableRes
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class Show(
-    val id: String,
-    val name: String,
-    val description: String,
-    @DrawableRes val imageResourceId: Int,
-    val reviews: MutableList<Review>
-) : Parcelable
+    @SerialName("id") val id: String,
+    @SerialName("average_rating") val averageRating: Float?,
+    @SerialName("description") val description: String?,
+    @SerialName("image_url") val imageUrl: String,
+    @SerialName("no_of_reviews") val numOfReviews : Int,
+    @SerialName("title") val title: String
+)
