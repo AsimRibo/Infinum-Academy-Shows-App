@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.ViewShowItemBinding
 import hr.asimr.shows_asim.models.Show
 import java.io.File
@@ -40,13 +41,13 @@ class ShowsAdapter(
             binding.tvName.text = show.title
             binding.tvDescription.text = show.description
             binding.cvShow.setOnClickListener { onClickCallback(show) }
-            show.imageUrl.let { url ->
-                Glide
-                    .with(binding.root)
-                    .load(url)
-                    .centerCrop()
-                    .into(binding.ivShow)
-            }
+            Glide
+                .with(binding.root)
+                .load(show.imageUrl)
+                .placeholder(R.drawable.ic_show_placeholder)
+                .centerCrop()
+                .into(binding.ivShow)
+
         }
     }
 }
