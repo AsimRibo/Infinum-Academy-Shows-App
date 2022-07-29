@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.models.api.request.RegisterRequest
 import hr.asimr.shows_asim.models.api.response.RegisterResponse
 import hr.asimr.shows_asim.networking.ApiModule
+import hr.asimr.shows_asim.utils.isEmailValid
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,6 +16,13 @@ class RegisterViewModel: ViewModel() {
 
     fun getRegistrationResultLiveData(): LiveData<Boolean> {
         return registrationResultLiveData
+    }
+
+    private val _emailValid: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    val emailValid: LiveData<Boolean> = _emailValid
+
+    fun validateEmail(email: String){
+        _emailValid.value = email.isEmailValid()
     }
 
     fun registerUser(email: String, password: String, passwordRepeated: String) {

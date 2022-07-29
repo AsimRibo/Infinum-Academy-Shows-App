@@ -10,10 +10,8 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import hr.asimr.shows_asim.databinding.FragmentLoginBinding
+import com.google.android.material.textfield.TextInputLayout
 import hr.asimr.shows_asim.databinding.FragmentRegisterBinding
-import hr.asimr.shows_asim.networking.ApiModule
-import hr.asimr.shows_asim.utils.isEmailValid
 import hr.asimr.shows_asim.viewModels.RegisterViewModel
 
 class RegisterFragment : Fragment() {
@@ -46,6 +44,24 @@ class RegisterFragment : Fragment() {
                 Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.emailValid.observe(viewLifecycleOwner) { valid ->
+            when (valid) {
+                true -> {
+                    if (binding.etPassword.text.toString() == binding.etPasswordRepeat.text.toString()) {
+                        viewModel.registerUser(
+                            binding.etEmail.text.toString(),
+                            binding.etPassword.text.toString(),
+                            binding.etPasswordRepeat.text.toString()
+                        )
+                    } else {
+                        showErrorMessage("Passwords don't match", binding.tilPassword)
+                    }
+                }
+                else -> showErrorMessage(EMAIL_ERROR, binding.tilEmail)
+
+            }
+        }
     }
 
     private fun initListeners() {
@@ -55,17 +71,7 @@ class RegisterFragment : Fragment() {
 
     private fun initButtonListeners() {
         binding.btnRegister.setOnClickListener {
-            if (binding.etEmail.text.toString().isEmailValid()
-                && binding.etPassword.text.toString() == binding.etPasswordRepeat.text.toString()
-            ) {
-                viewModel.registerUser(
-                    binding.etEmail.text.toString(),
-                    binding.etPassword.text.toString(),
-                    binding.etPasswordRepeat.text.toString()
-                )
-            } else {
-                showEmailMessage(EMAIL_ERROR)
-            }
+            viewModel.validateEmail(binding.etEmail.text.toString())
         }
     }
 
@@ -76,7 +82,8 @@ class RegisterFragment : Fragment() {
     }
 
     private fun handleLoginButton() {
-        showEmailMessage("")
+        showErrorMessage("", binding.tilEmail)
+        showErrorMessage("", binding.tilPassword)
 
         val enable = !binding.etEmail.text?.toString().isNullOrEmpty()
             && (binding.etPassword.text?.length ?: 0) >= MIN_PASSWORD_LENGTH
@@ -87,8 +94,8 @@ class RegisterFragment : Fragment() {
         binding.btnRegister.isEnabled = enable
     }
 
-    private fun showEmailMessage(message: String) {
-        binding.tilEmail.error = message
+    private fun showErrorMessage(message: String, til: TextInputLayout) {
+        til.error = message
     }
 
     private fun handleButtonOpacity(enabled: Boolean, button: Button) {
