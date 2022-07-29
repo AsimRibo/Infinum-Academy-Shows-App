@@ -20,7 +20,7 @@ const val USER_IMAGE = "userImage"
 class LoginViewModel : ViewModel() {
     private val loginResultLiveData: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 
-    fun getRegistrationResultLiveData(): LiveData<Boolean> {
+    fun getLoginResultLiveData(): LiveData<Boolean> {
         return loginResultLiveData
     }
 

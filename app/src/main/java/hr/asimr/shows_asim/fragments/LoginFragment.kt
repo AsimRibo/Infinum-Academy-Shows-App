@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun initObserving() {
-        viewModel.getRegistrationResultLiveData().observe(viewLifecycleOwner) { isSuccess ->
+        viewModel.getLoginResultLiveData().observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
                 loginPreferences.edit {
                     putBoolean(REMEMBER_ME, binding.chbRememberMe.isChecked)
