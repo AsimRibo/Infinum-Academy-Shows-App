@@ -26,7 +26,7 @@ interface ShowsApiService {
     @POST("/users/sign_in")
     fun login(@Body request: LoginRequest) : Call<UserResponse>
 
-    @GET("/shows")
+    @GET("/shows2")
     fun getAllShows() : Call<ShowsResponse>
 
     @GET("/shows/{showId}")

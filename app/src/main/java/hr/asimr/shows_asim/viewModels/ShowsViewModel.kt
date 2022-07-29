@@ -35,9 +35,15 @@ class ShowsViewModel : ViewModel() {
         ApiModule.retrofit.getAllShows()
             .enqueue(object : Callback<ShowsResponse> {
                 override fun onResponse(call: Call<ShowsResponse>, response: Response<ShowsResponse>) {
-                    _success.value = true
+                    if(response.isSuccessful){
+                        _success.value = true
+                        _showsLiveData.value = response.body()?.shows
+                    }
+                    else{
+                        _success.value = false
+                    }
                     _loading.postValue(false)
-                    _showsLiveData.value = response.body()?.shows
+
                 }
 
                 override fun onFailure(call: Call<ShowsResponse>, t: Throwable) {
@@ -55,10 +61,16 @@ class ShowsViewModel : ViewModel() {
         )
             .enqueue(object: Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                    _success.value = true
-                    pref.edit {
-                        putString(USER_IMAGE, response.body()?.user?.imageUrl)
+                    if (response.isSuccessful){
+                        _success.value = true
+                        pref.edit {
+                            putString(USER_IMAGE, response.body()?.user?.imageUrl)
+                        }
                     }
+                    else{
+                        _success.value = false
+                    }
+
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {

@@ -81,7 +81,6 @@ class ShowsFragment : Fragment() {
             binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView,
             loginPreferences.getString(USER_IMAGE, "")
         )
-        initShowsObserving()
         initSuccessObserving()
         initLoadingProgress()
     }
@@ -94,7 +93,10 @@ class ShowsFragment : Fragment() {
 
     private fun initSuccessObserving() {
         viewModel.success.observe(viewLifecycleOwner) { success ->
-            if (!success) {
+            if (success) {
+                initShowsObserving()
+            }
+            else{
                 Toast.makeText(requireContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
             }
         }
