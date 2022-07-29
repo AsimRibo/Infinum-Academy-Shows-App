@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.models.api.request.LoginRequest
 import hr.asimr.shows_asim.models.api.response.UserResponse
 import hr.asimr.shows_asim.networking.ApiModule
+import hr.asimr.shows_asim.utils.isEmailValid
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +23,13 @@ class LoginViewModel : ViewModel() {
 
     fun getLoginResultLiveData(): LiveData<Boolean> {
         return loginResultLiveData
+    }
+
+    private val _emailValid: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    val emailValid: LiveData<Boolean> = _emailValid
+
+    fun validateEmail(email: String){
+        _emailValid.value = email.isEmailValid()
     }
 
     fun loginUser(email: String, password: String, preferences: SharedPreferences) {

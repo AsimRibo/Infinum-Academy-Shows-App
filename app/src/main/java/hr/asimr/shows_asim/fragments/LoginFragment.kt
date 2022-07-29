@@ -76,6 +76,13 @@ class LoginFragment : Fragment() {
                 Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.emailValid.observe(viewLifecycleOwner){ valid ->
+            when(valid){
+                true -> viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
+                else -> showEmailMessage(EMAIL_ERROR)
+            }
+        }
     }
 
     private fun initListeners() {
@@ -97,11 +104,12 @@ class LoginFragment : Fragment() {
 
     private fun initButtonLogin() {
         binding.btnLogin.setOnClickListener {
-            if (binding.etEmail.text.toString().isEmailValid()) {
-                viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
-            } else {
-                showEmailMessage(EMAIL_ERROR)
-            }
+            viewModel.validateEmail(binding.etEmail.text.toString())
+//            if (binding.etEmail.text.toString().isEmailValid()) {
+//                viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
+//            } else {
+//                showEmailMessage(EMAIL_ERROR)
+//            }
         }
     }
 
