@@ -18,7 +18,6 @@ import hr.asimr.shows_asim.databinding.FragmentLoginBinding
 import hr.asimr.shows_asim.viewModels.LoginViewModel
 
 const val MIN_PASSWORD_LENGTH = 6
-const val EMAIL_ERROR = "Please provide a valid email address"
 const val LOGIN_PREFERENCES = "LoginPreferences"
 const val REMEMBER_ME = "RememberMe"
 const val USER_EMAIL = "UserEmail"
@@ -71,14 +70,14 @@ class LoginFragment : Fragment() {
                 }
                 goToShows(binding.etEmail.text.toString())
             } else {
-                Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.invalid_credentials, Toast.LENGTH_SHORT).show()
             }
         }
 
         viewModel.emailValid.observe(viewLifecycleOwner){ valid ->
             when(valid){
                 true -> viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
-                else -> showEmailMessage(EMAIL_ERROR)
+                else -> showEmailMessage(R.string.invalid_email.toString())
             }
         }
     }

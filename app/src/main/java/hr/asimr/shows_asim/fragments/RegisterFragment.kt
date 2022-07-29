@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentRegisterBinding
 import hr.asimr.shows_asim.viewModels.RegisterViewModel
 
@@ -41,7 +42,7 @@ class RegisterFragment : Fragment() {
             if (isSuccess) {
                 findNavController().popBackStack()
             } else {
-                Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.registration_fail, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -55,10 +56,10 @@ class RegisterFragment : Fragment() {
                             binding.etPasswordRepeat.text.toString()
                         )
                     } else {
-                        showErrorMessage("Passwords don't match", binding.tilPassword)
+                        showErrorMessage(R.string.password_mismatch.toString(), binding.tilPassword)
                     }
                 }
-                else -> showErrorMessage(EMAIL_ERROR, binding.tilEmail)
+                else -> showErrorMessage(R.string.invalid_email.toString(), binding.tilEmail)
 
             }
         }
