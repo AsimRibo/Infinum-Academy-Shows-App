@@ -77,7 +77,7 @@ class LoginFragment : Fragment() {
         viewModel.emailValid.observe(viewLifecycleOwner){ valid ->
             when(valid){
                 true -> viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
-                else -> showEmailMessage(getString(R.string.password_mismatch))
+                else -> showEmailMessage(getString(R.string.invalid_email))
             }
         }
     }
