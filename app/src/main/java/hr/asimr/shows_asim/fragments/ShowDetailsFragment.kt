@@ -127,7 +127,7 @@ class ShowDetailsFragment : Fragment() {
             Glide
                 .with(requireContext())
                 .load(show.imageUrl)
-                .placeholder(R.drawable.ic_office)
+                .placeholder(R.drawable.ic_show_placeholder)
                 .centerCrop()
                 .into(binding.ivShow)
         }
