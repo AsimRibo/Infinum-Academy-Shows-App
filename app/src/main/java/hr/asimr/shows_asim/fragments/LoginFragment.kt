@@ -105,11 +105,6 @@ class LoginFragment : Fragment() {
     private fun initButtonLogin() {
         binding.btnLogin.setOnClickListener {
             viewModel.validateEmail(binding.etEmail.text.toString())
-//            if (binding.etEmail.text.toString().isEmailValid()) {
-//                viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
-//            } else {
-//                showEmailMessage(EMAIL_ERROR)
-//            }
         }
     }
 
