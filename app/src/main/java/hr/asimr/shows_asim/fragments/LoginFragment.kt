@@ -36,9 +36,10 @@ class LoginFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-//        if (loginPreferences.getBoolean(REMEMBER_ME, false)) {
-//            goToShows(loginPreferences.getString(USER_EMAIL, "").orEmpty())
-//        }
+        if (loginPreferences.getBoolean(REMEMBER_ME, false)) {
+            val email = loginPreferences.getString(USER_EMAIL, "").orEmpty()
+            if(email.isNotEmpty()) goToShows(email)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,7 +49,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun goToShows(email: String) {
-        resetValues()
         findNavController().navigate(
             LoginFragmentDirections.actionLoginFragmentToShowsFragment(
                 email
