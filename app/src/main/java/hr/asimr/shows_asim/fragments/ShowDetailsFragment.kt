@@ -41,8 +41,7 @@ class ShowDetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShowDetailsBinding.inflate(layoutInflater, container, false)
         loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-        ApiModule.initRetrofit(requireContext(), loginPreferences.getString(ACCESS_TOKEN, "")!!, loginPreferences.getString(CLIENT, "")!!,
-            loginPreferences.getString(UID, "")!!)
+        initApiModule()
         return binding.root
     }
 
@@ -58,6 +57,19 @@ class ShowDetailsFragment : Fragment() {
         initReviewsObserving()
         observeRatingAndStats()
         observeSuccess()
+    }
+
+    private fun initApiModule() {
+        val accessToken = loginPreferences.getString(ACCESS_TOKEN, "").orEmpty()
+        val client = loginPreferences.getString(CLIENT, "").orEmpty()
+        val uid = loginPreferences.getString(UID, "").orEmpty()
+
+        if(accessToken.isEmpty() || client.isEmpty() || uid.isEmpty()){
+            findNavController().navigate(R.id.action_showsFragment_loginFragment)
+        }
+        else{
+            ApiModule.initRetrofit(requireContext(), accessToken, client, uid)
+        }
     }
 
     private fun observeSuccess() {
