@@ -56,7 +56,7 @@ class ShowsFragment : Fragment() {
             viewModel.updateUserImage(FileUtils.getImageFile(requireContext()).toString(), loginPreferences)
             loadImage(
                 binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView,
-                loginPreferences.getString(USER_IMAGE, "")
+                FileUtils.getImageFile(requireContext()).toString()
             )
         } else {
             Log.e("Image", "Image not taken")
@@ -98,7 +98,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     initSuccessObserving()
 }
 
-private fun initSuccessObserving() {
+    private fun initSuccessObserving() {
     viewModel.success.observe(viewLifecycleOwner) { success ->
         if (!success) {
             Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
