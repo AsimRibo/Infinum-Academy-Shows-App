@@ -15,8 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentLoginBinding
-import hr.asimr.shows_asim.networking.ApiModule
-import hr.asimr.shows_asim.utils.isEmailValid
 import hr.asimr.shows_asim.viewModels.LoginViewModel
 
 const val MIN_PASSWORD_LENGTH = 6
