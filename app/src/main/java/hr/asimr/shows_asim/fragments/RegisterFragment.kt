@@ -28,8 +28,6 @@ class RegisterFragment : Fragment() {
     ): View? {
         _binding = FragmentRegisterBinding.inflate(layoutInflater)
 
-        ApiModule.initRetrofit(requireContext())
-
         return binding.root
     }
 

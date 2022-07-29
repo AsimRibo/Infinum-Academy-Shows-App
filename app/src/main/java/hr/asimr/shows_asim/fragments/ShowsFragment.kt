@@ -67,23 +67,8 @@ class ShowsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         _binding = FragmentShowsBinding.inflate(layoutInflater)
         loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-        initApiModule()
         return binding.root
     }
-
-    private fun initApiModule() {
-        val accessToken = loginPreferences.getString(ACCESS_TOKEN, "").orEmpty()
-        val client = loginPreferences.getString(CLIENT, "").orEmpty()
-        val uid = loginPreferences.getString(UID, "").orEmpty()
-
-        if(accessToken.isEmpty() || client.isEmpty() || uid.isEmpty()){
-            findNavController().navigate(R.id.action_showsFragment_loginFragment)
-        }
-        else{
-            ApiModule.initRetrofit(requireContext(), accessToken, client, uid)
-        }
-    }
-
 
 override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)

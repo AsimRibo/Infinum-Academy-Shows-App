@@ -20,11 +20,7 @@ import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
-import hr.asimr.shows_asim.networking.ApiModule
-import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN
-import hr.asimr.shows_asim.viewModels.CLIENT
 import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
-import hr.asimr.shows_asim.viewModels.UID
 import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
 
 class ShowDetailsFragment : Fragment() {
@@ -41,7 +37,6 @@ class ShowDetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShowDetailsBinding.inflate(layoutInflater, container, false)
         loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-        initApiModule()
         return binding.root
     }
 
@@ -57,19 +52,6 @@ class ShowDetailsFragment : Fragment() {
         initReviewsObserving()
         observeRatingAndStats()
         observeSuccess()
-    }
-
-    private fun initApiModule() {
-        val accessToken = loginPreferences.getString(ACCESS_TOKEN, "").orEmpty()
-        val client = loginPreferences.getString(CLIENT, "").orEmpty()
-        val uid = loginPreferences.getString(UID, "").orEmpty()
-
-        if(accessToken.isEmpty() || client.isEmpty() || uid.isEmpty()){
-            findNavController().navigate(R.id.action_showsFragment_loginFragment)
-        }
-        else{
-            ApiModule.initRetrofit(requireContext(), accessToken, client, uid)
-        }
     }
 
     private fun observeSuccess() {
