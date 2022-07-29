@@ -56,10 +56,10 @@ class RegisterFragment : Fragment() {
                             binding.etPasswordRepeat.text.toString()
                         )
                     } else {
-                        showErrorMessage(R.string.password_mismatch.toString(), binding.tilPassword)
+                        showErrorMessage(getString(R.string.password_mismatch), binding.tilPassword)
                     }
                 }
-                else -> showErrorMessage(R.string.invalid_email.toString(), binding.tilEmail)
+                else -> showErrorMessage(getString(R.string.invalid_email), binding.tilEmail)
 
             }
         }
