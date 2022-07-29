@@ -34,6 +34,7 @@ import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN
 import hr.asimr.shows_asim.viewModels.CLIENT
 import hr.asimr.shows_asim.viewModels.ShowsViewModel
 import hr.asimr.shows_asim.viewModels.UID
+import hr.asimr.shows_asim.viewModels.USER_IMAGE
 import java.io.File
 
 class ShowsFragment : Fragment() {
@@ -52,9 +53,10 @@ class ShowsFragment : Fragment() {
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
+            viewModel.updateUserImage(FileUtils.getImageFile(requireContext()).toString(), loginPreferences)
             loadImage(
                 binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView,
-                FileUtils.getImageFile(requireContext())
+                loginPreferences.getString(USER_IMAGE, "")
             )
         } else {
             Log.e("Image", "Image not taken")
@@ -91,7 +93,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     initShowsRecycler()
     initListeners()
     viewModel.getAllShows()
-    loadImage(binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, FileUtils.getImageFile(requireContext()))
+    loadImage(binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, loginPreferences.getString(USER_IMAGE, ""))
     initShowsObserving()
     initSuccessObserving()
 }
@@ -110,16 +112,16 @@ private fun initShowsObserving() {
     }
 }
 
-private fun loadImage(view: ImageView, file: File?) {
-    file?.let { image ->
+private fun loadImage(view: ImageView, url: String?) {
         Glide
             .with(requireContext())
-            .load(image)
+            .load(url)
+            .placeholder(R.drawable.ic_profile_placeholder)
             .skipMemoryCache(true)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .centerCrop()
             .into(view)
-    }
+
 }
 
 private fun initToolbarMenuItemListeners() {
@@ -133,7 +135,7 @@ private fun initUserProfileBottomSheet() {
     val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
     dialog.setContentView(bottomSheet.root)
 
-    loadImage(bottomSheet.ivUserProfile, FileUtils.getImageFile(requireContext()))
+    loadImage(bottomSheet.ivUserProfile, loginPreferences.getString(USER_IMAGE, ""))
     bottomSheet.tvEmail.text = email
     bottomSheet.btnLogout.setOnClickListener {
         dialog.dismiss()

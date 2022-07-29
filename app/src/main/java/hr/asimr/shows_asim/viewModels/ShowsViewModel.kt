@@ -1,13 +1,17 @@
 package hr.asimr.shows_asim.viewModels
 
+import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.models.api.response.ShowsResponse
+import hr.asimr.shows_asim.models.api.response.UserResponse
 import hr.asimr.shows_asim.networking.ApiModule
 import java.io.File
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -39,7 +43,23 @@ class ShowsViewModel : ViewModel() {
             })
     }
 
-//    fun updateUserImage(path: String) {
-//
-//    }
+    fun updateUserImage(path: String, pref: SharedPreferences) {
+        val file = File(path)
+        val requestData = file.asRequestBody("multipart/form-data".toMediaType())
+        ApiModule.retrofit.updateUserImage(
+            MultipartBody.Part.createFormData("image", file.name, requestData)
+        )
+            .enqueue(object: Callback<UserResponse> {
+                override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                    _success.value = true
+                    pref.edit {
+                        putString(USER_IMAGE, response.body()?.user?.imageUrl)
+                    }
+                }
+
+                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                    _success.value = false
+                }
+            })
+    }
 }
