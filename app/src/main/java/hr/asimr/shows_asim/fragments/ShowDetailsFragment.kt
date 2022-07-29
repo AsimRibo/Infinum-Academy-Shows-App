@@ -52,6 +52,17 @@ class ShowDetailsFragment : Fragment() {
         initReviewsObserving()
         observeRatingAndStats()
         observeSuccess()
+        initLoadingProgress()
+    }
+
+    private fun initLoadingProgress() {
+        viewModel.loadingShow.observe(viewLifecycleOwner) { loading ->
+            binding.progressIndicatorShow.isVisible = loading
+        }
+
+        viewModel.loadingReviews.observe(viewLifecycleOwner) { loading ->
+            binding.progressIndicatorReviews.isVisible = loading
+        }
     }
 
     private fun observeSuccess() {

@@ -34,11 +34,19 @@ class ShowDetailsViewModel(private val id: String) : ViewModel() {
     private val _success: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     val success: LiveData<Boolean> = _success
 
+    private val _loadingShow: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    val loadingShow: LiveData<Boolean> = _loadingShow
+
+    private val _loadingReviews: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    val loadingReviews: LiveData<Boolean> = _loadingReviews
+
     fun getShow() {
+        _loadingShow.postValue(true)
         ApiModule.retrofit.getShow(id)
             .enqueue(object : Callback<ShowResponse> {
                 override fun onResponse(call: Call<ShowResponse>, response: Response<ShowResponse>) {
                     _success.value = true
+                    _loadingShow.postValue(false)
                     _showLiveData.value = response.body()?.show
                     _averageLiveData.value = response.body()?.show?.averageRating
                     val numOfReviews = response.body()?.show?.numOfReviews
@@ -48,20 +56,24 @@ class ShowDetailsViewModel(private val id: String) : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<ShowResponse>, t: Throwable) {
+                    _loadingShow.postValue(false)
                     _success.value = false
                 }
             })
     }
 
     fun getShowReviews() {
+        _loadingReviews.postValue(true)
         ApiModule.retrofit.getShowReviews(id)
             .enqueue(object : Callback<ShowReviewsResponse> {
                 override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
+                    _loadingReviews.postValue(false)
                     _success.value = true
                     _showReviewsLiveData.value = response.body()?.reviews
                 }
 
                 override fun onFailure(call: Call<ShowReviewsResponse>, t: Throwable) {
+                    _loadingReviews.postValue(false)
                     _success.value = false
                 }
             })

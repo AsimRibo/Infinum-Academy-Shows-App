@@ -10,10 +10,8 @@ import hr.asimr.shows_asim.models.api.response.ShowsResponse
 import hr.asimr.shows_asim.models.api.response.UserResponse
 import hr.asimr.shows_asim.networking.ApiModule
 import java.io.File
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,16 +27,22 @@ class ShowsViewModel : ViewModel() {
     private val _success: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     val success: LiveData<Boolean> = _success
 
+    private val _loading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    val loading: LiveData<Boolean> = _loading
+
     fun getAllShows() {
+        _loading.postValue(true)
         ApiModule.retrofit.getAllShows()
             .enqueue(object : Callback<ShowsResponse> {
                 override fun onResponse(call: Call<ShowsResponse>, response: Response<ShowsResponse>) {
                     _success.value = true
+                    _loading.postValue(false)
                     _showsLiveData.value = response.body()?.shows
                 }
 
                 override fun onFailure(call: Call<ShowsResponse>, t: Throwable) {
                     _success.value = false
+                    _loading.postValue(false)
                 }
             })
     }

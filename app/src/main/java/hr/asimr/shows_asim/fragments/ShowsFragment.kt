@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -28,7 +29,6 @@ import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
-import hr.asimr.shows_asim.networking.ApiModule
 import hr.asimr.shows_asim.utils.FileUtils
 import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN
 import hr.asimr.shows_asim.viewModels.CLIENT
@@ -70,34 +70,43 @@ class ShowsFragment : Fragment() {
         return binding.root
     }
 
-override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        email = args.email
 
-    email = args.email
+        initShowsRecycler()
+        initListeners()
+        viewModel.getAllShows()
+        loadImage(
+            binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView,
+            loginPreferences.getString(USER_IMAGE, "")
+        )
+        initShowsObserving()
+        initSuccessObserving()
+        initLoadingProgress()
+    }
 
-    initShowsRecycler()
-    initListeners()
-    viewModel.getAllShows()
-    loadImage(binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView, loginPreferences.getString(USER_IMAGE, ""))
-    initShowsObserving()
-    initSuccessObserving()
-}
-
-    private fun initSuccessObserving() {
-    viewModel.success.observe(viewLifecycleOwner) { success ->
-        if (!success) {
-            Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+    private fun initLoadingProgress() {
+        viewModel.loading.observe(viewLifecycleOwner) { loading ->
+            binding.progressIndicator.isVisible = loading
         }
     }
-}
 
-private fun initShowsObserving() {
-    viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
-        adapter.updateShows(shows)
+    private fun initSuccessObserving() {
+        viewModel.success.observe(viewLifecycleOwner) { success ->
+            if (!success) {
+                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
-}
 
-private fun loadImage(view: ImageView, url: String?) {
+    private fun initShowsObserving() {
+        viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
+            adapter.updateShows(shows)
+        }
+    }
+
+    private fun loadImage(view: ImageView, url: String?) {
         Glide
             .with(requireContext())
             .load(url)
@@ -107,83 +116,83 @@ private fun loadImage(view: ImageView, url: String?) {
             .centerCrop()
             .into(view)
 
-}
-
-private fun initToolbarMenuItemListeners() {
-    (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).setOnClickListener {
-        initUserProfileBottomSheet()
     }
-}
 
-private fun initUserProfileBottomSheet() {
-    val dialog = BottomSheetDialog(requireContext())
-    val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
-    dialog.setContentView(bottomSheet.root)
-
-    loadImage(bottomSheet.ivUserProfile, loginPreferences.getString(USER_IMAGE, ""))
-    bottomSheet.tvEmail.text = email
-    bottomSheet.btnLogout.setOnClickListener {
-        dialog.dismiss()
-        AlertDialog.Builder(requireContext()).apply {
-            setTitle(R.string.logout)
-            setMessage(R.string.logout_confirm_message)
-            setNegativeButton(R.string.cancel, null)
-            setPositiveButton(R.string.logout) { _, _ -> logout() }
-            show()
+    private fun initToolbarMenuItemListeners() {
+        (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).setOnClickListener {
+            initUserProfileBottomSheet()
         }
     }
-    bottomSheet.btnChangeProfilePhoto.setOnClickListener {
-        dialog.dismiss()
-        changeUserImage()
-    }
-    dialog.show()
-}
 
-private fun changeUserImage() {
-    val photoFile: File? = FileUtils.createImageFile(requireContext())
-    photoFile?.also {
-        val photoURI: Uri = FileProvider.getUriForFile(
-            requireContext(),
-            BuildConfig.APPLICATION_ID + ".fileProvider",
-            it
+    private fun initUserProfileBottomSheet() {
+        val dialog = BottomSheetDialog(requireContext())
+        val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
+        dialog.setContentView(bottomSheet.root)
+
+        loadImage(bottomSheet.ivUserProfile, loginPreferences.getString(USER_IMAGE, ""))
+        bottomSheet.tvEmail.text = email
+        bottomSheet.btnLogout.setOnClickListener {
+            dialog.dismiss()
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle(R.string.logout)
+                setMessage(R.string.logout_confirm_message)
+                setNegativeButton(R.string.cancel, null)
+                setPositiveButton(R.string.logout) { _, _ -> logout() }
+                show()
+            }
+        }
+        bottomSheet.btnChangeProfilePhoto.setOnClickListener {
+            dialog.dismiss()
+            changeUserImage()
+        }
+        dialog.show()
+    }
+
+    private fun changeUserImage() {
+        val photoFile: File? = FileUtils.createImageFile(requireContext())
+        photoFile?.also {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                requireContext(),
+                BuildConfig.APPLICATION_ID + ".fileProvider",
+                it
+            )
+            takePictureLauncher.launch(photoURI)
+        }
+    }
+
+    private fun logout() {
+        val loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
+        loginPreferences.edit {
+            putBoolean(REMEMBER_ME, false)
+            remove(USER_EMAIL)
+            remove(ACCESS_TOKEN)
+            remove(UID)
+            remove(CLIENT)
+        }
+        findNavController().navigate(R.id.action_showsFragment_loginFragment)
+    }
+
+    private fun initListeners() {
+        initToolbarMenuItemListeners()
+    }
+
+    private fun initShowsRecycler() {
+        adapter = ShowsAdapter(listOf()) { show ->
+            showClicked(show)
+        }
+        binding.rvShows.adapter = adapter
+    }
+
+    private fun showClicked(show: Show) {
+        findNavController().navigate(
+            ShowsFragmentDirections.actionShowsFragmentToShowDetailsFragment(
+                show.id
+            )
         )
-        takePictureLauncher.launch(photoURI)
     }
-}
 
-private fun logout() {
-    val loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-    loginPreferences.edit {
-        putBoolean(REMEMBER_ME, false)
-        remove(USER_EMAIL)
-        remove(ACCESS_TOKEN)
-        remove(UID)
-        remove(CLIENT)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
-    findNavController().navigate(R.id.action_showsFragment_loginFragment)
-}
-
-private fun initListeners() {
-    initToolbarMenuItemListeners()
-}
-
-private fun initShowsRecycler() {
-    adapter = ShowsAdapter(listOf()) { show ->
-        showClicked(show)
-    }
-    binding.rvShows.adapter = adapter
-}
-
-private fun showClicked(show: Show) {
-    findNavController().navigate(
-        ShowsFragmentDirections.actionShowsFragmentToShowDetailsFragment(
-            show.id
-        )
-    )
-}
-
-override fun onDestroyView() {
-    super.onDestroyView()
-    _binding = null
-}
 }
