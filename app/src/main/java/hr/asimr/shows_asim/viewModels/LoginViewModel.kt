@@ -7,16 +7,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.models.api.request.LoginRequest
 import hr.asimr.shows_asim.models.api.response.UserResponse
+import hr.asimr.shows_asim.networking.ACCESS_TOKEN
 import hr.asimr.shows_asim.networking.ApiModule
+import hr.asimr.shows_asim.networking.CLIENT
+import hr.asimr.shows_asim.networking.UID
 import hr.asimr.shows_asim.utils.isEmailValid
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-const val ACCESS_TOKEN = "access-token"
-const val CLIENT = "client"
-const val UID = "uid"
+
 const val USER_IMAGE = "userImage"
+const val ACCESS_TOKEN_VALUE = "access_token_value"
+const val CLIENT_VALUE = "client_value"
+const val UID_VALUE = "uid_value"
 
 class LoginViewModel : ViewModel() {
     private val loginResultLiveData: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
@@ -44,9 +48,9 @@ class LoginViewModel : ViewModel() {
                     _loading.postValue(false)
                     loginResultLiveData.value = response.isSuccessful
                     preferences.edit {
-                        putString(ACCESS_TOKEN, response.headers()[ACCESS_TOKEN])
-                        putString(CLIENT, response.headers()[CLIENT])
-                        putString(UID, response.headers()[UID])
+                        putString(ACCESS_TOKEN_VALUE, response.headers()[ACCESS_TOKEN])
+                        putString(CLIENT_VALUE, response.headers()[CLIENT])
+                        putString(UID_VALUE, response.headers()[UID])
                         putString(USER_IMAGE, response.body()?.user?.imageUrl)
                     }
                 }
