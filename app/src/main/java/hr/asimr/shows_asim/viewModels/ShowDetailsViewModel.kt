@@ -41,12 +41,12 @@ class ShowDetailsViewModel(private val id: String) : ViewModel() {
     val loadingReviews: LiveData<Boolean> = _loadingReviews
 
     fun getShow() {
-        _loadingShow.postValue(true)
+        _loadingShow.value = true
         ApiModule.retrofit.getShow(id)
             .enqueue(object : Callback<ShowResponse> {
                 override fun onResponse(call: Call<ShowResponse>, response: Response<ShowResponse>) {
                     _success.value = true
-                    _loadingShow.postValue(false)
+                    _loadingShow.value = false
                     _showLiveData.value = response.body()?.show
                     _averageLiveData.value = response.body()?.show?.averageRating
                     val numOfReviews = response.body()?.show?.numOfReviews
@@ -56,24 +56,24 @@ class ShowDetailsViewModel(private val id: String) : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<ShowResponse>, t: Throwable) {
-                    _loadingShow.postValue(false)
+                    _loadingShow.value = false
                     _success.value = false
                 }
             })
     }
 
     fun getShowReviews() {
-        _loadingReviews.postValue(true)
+        _loadingReviews.value = true
         ApiModule.retrofit.getShowReviews(id)
             .enqueue(object : Callback<ShowReviewsResponse> {
                 override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
-                    _loadingReviews.postValue(false)
+                    _loadingReviews.value = false
                     _success.value = true
                     _showReviewsLiveData.value = response.body()?.reviews
                 }
 
                 override fun onFailure(call: Call<ShowReviewsResponse>, t: Throwable) {
-                    _loadingReviews.postValue(false)
+                    _loadingReviews.value = false
                     _success.value = false
                 }
             })

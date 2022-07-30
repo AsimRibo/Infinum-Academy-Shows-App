@@ -31,7 +31,7 @@ class ShowsViewModel : ViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun getAllShows() {
-        _loading.postValue(true)
+        _loading.value = true
         ApiModule.retrofit.getAllShows()
             .enqueue(object : Callback<ShowsResponse> {
                 override fun onResponse(call: Call<ShowsResponse>, response: Response<ShowsResponse>) {
@@ -42,13 +42,13 @@ class ShowsViewModel : ViewModel() {
                     else{
                         _success.value = false
                     }
-                    _loading.postValue(false)
+                    _loading.value = false
 
                 }
 
                 override fun onFailure(call: Call<ShowsResponse>, t: Throwable) {
                     _success.value = false
-                    _loading.postValue(false)
+                    _loading.value = false
                 }
             })
     }

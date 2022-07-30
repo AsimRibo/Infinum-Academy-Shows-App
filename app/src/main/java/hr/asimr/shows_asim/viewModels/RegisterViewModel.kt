@@ -29,7 +29,7 @@ class RegisterViewModel: ViewModel() {
     }
 
     fun registerUser(email: String, password: String, passwordRepeated: String) {
-        _loading.postValue(true)
+        _loading.value = true
         val registerRequest = RegisterRequest(
             email = email,
             password = password,
@@ -38,12 +38,12 @@ class RegisterViewModel: ViewModel() {
         ApiModule.retrofit.register(registerRequest)
             .enqueue(object: Callback<RegisterResponse> {
                 override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-                    _loading.postValue(false)
+                    _loading.value = false
                     registrationResultLiveData.value = response.isSuccessful
                 }
 
                 override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                    _loading.postValue(false)
+                    _loading.value = false
                     registrationResultLiveData.value = false
                 }
 
