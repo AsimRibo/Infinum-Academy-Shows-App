@@ -41,7 +41,7 @@ class LoginViewModel : ViewModel() {
         ApiModule.retrofit.login(loginRequest)
             .enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                    _loading.postValue(true)
+                    _loading.postValue(false)
                     loginResultLiveData.value = response.isSuccessful
                     preferences.edit {
                         putString(ACCESS_TOKEN, response.headers()[ACCESS_TOKEN])
@@ -52,7 +52,7 @@ class LoginViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                    _loading.postValue(true)
+                    _loading.postValue(false)
                     loginResultLiveData.value = false
                 }
             })

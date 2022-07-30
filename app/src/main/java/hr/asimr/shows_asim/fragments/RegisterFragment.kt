@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -62,6 +63,10 @@ class RegisterFragment : Fragment() {
                 else -> showErrorMessage(getString(R.string.invalid_email), binding.tilEmail)
 
             }
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner) { loading ->
+            binding.progressIndicator.isVisible = loading
         }
     }
 
