@@ -14,12 +14,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
+import hr.asimr.shows_asim.utils.loadImageFrom
 import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
 import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
 
@@ -129,12 +129,7 @@ class ShowDetailsFragment : Fragment() {
         viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
             binding.tvDescription.text = show.description
             binding.toolbar.title = show.title
-            Glide
-                .with(requireContext())
-                .load(show.imageUrl)
-                .placeholder(R.drawable.ic_show_placeholder)
-                .centerCrop()
-                .into(binding.ivShow)
+            binding.ivShow.loadImageFrom(show.imageUrl)
         }
     }
 

@@ -2,14 +2,10 @@ package hr.asimr.shows_asim.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.ViewShowItemBinding
 import hr.asimr.shows_asim.models.Show
-import java.io.File
+import hr.asimr.shows_asim.utils.loadImageFrom
 
 class ShowsAdapter(
     private var shows: List<Show>,
@@ -41,13 +37,7 @@ class ShowsAdapter(
             binding.tvName.text = show.title
             binding.tvDescription.text = show.description
             binding.cvShow.setOnClickListener { onClickCallback(show) }
-            Glide
-                .with(binding.root)
-                .load(show.imageUrl)
-                .placeholder(R.drawable.ic_show_placeholder)
-                .centerCrop()
-                .into(binding.ivShow)
-
+            binding.ivShow.loadImageFrom(show.imageUrl)
         }
     }
 }

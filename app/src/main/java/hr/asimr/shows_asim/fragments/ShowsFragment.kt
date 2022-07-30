@@ -19,8 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.imageview.ShapeableImageView
 import hr.asimr.shows_asim.BuildConfig
@@ -30,6 +28,7 @@ import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.utils.FileUtils
+import hr.asimr.shows_asim.utils.loadImageFrom
 import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN_VALUE
 import hr.asimr.shows_asim.viewModels.CLIENT_VALUE
 import hr.asimr.shows_asim.viewModels.ShowsViewModel
@@ -109,15 +108,7 @@ class ShowsFragment : Fragment() {
     }
 
     private fun loadImage(view: ImageView, url: String?) {
-        Glide
-            .with(requireContext())
-            .load(url)
-            .placeholder(R.drawable.ic_profile_placeholder)
-            .skipMemoryCache(true)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .centerCrop()
-            .into(view)
-
+        view.loadImageFrom(url)
     }
 
     private fun initToolbarMenuItemListeners() {
