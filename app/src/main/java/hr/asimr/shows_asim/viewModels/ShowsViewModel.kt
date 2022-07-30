@@ -62,15 +62,10 @@ class ShowsViewModel : ViewModel() {
             .enqueue(object: Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                     if (response.isSuccessful){
-                        _success.value = true
                         pref.edit {
                             putString(USER_IMAGE, response.body()?.user?.imageUrl)
                         }
                     }
-                    else{
-                        _success.value = false
-                    }
-
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
