@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -53,9 +52,9 @@ class ShowsFragment : Fragment() {
     ) { isSuccess ->
         if (isSuccess) {
             viewModel.updateUserImage(FileUtils.getImageFile(requireContext()).toString(), loginPreferences)
-            loadImage(
-                binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView,
-                FileUtils.getImageFile(requireContext()).toString()
+            (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).loadImageFrom(
+                FileUtils.getImageFile(requireContext()).toString(),
+                R.drawable.ic_profile_placeholder
             )
         } else {
             Log.e("Image", "Image not taken")
@@ -76,9 +75,9 @@ class ShowsFragment : Fragment() {
         initShowsRecycler()
         initListeners()
         viewModel.getAllShows()
-        loadImage(
-            binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView,
-            loginPreferences.getString(USER_IMAGE, "")
+        (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).loadImageFrom(
+            FileUtils.getImageFile(requireContext()).toString(),
+            R.drawable.ic_profile_placeholder
         )
         initSuccessObserving()
         initLoadingProgress()
@@ -94,8 +93,7 @@ class ShowsFragment : Fragment() {
         viewModel.success.observe(viewLifecycleOwner) { success ->
             if (success) {
                 initShowsObserving()
-            }
-            else{
+            } else {
                 Toast.makeText(requireContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
             }
         }
@@ -105,10 +103,6 @@ class ShowsFragment : Fragment() {
         viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
             adapter.updateShows(shows)
         }
-    }
-
-    private fun loadImage(view: ImageView, url: String?) {
-        view.loadImageFrom(url)
     }
 
     private fun initToolbarMenuItemListeners() {
@@ -122,7 +116,7 @@ class ShowsFragment : Fragment() {
         val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
         dialog.setContentView(bottomSheet.root)
 
-        loadImage(bottomSheet.ivUserProfile, loginPreferences.getString(USER_IMAGE, ""))
+        bottomSheet.ivUserProfile.loadImageFrom(loginPreferences.getString(USER_IMAGE, ""), R.drawable.ic_profile_placeholder)
         bottomSheet.tvEmail.text = email
         bottomSheet.btnLogout.setOnClickListener {
             dialog.dismiss()

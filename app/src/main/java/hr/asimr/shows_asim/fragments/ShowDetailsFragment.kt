@@ -129,7 +129,7 @@ class ShowDetailsFragment : Fragment() {
         viewModel.showLiveData.observe(viewLifecycleOwner) { show ->
             binding.tvDescription.text = show.description
             binding.toolbar.title = show.title
-            binding.ivShow.loadImageFrom(show.imageUrl)
+            binding.ivShow.loadImageFrom(show.imageUrl, R.drawable.ic_show_placeholder)
         }
     }
 

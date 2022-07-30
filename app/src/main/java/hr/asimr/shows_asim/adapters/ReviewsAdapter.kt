@@ -3,6 +3,7 @@ package hr.asimr.shows_asim.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.ItemReviewBinding
 import hr.asimr.shows_asim.models.Review
 import hr.asimr.shows_asim.utils.loadImageFrom
@@ -31,7 +32,7 @@ class ReviewsAdapter(private var reviews: List<Review>) : RecyclerView.Adapter<R
             binding.tvRating.text = item.rating.toString()
             binding.tvComment.text = item.comment
             binding.tvUsername.text = item.user.email.loseEmailDomain()
-            binding.ivUser.loadImageFrom(item.user.imageUrl)
+            binding.ivUser.loadImageFrom(item.user.imageUrl, R.drawable.ic_profile_placeholder)
         }
     }
 }
