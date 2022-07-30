@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -79,6 +80,10 @@ class LoginFragment : Fragment() {
                 true -> viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
                 else -> showEmailMessage(getString(R.string.invalid_email))
             }
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner) { loading ->
+            binding.progressIndicator.isVisible = loading
         }
     }
 

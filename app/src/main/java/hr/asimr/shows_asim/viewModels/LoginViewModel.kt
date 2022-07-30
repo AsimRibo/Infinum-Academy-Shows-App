@@ -28,15 +28,20 @@ class LoginViewModel : ViewModel() {
     private val _emailValid: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     val emailValid: LiveData<Boolean> = _emailValid
 
+    private val _loading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    val loading: LiveData<Boolean> = _loading
+
     fun validateEmail(email: String){
         _emailValid.value = email.isEmailValid()
     }
 
     fun loginUser(email: String, password: String, preferences: SharedPreferences) {
+        _loading.postValue(true)
         val loginRequest = LoginRequest(email, password)
         ApiModule.retrofit.login(loginRequest)
             .enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                    _loading.postValue(true)
                     loginResultLiveData.value = response.isSuccessful
                     preferences.edit {
                         putString(ACCESS_TOKEN, response.headers()[ACCESS_TOKEN])
@@ -47,6 +52,7 @@ class LoginViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                    _loading.postValue(true)
                     loginResultLiveData.value = false
                 }
             })
