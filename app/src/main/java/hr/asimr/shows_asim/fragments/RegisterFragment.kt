@@ -48,20 +48,19 @@ class RegisterFragment : Fragment() {
         }
 
         viewModel.emailValid.observe(viewLifecycleOwner) { valid ->
-            when (valid) {
-                true -> {
-                    if (binding.etPassword.text.toString() == binding.etPasswordRepeat.text.toString()) {
-                        viewModel.registerUser(
-                            binding.etEmail.text.toString(),
-                            binding.etPassword.text.toString(),
-                            binding.etPasswordRepeat.text.toString()
-                        )
-                    } else {
-                        showErrorMessage(getString(R.string.password_mismatch), binding.tilPassword)
-                    }
+            if (valid){
+                if (binding.etPassword.text.toString() == binding.etPasswordRepeat.text.toString()) {
+                    viewModel.registerUser(
+                        binding.etEmail.text.toString(),
+                        binding.etPassword.text.toString(),
+                        binding.etPasswordRepeat.text.toString()
+                    )
+                } else {
+                    showErrorMessage(getString(R.string.password_mismatch), binding.tilPassword)
                 }
-                else -> showErrorMessage(getString(R.string.invalid_email), binding.tilEmail)
-
+            }
+            else{
+                showErrorMessage(getString(R.string.invalid_email), binding.tilEmail)
             }
         }
 
