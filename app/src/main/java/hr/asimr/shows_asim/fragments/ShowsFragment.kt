@@ -30,10 +30,10 @@ import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.utils.FileUtils
-import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN
-import hr.asimr.shows_asim.viewModels.CLIENT
+import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN_VALUE
+import hr.asimr.shows_asim.viewModels.CLIENT_VALUE
 import hr.asimr.shows_asim.viewModels.ShowsViewModel
-import hr.asimr.shows_asim.viewModels.UID
+import hr.asimr.shows_asim.viewModels.UID_VALUE
 import hr.asimr.shows_asim.viewModels.USER_IMAGE
 import java.io.File
 
@@ -167,9 +167,9 @@ class ShowsFragment : Fragment() {
         loginPreferences.edit {
             putBoolean(REMEMBER_ME, false)
             remove(USER_EMAIL)
-            remove(ACCESS_TOKEN)
-            remove(UID)
-            remove(CLIENT)
+            remove(ACCESS_TOKEN_VALUE)
+            remove(UID_VALUE)
+            remove(CLIENT_VALUE)
         }
         findNavController().navigate(R.id.action_showsFragment_loginFragment)
     }
