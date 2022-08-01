@@ -136,7 +136,8 @@ class ShowDetailsFragment : Fragment() {
     }
 
     private fun handleReview(rating: Int, reviewDetails: String) {
-        viewModel.addReview(rating, reviewDetails, DeviceInternetConnection.isAvailable(requireContext()))
+        viewModel.addReview(rating, reviewDetails, DeviceInternetConnection.isAvailable(requireContext()), loginPreferences.getString(
+            USER_EMAIL, "").orEmpty())
     }
 
     private fun updateGroupsVisibility() {

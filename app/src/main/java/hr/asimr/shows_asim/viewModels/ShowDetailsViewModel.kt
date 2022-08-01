@@ -6,11 +6,13 @@ import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.dao.ShowsDatabase
 import hr.asimr.shows_asim.models.Review
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.models.User
 import hr.asimr.shows_asim.models.api.request.ReviewRequest
 import hr.asimr.shows_asim.models.api.response.ReviewResponse
 import hr.asimr.shows_asim.models.api.response.ShowResponse
 import hr.asimr.shows_asim.models.api.response.ShowReviewsResponse
 import hr.asimr.shows_asim.networking.ApiModule
+import java.util.UUID
 import java.util.concurrent.Executors
 import retrofit2.Call
 import retrofit2.Callback
@@ -109,18 +111,28 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
         }
     }
 
-    fun addReview(rating: Int, comment: String, internetAvailable: Boolean) {
-        ApiModule.retrofit.addReview(ReviewRequest(comment, rating, id))
-            .enqueue(object : Callback<ReviewResponse> {
-                override fun onResponse(call: Call<ReviewResponse>, response: Response<ReviewResponse>) {
-                    _success.value = true
-                    getShow(internetAvailable)
-                    getShowReviews(internetAvailable)
-                }
+    fun addReview(rating: Int, comment: String, internetAvailable: Boolean, email: String) {
+        if (internetAvailable){
+            ApiModule.retrofit.addReview(ReviewRequest(comment, rating, id))
+                .enqueue(object : Callback<ReviewResponse> {
+                    override fun onResponse(call: Call<ReviewResponse>, response: Response<ReviewResponse>) {
+                        _success.value = true
+                        getShow(internetAvailable)
+                        getShowReviews(internetAvailable)
+                    }
 
-                override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
-                    _success.value = false
-                }
-            })
+                    override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
+                        _success.value = false
+                    }
+                })
+        }
+        else{
+            Executors.newSingleThreadExecutor().execute {
+                database.reviewDao().insertReview(Review(UUID.randomUUID().toString(), comment, rating, id.toInt(),
+                User("-1", email, null)
+                ))
+                _success.postValue(true)
+            }
+        }
     }
 }
