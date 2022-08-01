@@ -19,4 +19,7 @@ interface ReviewDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllReviews(reviews: List<Review>)
+
+    @Query("DELETE FROM reviews")
+    fun nukeReviews()
 }

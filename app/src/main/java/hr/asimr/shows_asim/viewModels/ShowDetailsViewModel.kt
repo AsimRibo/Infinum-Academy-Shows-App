@@ -91,7 +91,9 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                         _showReviewsLiveData.value = reviews
                         if (reviews != null){
                             Executors.newSingleThreadExecutor().execute{
-                                database.reviewDao().insertAllReviews(reviews)
+                                reviews.forEach{r ->
+                                    database.reviewDao().insertReview(r)
+                                }
                             }
                         }
                     }
@@ -117,8 +119,7 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                 .enqueue(object : Callback<ReviewResponse> {
                     override fun onResponse(call: Call<ReviewResponse>, response: Response<ReviewResponse>) {
                         _success.value = true
-                        getShow(internetAvailable)
-                        getShowReviews(internetAvailable)
+                        _showReviewsLiveData.value = _showReviewsLiveData.value!! + response.body()?.review!!
                     }
 
                     override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
@@ -132,6 +133,8 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                 User("-1", email, null)
                 ))
                 _success.postValue(true)
+
+                _showReviewsLiveData.postValue(database.reviewDao().getAllReviews(id))
             }
         }
     }
