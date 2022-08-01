@@ -6,6 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressIndicatorShow"
+        android:layout_width="wrap_content"
+        android:indeterminate="true"
+        app:indicatorColor="@color/purple_background"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"/>
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/spacing_136"
@@ -104,6 +112,17 @@
                 android:stepSize="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvReviewStats"/>
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressIndicatorReviews"
+                android:layout_width="wrap_content"
+                android:indeterminate="true"
+                app:layout_constraintTop_toBottomOf="@id/tvReviewHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:indicatorColor="@color/purple_background"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvReview"

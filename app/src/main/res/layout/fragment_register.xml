@@ -54,6 +54,19 @@
             app:layout_constraintStart_toEndOf="@id/ivTriangle"
             app:layout_constraintTop_toTopOf="@id/ivTriangle"/>
 
+        <TextView
+            android:id="@+id/tvRegisterHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_24"
+            android:layout_marginTop="@dimen/spacing_104"
+            android:text="Register"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_34sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivTriangle"/>
+
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressIndicator"
             android:layout_width="wrap_content"
@@ -66,31 +79,6 @@
             android:layout_marginBottom="@dimen/spacing_104"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/tvLoginHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_24"
-            android:layout_marginTop="@dimen/spacing_104"
-            android:text="@string/login_header"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_34sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivTriangle"/>
-
-        <TextView
-            android:id="@+id/tvLoginMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_24"
-            android:layout_marginTop="@dimen/spacing_16"
-            android:text="@string/login_message"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLoginHeader"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmail"
@@ -110,7 +98,7 @@
             app:hintTextColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLoginMessage">
+            app:layout_constraintTop_toBottomOf="@id/tvRegisterHeader">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
@@ -151,36 +139,36 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <CheckBox
-            android:id="@+id/chbRememberMe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_24"
-            android:layout_marginTop="@dimen/spacing_24"
-            android:textColor="@color/white"
-            android:buttonTint="@color/white"
-            android:text="@string/remember_me"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilPassword"/>
-
-        <android.widget.Button
-            android:id="@+id/btnLogin"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPasswordRepeat"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="@dimen/spacing_0"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_24"
+            android:layout_marginTop="@dimen/spacing_24"
             android:layout_marginEnd="@dimen/spacing_24"
-            android:layout_marginBottom="@dimen/spacing_24"
-            android:alpha="0.5"
-            android:background="@drawable/button_background"
-            android:enabled="false"
-            android:text="@string/login"
-            android:textAllCaps="false"
-            android:textColor="@drawable/button_text"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/chbRememberMe"
+            android:hint="@string/repeat_password"
+            app:errorTextColor="@color/error_color_for_purple_background"
+            app:errorIconTint="@color/error_color_for_purple_background"
+            app:boxStrokeErrorColor="@color/error_color_for_purple_background"
+            android:textColorHint="@color/white"
+            app:boxStrokeColor="@color/white"
+            app:hintTextColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btnRegister"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilPassword"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPasswordRepeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <android.widget.Button
             android:id="@+id/btnRegister"
@@ -189,16 +177,19 @@
             android:layout_marginStart="@dimen/spacing_24"
             android:layout_marginEnd="@dimen/spacing_24"
             android:layout_marginBottom="@dimen/spacing_32"
-            android:background="@drawable/button_register"
+            android:layout_marginTop="@dimen/spacing_24"
+            android:alpha="0.5"
+            android:background="@drawable/button_background"
+            android:enabled="false"
             android:text="@string/register"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@drawable/button_text"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilPasswordRepeat"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
-

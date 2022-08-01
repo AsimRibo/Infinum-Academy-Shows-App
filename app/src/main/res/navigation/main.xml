@@ -20,7 +20,17 @@
                 android:name="email"
                 app:argType="string"/>
         </action>
+        <action android:id="@+id/action_loginFragment_to_registerFragment"
+            app:enterAnim="@anim/slide_up"
+            app:popEnterAnim="@anim/slide_up"
+            app:destination="@id/registerFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="hr.asimr.shows_asim.fragments.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register"/>
 
     <navigation android:id="@+id/showsNav" app:startDestination="@id/showsFragment">
         <fragment
@@ -46,18 +56,14 @@
             tools:layout="@layout/fragment_show_details">
 
             <argument
-                android:name="email"
+                android:name="showId"
                 app:argType="string"/>
-
-            <argument
-                android:name="show"
-                app:argType="hr.asimr.shows_asim.models.Show"/>
         </fragment>
         <action
             android:id="@+id/action_showsFragment_loginFragment"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/showsFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/loginFragment"/>
+            app:popUpToInclusive="true"/>
     </navigation>
 
 </navigation>

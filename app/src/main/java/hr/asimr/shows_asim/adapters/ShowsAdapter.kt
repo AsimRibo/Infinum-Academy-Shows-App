@@ -3,8 +3,10 @@ package hr.asimr.shows_asim.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.ViewShowItemBinding
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.utils.loadImageFrom
 
 class ShowsAdapter(
     private var shows: List<Show>,
@@ -22,7 +24,7 @@ class ShowsAdapter(
         holder.bind(shows[position])
     }
 
-    fun updateShows(newShows: List<Show>){
+    fun updateShows(newShows: List<Show>) {
         shows = newShows
         notifyDataSetChanged()
     }
@@ -33,10 +35,10 @@ class ShowsAdapter(
         private val binding: ViewShowItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(show: Show) {
-            binding.tvName.text = show.name
+            binding.tvName.text = show.title
             binding.tvDescription.text = show.description
-            binding.ivShow.setImageResource(show.imageResourceId)
             binding.cvShow.setOnClickListener { onClickCallback(show) }
+            binding.ivShow.loadImageFrom(show.imageUrl, R.drawable.ic_show_placeholder)
         }
     }
 }
