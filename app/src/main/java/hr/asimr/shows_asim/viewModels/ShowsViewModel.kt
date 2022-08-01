@@ -11,6 +11,7 @@ import hr.asimr.shows_asim.models.api.response.ShowsResponse
 import hr.asimr.shows_asim.models.api.response.UserResponse
 import hr.asimr.shows_asim.networking.ApiModule
 import java.io.File
+import java.util.concurrent.Executors
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -33,25 +34,29 @@ class ShowsViewModel(val database: ShowsDatabase) : ViewModel() {
 
     fun getAllShows() {
         _loading.value = true
-        ApiModule.retrofit.getAllShows()
-            .enqueue(object : Callback<ShowsResponse> {
-                override fun onResponse(call: Call<ShowsResponse>, response: Response<ShowsResponse>) {
-                    if(response.isSuccessful){
-                        _success.value = true
-                        _showsLiveData.value = response.body()?.shows
+            ApiModule.retrofit.getAllShows()
+                .enqueue(object : Callback<ShowsResponse> {
+                    override fun onResponse(call: Call<ShowsResponse>, response: Response<ShowsResponse>) {
+                        if(response.isSuccessful){
+                            _success.value = true
+                            _showsLiveData.value = response.body()?.shows
+                            Executors.newSingleThreadExecutor().execute{
+                                database.showDao().insertAllShows(response.body()?.shows!!)
+                            }
+                        }
+                        else{
+                            _success.value = false
+                        }
+                        _loading.value = false
+
                     }
-                    else{
+
+                    override fun onFailure(call: Call<ShowsResponse>, t: Throwable) {
                         _success.value = false
+                        _loading.value = false
                     }
-                    _loading.value = false
+                })
 
-                }
-
-                override fun onFailure(call: Call<ShowsResponse>, t: Throwable) {
-                    _success.value = false
-                    _loading.value = false
-                }
-            })
     }
 
     fun updateUserImage(path: String, pref: SharedPreferences) {

@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
     tableName = "reviews", foreignKeys = [ForeignKey(
         entity = Show::class,
         parentColumns = arrayOf("idShow"),
-        childColumns = arrayOf("showId")
+        childColumns = arrayOf("show_id")
     )]
 )
 data class Review(

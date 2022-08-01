@@ -1,10 +1,21 @@
 package hr.asimr.shows_asim.dao
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import hr.asimr.shows_asim.models.Review
+import hr.asimr.shows_asim.models.Show
 
-abstract class ShowsDatabase : RoomDatabase(){
+@Database(
+    entities = [
+        Show::class,
+        Review::class
+    ],
+    version = 1
+)
+
+abstract class ShowsDatabase : RoomDatabase() {
     companion object {
 
         @Volatile
