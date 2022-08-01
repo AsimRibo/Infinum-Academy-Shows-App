@@ -11,6 +11,7 @@ import hr.asimr.shows_asim.models.api.response.ReviewResponse
 import hr.asimr.shows_asim.models.api.response.ShowResponse
 import hr.asimr.shows_asim.models.api.response.ShowReviewsResponse
 import hr.asimr.shows_asim.networking.ApiModule
+import java.util.concurrent.Executors
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,24 +44,38 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
 
     fun getShow() {
         _loadingShow.value = true
-        ApiModule.retrofit.getShow(id)
-            .enqueue(object : Callback<ShowResponse> {
-                override fun onResponse(call: Call<ShowResponse>, response: Response<ShowResponse>) {
-                    _success.value = true
-                    _loadingShow.value = false
-                    _showLiveData.value = response.body()?.show
-                    _averageLiveData.value = response.body()?.show?.averageRating
-                    val numOfReviews = response.body()?.show?.numOfReviews
-                    if (numOfReviews != null && _averageLiveData.value != null){
-                        _reviewStats.value = "$numOfReviews REVIEWS, ${_averageLiveData.value} AVERAGE"
+                if(true){
+                    ApiModule.retrofit.getShow(id)
+                        .enqueue(object : Callback<ShowResponse> {
+                            override fun onResponse(call: Call<ShowResponse>, response: Response<ShowResponse>) {
+                                _success.value = true
+                                _loadingShow.value = false
+                                _showLiveData.value = response.body()?.show
+                                _averageLiveData.value = response.body()?.show?.averageRating
+                                val numOfReviews = response.body()?.show?.numOfReviews
+                                if (numOfReviews != null && _averageLiveData.value != null){
+                                    _reviewStats.value = "$numOfReviews REVIEWS, ${_averageLiveData.value} AVERAGE"
+                                }
+                            }
+
+                            override fun onFailure(call: Call<ShowResponse>, t: Throwable) {
+                                _loadingShow.value = false
+                                _success.value = false
+                            }
+                        })
+                }
+                else{
+                    Executors.newSingleThreadExecutor().execute{
+                        val show = database.showDao().getShow(id)
+                        _success.postValue(true)
+                        _loadingShow.postValue(false)
+                        _showLiveData.postValue(show)
+                        _averageLiveData.postValue(show.averageRating)
+                        if (show.numOfReviews != null && _averageLiveData.value != null) {
+                            _reviewStats.postValue("${show.numOfReviews} REVIEWS, ${_averageLiveData.value} AVERAGE")
+                        }
                     }
                 }
-
-                override fun onFailure(call: Call<ShowResponse>, t: Throwable) {
-                    _loadingShow.value = false
-                    _success.value = false
-                }
-            })
     }
 
     fun getShowReviews() {
@@ -81,9 +96,9 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
 
     }
 
-    fun addReview(rating: Int, comment: String){
+    fun addReview(rating: Int, comment: String) {
         ApiModule.retrofit.addReview(ReviewRequest(comment, rating, id))
-            .enqueue(object: Callback<ReviewResponse>{
+            .enqueue(object : Callback<ReviewResponse> {
                 override fun onResponse(call: Call<ReviewResponse>, response: Response<ReviewResponse>) {
                     _success.value = true
                     getShow()

@@ -16,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import hr.asimr.shows_asim.R
+import hr.asimr.shows_asim.ShowsApplication
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
@@ -31,7 +32,7 @@ class ShowDetailsFragment : Fragment() {
     private lateinit var loginPreferences: SharedPreferences
     private val args by navArgs<ShowDetailsFragmentArgs>()
     private val viewModel by viewModels<ShowDetailsViewModel>{
-        ShowDetailsViewModelFactory(args.showId)
+        ShowDetailsViewModelFactory(args.showId, (activity?.application as ShowsApplication).showsDatabase)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
