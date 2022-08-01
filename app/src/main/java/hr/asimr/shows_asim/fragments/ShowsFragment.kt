@@ -27,6 +27,7 @@ import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.networking.DeviceInternetConnection
 import hr.asimr.shows_asim.utils.FileUtils
 import hr.asimr.shows_asim.utils.loadImageFrom
 import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN_VALUE
@@ -78,6 +79,7 @@ class ShowsFragment : Fragment() {
 
         initShowsRecycler()
         initListeners()
+        DeviceInternetConnection.isAvailable(requireContext())
         viewModel.getAllShows()
         (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).loadImageFrom(
             FileUtils.getImageFile(requireContext()).toString(),

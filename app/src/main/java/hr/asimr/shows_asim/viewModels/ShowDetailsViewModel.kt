@@ -71,7 +71,7 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                         _loadingShow.postValue(false)
                         _showLiveData.postValue(show)
                         _averageLiveData.postValue(show.averageRating)
-                        if (show.numOfReviews != null && _averageLiveData.value != null) {
+                        if (_averageLiveData.value != null) {
                             _reviewStats.postValue("${show.numOfReviews} REVIEWS, ${_averageLiveData.value} AVERAGE")
                         }
                     }
@@ -79,21 +79,34 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
     }
 
     fun getShowReviews() {
-        _loadingReviews.value = true
-        ApiModule.retrofit.getShowReviews(id)
-            .enqueue(object : Callback<ShowReviewsResponse> {
-                override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
-                    _loadingReviews.value = false
-                    _success.value = true
-                    _showReviewsLiveData.value = response.body()?.reviews
-                }
+        if(true){
+            ApiModule.retrofit.getShowReviews(id)
+                .enqueue(object : Callback<ShowReviewsResponse> {
+                    override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
+                        _loadingReviews.value = false
+                        _success.value = true
+                        val reviews = response.body()?.reviews
+                        _showReviewsLiveData.value = reviews
+                        if (reviews != null){
+                            Executors.newSingleThreadExecutor().execute{
+                                database.reviewDao().insertAllReviews(reviews)
+                            }
+                        }
+                    }
 
-                override fun onFailure(call: Call<ShowReviewsResponse>, t: Throwable) {
-                    _loadingReviews.value = false
-                    _success.value = false
-                }
-            })
-
+                    override fun onFailure(call: Call<ShowReviewsResponse>, t: Throwable) {
+                        _loadingReviews.value = false
+                        _success.value = false
+                    }
+                })
+        }
+        else{
+            Executors.newSingleThreadExecutor().execute{
+                _showReviewsLiveData.postValue(database.reviewDao().getAllReviews(id))
+                _success.postValue(true)
+                _loadingReviews.postValue(false)
+            }
+        }
     }
 
     fun addReview(rating: Int, comment: String) {

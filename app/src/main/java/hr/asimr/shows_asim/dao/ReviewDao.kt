@@ -9,7 +9,7 @@ import hr.asimr.shows_asim.models.Review
 @Dao
 interface ReviewDao {
     @Query("SELECT * FROM reviews INNER JOIN shows ON show_id = :idShow")
-    fun getAllReviews(idShow: Int): List<Review>
+    fun getAllReviews(idShow: String): List<Review>
 
     @Query("SELECT * FROM reviews WHERE idReview IS :idReview")
     fun getReview(idReview: Int): Review
