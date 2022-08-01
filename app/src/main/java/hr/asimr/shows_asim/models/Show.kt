@@ -9,9 +9,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity(tableName = "shows")
 data class Show(
-    @SerialName("idShow")
+    @SerialName("id")
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "idShow")
     val id: String,
 
     @SerialName("average_rating")
