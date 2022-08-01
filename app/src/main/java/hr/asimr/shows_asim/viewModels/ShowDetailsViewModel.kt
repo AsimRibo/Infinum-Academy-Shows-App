@@ -71,8 +71,8 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                         _loadingShow.postValue(false)
                         _showLiveData.postValue(show)
                         _averageLiveData.postValue(show.averageRating)
-                        if (_averageLiveData.value != null) {
-                            _reviewStats.postValue("${show.numOfReviews} REVIEWS, ${_averageLiveData.value} AVERAGE")
+                        if (show.averageRating != null) {
+                            _reviewStats.postValue("${show.numOfReviews} REVIEWS, ${show.averageRating} AVERAGE")
                         }
                     }
                 }
