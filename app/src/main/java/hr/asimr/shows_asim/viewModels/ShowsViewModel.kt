@@ -1,6 +1,7 @@
 package hr.asimr.shows_asim.viewModels
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -42,6 +43,9 @@ class ShowsViewModel(val database: ShowsDatabase) : ViewModel() {
                             _showsLiveData.value = response.body()?.shows
                             Executors.newSingleThreadExecutor().execute{
                                 database.showDao().insertAllShows(response.body()?.shows!!)
+                                val allShows = database.showDao().getAllShows()
+                                Log.i("velicina", allShows.size.toString())
+
                             }
                         }
                         else{
