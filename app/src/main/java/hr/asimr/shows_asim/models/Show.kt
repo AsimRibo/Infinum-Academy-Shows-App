@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity(tableName = "shows")
 data class Show(
-    @SerialName("id")
+    @SerialName("idShow")
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String,
