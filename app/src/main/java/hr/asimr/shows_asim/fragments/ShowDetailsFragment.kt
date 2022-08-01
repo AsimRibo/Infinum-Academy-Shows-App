@@ -20,6 +20,7 @@ import hr.asimr.shows_asim.ShowsApplication
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
+import hr.asimr.shows_asim.networking.DeviceInternetConnection
 import hr.asimr.shows_asim.utils.loadImageFrom
 import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
 import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
@@ -45,8 +46,8 @@ class ShowDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initToolbar(binding.toolbar)
-        viewModel.getShow()
-        viewModel.getShowReviews()
+        viewModel.getShow(DeviceInternetConnection.isAvailable(requireContext()))
+        viewModel.getShowReviews(DeviceInternetConnection.isAvailable(requireContext()))
         initListeners()
         initShowDetails()
         initReviewsRecycler()
@@ -135,7 +136,7 @@ class ShowDetailsFragment : Fragment() {
     }
 
     private fun handleReview(rating: Int, reviewDetails: String) {
-        viewModel.addReview(rating, reviewDetails)
+        viewModel.addReview(rating, reviewDetails, DeviceInternetConnection.isAvailable(requireContext()))
     }
 
     private fun updateGroupsVisibility() {

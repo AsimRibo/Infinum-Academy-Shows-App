@@ -42,9 +42,9 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
     private val _loadingReviews: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     val loadingReviews: LiveData<Boolean> = _loadingReviews
 
-    fun getShow() {
+    fun getShow(internetAvailable: Boolean) {
         _loadingShow.value = true
-                if(true){
+                if(internetAvailable){
                     ApiModule.retrofit.getShow(id)
                         .enqueue(object : Callback<ShowResponse> {
                             override fun onResponse(call: Call<ShowResponse>, response: Response<ShowResponse>) {
@@ -78,8 +78,8 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                 }
     }
 
-    fun getShowReviews() {
-        if(true){
+    fun getShowReviews(internetAvailable: Boolean) {
+        if(internetAvailable){
             ApiModule.retrofit.getShowReviews(id)
                 .enqueue(object : Callback<ShowReviewsResponse> {
                     override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
@@ -109,13 +109,13 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
         }
     }
 
-    fun addReview(rating: Int, comment: String) {
+    fun addReview(rating: Int, comment: String, internetAvailable: Boolean) {
         ApiModule.retrofit.addReview(ReviewRequest(comment, rating, id))
             .enqueue(object : Callback<ReviewResponse> {
                 override fun onResponse(call: Call<ReviewResponse>, response: Response<ReviewResponse>) {
                     _success.value = true
-                    getShow()
-                    getShowReviews()
+                    getShow(internetAvailable)
+                    getShowReviews(internetAvailable)
                 }
 
                 override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
