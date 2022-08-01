@@ -3,6 +3,7 @@ package hr.asimr.shows_asim.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import hr.asimr.shows_asim.dao.ShowsDatabase
 import hr.asimr.shows_asim.models.Review
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.models.api.request.ReviewRequest
@@ -14,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ShowDetailsViewModel(private val id: String) : ViewModel() {
+class ShowDetailsViewModel(private val id: String, private val database: ShowsDatabase) : ViewModel() {
     private val _showLiveData: MutableLiveData<Show> by lazy {
         MutableLiveData<Show>()
     }
