@@ -1,7 +1,6 @@
 package hr.asimr.shows_asim.viewModels
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
