@@ -80,7 +80,7 @@ class ShowsFragment : Fragment() {
         initShowsRecycler()
         initListeners()
         DeviceInternetConnection.isAvailable(requireContext())
-        viewModel.getAllShows()
+        viewModel.getAllShows(DeviceInternetConnection.isAvailable(requireContext()))
         (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).loadImageFrom(
             FileUtils.getImageFile(requireContext()).toString(),
             R.drawable.ic_profile_placeholder

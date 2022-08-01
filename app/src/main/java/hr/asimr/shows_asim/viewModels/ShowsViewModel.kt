@@ -32,9 +32,9 @@ class ShowsViewModel(val database: ShowsDatabase) : ViewModel() {
     private val _loading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     val loading: LiveData<Boolean> = _loading
 
-    fun getAllShows() {
+    fun getAllShows(internetAvailable: Boolean) {
         _loading.value = true
-        if(true){
+        if(internetAvailable){
             ApiModule.retrofit.getAllShows()
                 .enqueue(object : Callback<ShowsResponse> {
                     override fun onResponse(call: Call<ShowsResponse>, response: Response<ShowsResponse>) {
