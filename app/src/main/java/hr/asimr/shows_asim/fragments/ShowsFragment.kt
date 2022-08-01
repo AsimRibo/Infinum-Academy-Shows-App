@@ -22,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.imageview.ShapeableImageView
 import hr.asimr.shows_asim.BuildConfig
 import hr.asimr.shows_asim.R
+import hr.asimr.shows_asim.ShowsApplication
 import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
@@ -33,6 +34,7 @@ import hr.asimr.shows_asim.viewModels.CLIENT_VALUE
 import hr.asimr.shows_asim.viewModels.ShowsViewModel
 import hr.asimr.shows_asim.viewModels.UID_VALUE
 import hr.asimr.shows_asim.viewModels.USER_IMAGE
+import hr.asimr.shows_asim.viewModels.factories.ShowsViewModelFactory
 import java.io.File
 
 class ShowsFragment : Fragment() {
@@ -43,7 +45,9 @@ class ShowsFragment : Fragment() {
     private lateinit var email: String
 
     private lateinit var loginPreferences: SharedPreferences
-    private val viewModel by viewModels<ShowsViewModel>()
+    private val viewModel: ShowsViewModel by viewModels {
+        ShowsViewModelFactory((activity?.application as ShowsApplication).showsDatabase)
+    }
 
     private val args by navArgs<ShowsFragmentArgs>()
 

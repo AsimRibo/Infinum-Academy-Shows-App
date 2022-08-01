@@ -7,7 +7,7 @@ import hr.asimr.shows_asim.viewModels.ShowsViewModel
 
 class ShowsViewModelFactory(val database: ShowsDatabase) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ShowsViewModel::class.java)) {
             return ShowsViewModel(database) as T
         }
