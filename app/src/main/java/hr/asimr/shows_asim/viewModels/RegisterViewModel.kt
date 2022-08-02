@@ -31,17 +31,15 @@ class RegisterViewModel: ViewModel() {
             checkPasswordsMatch(password, passwordRepeated)
         }
         else{
-            _formValid.value?.isValid = false
-            _formValid.value?.messageId = R.string.invalid_email
+            _formValid.value = FormDataStatus(false, R.string.invalid_email)
         }
     }
 
     private fun checkPasswordsMatch(password: String, passwordRepeated: String) {
         if (password == passwordRepeated) {
-            _formValid.value?.isValid = true
+            _formValid.value = FormDataStatus(true, null)
         } else {
-            _formValid.value?.isValid = false
-            _formValid.value?.messageId = R.string.password_mismatch
+            FormDataStatus(false, R.string.password_mismatch)
         }
     }
 
