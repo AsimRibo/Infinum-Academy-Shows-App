@@ -81,39 +81,49 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
 
     fun getShowReviews(internetAvailable: Boolean) {
         if (internetAvailable) {
-            ApiModule.retrofit.getShowReviews(id)
-                .enqueue(object : Callback<ShowReviewsResponse> {
-                    override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
-                        _loadingReviews.value = false
-                        _success.value = true
-                        Executors.newSingleThreadExecutor().execute {
-                            val reviewsToAddToApi = database.reviewDao().getReviewsNotSyncedWithApi()
-                            reviewsToAddToApi.forEach{r ->
-                                ApiModule.retrofit.addReview(ReviewRequest(r.comment, r.rating, id))
-                            }
-                            database.reviewDao().deleteReviewsAfterSyncedWithApi()
+            getReviewsFromApi(internetAvailable)
+        } else {
+            getReviewsFromDb()
+        }
+    }
+
+    private fun getReviewsFromDb() {
+        Executors.newSingleThreadExecutor().execute {
+            _showReviewsLiveData.postValue(database.reviewDao().getAllReviews(id))
+            _success.postValue(true)
+            _loadingReviews.postValue(false)
+        }
+    }
+
+    private fun getReviewsFromApi(internetAvailable: Boolean) {
+        ApiModule.retrofit.getShowReviews(id)
+            .enqueue(object : Callback<ShowReviewsResponse> {
+                override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
+                    _loadingReviews.value = false
+                    _success.value = true
+
+                    Executors.newSingleThreadExecutor().execute {
+                        val reviewsToAddToApi = database.reviewDao().getReviewsNotSyncedWithApi()
+                        reviewsToAddToApi.forEach { r ->
+                            addReview(r.rating, r.comment, internetAvailable, "")
                         }
-                        val reviews = response.body()?.reviews
-                        _showReviewsLiveData.value = reviews
-                        if (reviews != null) {
-                            Executors.newSingleThreadExecutor().execute {
-                                database.reviewDao().insertAllReviews(reviews)
-                            }
-                        }
+                        database.reviewDao().deleteReviewsAfterSyncedWithApi()
                     }
 
-                    override fun onFailure(call: Call<ShowReviewsResponse>, t: Throwable) {
-                        _loadingReviews.value = false
-                        _success.value = false
+                    val reviews = response.body()?.reviews
+                    _showReviewsLiveData.value = reviews
+                    if (reviews != null) {
+                        Executors.newSingleThreadExecutor().execute {
+                            database.reviewDao().insertAllReviews(reviews)
+                        }
                     }
-                })
-        } else {
-            Executors.newSingleThreadExecutor().execute {
-                _showReviewsLiveData.postValue(database.reviewDao().getAllReviews(id))
-                _success.postValue(true)
-                _loadingReviews.postValue(false)
-            }
-        }
+                }
+
+                override fun onFailure(call: Call<ShowReviewsResponse>, t: Throwable) {
+                    _loadingReviews.value = false
+                    _success.value = false
+                }
+            })
     }
 
     fun addReview(rating: Int, comment: String, internetAvailable: Boolean, email: String) {

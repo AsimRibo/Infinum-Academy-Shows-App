@@ -19,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ShowsViewModel(val database: ShowsDatabase) : ViewModel() {
+class ShowsViewModel(private val database: ShowsDatabase) : ViewModel() {
 
     private val _showsLiveData: MutableLiveData<List<Show>> by lazy {
         MutableLiveData<List<Show>>()
