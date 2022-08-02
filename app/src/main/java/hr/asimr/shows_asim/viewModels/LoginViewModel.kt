@@ -39,11 +39,10 @@ class LoginViewModel : ViewModel() {
 
     fun validateForm(email: String){
         if (email.isEmailValid()){
-            _formValid.value?.isValid = true
+            _formValid.value = FormDataStatus(true, null)
         }
         else{
-            _formValid.value?.isValid = false
-            _formValid.value?.messageId  = R.string.invalid_credentials
+            _formValid.value = FormDataStatus(false, R.string.invalid_email)
         }
     }
 
