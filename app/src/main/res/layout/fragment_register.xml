@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_24"
             android:layout_marginTop="@dimen/spacing_104"
-            android:text="Register"
+            android:text="@string/register"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_34sp"
             android:textStyle="bold"
