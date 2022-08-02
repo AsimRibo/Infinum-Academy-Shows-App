@@ -12,7 +12,7 @@ import hr.asimr.shows_asim.models.Show
         Show::class,
         Review::class
     ],
-    version = 1
+    version = 3
 )
 
 abstract class ShowsDatabase : RoomDatabase() {

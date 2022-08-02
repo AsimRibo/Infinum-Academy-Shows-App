@@ -107,7 +107,12 @@ class ShowsFragment : Fragment() {
 
     private fun initShowsObserving() {
         viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
-            adapter.updateShows(shows)
+            if (shows.isNotEmpty()) {
+                adapter.updateShows(shows)
+            } else {
+                binding.groupEmptyState.isVisible = true
+                binding.groupFullState.isVisible = false
+            }
         }
     }
 

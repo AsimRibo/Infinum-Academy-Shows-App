@@ -46,42 +46,41 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
 
     fun getShow(internetAvailable: Boolean) {
         _loadingShow.value = true
-                if(internetAvailable){
-                    ApiModule.retrofit.getShow(id)
-                        .enqueue(object : Callback<ShowResponse> {
-                            override fun onResponse(call: Call<ShowResponse>, response: Response<ShowResponse>) {
-                                _success.value = true
-                                _loadingShow.value = false
-                                _showLiveData.value = response.body()?.show
-                                _averageLiveData.value = response.body()?.show?.averageRating
-                                val numOfReviews = response.body()?.show?.numOfReviews
-                                if (numOfReviews != null && _averageLiveData.value != null){
-                                    _reviewStats.value = "$numOfReviews REVIEWS, ${_averageLiveData.value} AVERAGE"
-                                }
-                            }
-
-                            override fun onFailure(call: Call<ShowResponse>, t: Throwable) {
-                                _loadingShow.value = false
-                                _success.value = false
-                            }
-                        })
-                }
-                else{
-                    Executors.newSingleThreadExecutor().execute{
-                        val show = database.showDao().getShow(id)
-                        _success.postValue(true)
-                        _loadingShow.postValue(false)
-                        _showLiveData.postValue(show)
-                        _averageLiveData.postValue(show.averageRating)
-                        if (show.averageRating != null) {
-                            _reviewStats.postValue("${show.numOfReviews} REVIEWS, ${show.averageRating} AVERAGE")
+        if (internetAvailable) {
+            ApiModule.retrofit.getShow(id)
+                .enqueue(object : Callback<ShowResponse> {
+                    override fun onResponse(call: Call<ShowResponse>, response: Response<ShowResponse>) {
+                        _success.value = true
+                        _loadingShow.value = false
+                        _showLiveData.value = response.body()?.show
+                        _averageLiveData.value = response.body()?.show?.averageRating
+                        val numOfReviews = response.body()?.show?.numOfReviews
+                        if (numOfReviews != null && _averageLiveData.value != null) {
+                            _reviewStats.value = "$numOfReviews REVIEWS, ${_averageLiveData.value} AVERAGE"
                         }
                     }
+
+                    override fun onFailure(call: Call<ShowResponse>, t: Throwable) {
+                        _loadingShow.value = false
+                        _success.value = false
+                    }
+                })
+        } else {
+            Executors.newSingleThreadExecutor().execute {
+                val show = database.showDao().getShow(id)
+                _success.postValue(true)
+                _loadingShow.postValue(false)
+                _showLiveData.postValue(show)
+                _averageLiveData.postValue(show.averageRating)
+                if (show.averageRating != null) {
+                    _reviewStats.postValue("${show.numOfReviews} REVIEWS, ${show.averageRating} AVERAGE")
                 }
+            }
+        }
     }
 
     fun getShowReviews(internetAvailable: Boolean) {
-        if(internetAvailable){
+        if (internetAvailable) {
             ApiModule.retrofit.getShowReviews(id)
                 .enqueue(object : Callback<ShowReviewsResponse> {
                     override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
@@ -89,11 +88,9 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                         _success.value = true
                         val reviews = response.body()?.reviews
                         _showReviewsLiveData.value = reviews
-                        if (reviews != null){
-                            Executors.newSingleThreadExecutor().execute{
-                                reviews.forEach{r ->
-                                    database.reviewDao().insertReview(r)
-                                }
+                        if (reviews != null) {
+                            Executors.newSingleThreadExecutor().execute {
+                                database.reviewDao().insertAllReviews(reviews)
                             }
                         }
                     }
@@ -103,9 +100,8 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                         _success.value = false
                     }
                 })
-        }
-        else{
-            Executors.newSingleThreadExecutor().execute{
+        } else {
+            Executors.newSingleThreadExecutor().execute {
                 _showReviewsLiveData.postValue(database.reviewDao().getAllReviews(id))
                 _success.postValue(true)
                 _loadingReviews.postValue(false)
@@ -114,24 +110,27 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
     }
 
     fun addReview(rating: Int, comment: String, internetAvailable: Boolean, email: String) {
-        if (internetAvailable){
+        if (internetAvailable) {
             ApiModule.retrofit.addReview(ReviewRequest(comment, rating, id))
                 .enqueue(object : Callback<ReviewResponse> {
                     override fun onResponse(call: Call<ReviewResponse>, response: Response<ReviewResponse>) {
                         _success.value = true
-                        _showReviewsLiveData.value = _showReviewsLiveData.value!! + response.body()?.review!!
+                        getShow(internetAvailable)
+                        getShowReviews(internetAvailable)
                     }
 
                     override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
                         _success.value = false
                     }
                 })
-        }
-        else{
+        } else {
             Executors.newSingleThreadExecutor().execute {
-                database.reviewDao().insertReview(Review(UUID.randomUUID().toString(), comment, rating, id.toInt(),
-                User("-1", email, null)
-                ))
+                database.reviewDao().insertReview(
+                    Review(
+                        UUID.randomUUID().toString(), comment, rating, id.toInt(),
+                        User("-1", email, null)
+                    )
+                )
                 _success.postValue(true)
 
                 _showReviewsLiveData.postValue(database.reviewDao().getAllReviews(id))
