@@ -43,7 +43,6 @@ class ShowsViewModel(val database: ShowsDatabase) : ViewModel() {
                             _showsLiveData.value = response.body()?.shows
                             Executors.newSingleThreadExecutor().execute{
                                 database.showDao().insertAllShows(response.body()?.shows!!)
-//                                database.reviewDao().nukeReviews()
                             }
                         }
                         else{
