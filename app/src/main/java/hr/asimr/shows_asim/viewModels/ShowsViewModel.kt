@@ -35,37 +35,44 @@ class ShowsViewModel(val database: ShowsDatabase) : ViewModel() {
     fun getAllShows(internetAvailable: Boolean) {
         _loading.value = true
         if(internetAvailable){
-            ApiModule.retrofit.getAllShows()
-                .enqueue(object : Callback<ShowsResponse> {
-                    override fun onResponse(call: Call<ShowsResponse>, response: Response<ShowsResponse>) {
-                        if(response.isSuccessful){
-                            _success.value = true
-                            _showsLiveData.value = response.body()?.shows
-                            Executors.newSingleThreadExecutor().execute{
-                                database.showDao().insertAllShows(response.body()?.shows!!)
-                            }
-                        }
-                        else{
-                            _success.value = false
-                        }
-                        _loading.value = false
-                    }
-
-                    override fun onFailure(call: Call<ShowsResponse>, t: Throwable) {
-                        _success.value = false
-                        _loading.value = false
-                    }
-                })
+            getShowsFromApi()
         }
         else{
-            Executors.newSingleThreadExecutor().execute{
-                val allShows = database.showDao().getAllShows()
-                _success.postValue(true)
-                _loading.postValue(false)
-                _showsLiveData.postValue(allShows)
-            }
+            getShowsFromDb()
         }
 
+    }
+
+    private fun getShowsFromDb() {
+        Executors.newSingleThreadExecutor().execute {
+            val allShows = database.showDao().getAllShows()
+            _success.postValue(true)
+            _loading.postValue(false)
+            _showsLiveData.postValue(allShows)
+        }
+    }
+
+    private fun getShowsFromApi() {
+        ApiModule.retrofit.getAllShows()
+            .enqueue(object : Callback<ShowsResponse> {
+                override fun onResponse(call: Call<ShowsResponse>, response: Response<ShowsResponse>) {
+                    if (response.isSuccessful) {
+                        _success.value = true
+                        _showsLiveData.value = response.body()?.shows
+                        Executors.newSingleThreadExecutor().execute {
+                            database.showDao().insertAllShows(response.body()?.shows!!)
+                        }
+                    } else {
+                        _success.value = false
+                    }
+                    _loading.value = false
+                }
+
+                override fun onFailure(call: Call<ShowsResponse>, t: Throwable) {
+                    _success.value = false
+                    _loading.value = false
+                }
+            })
     }
 
     fun updateUserImage(path: String, pref: SharedPreferences) {
