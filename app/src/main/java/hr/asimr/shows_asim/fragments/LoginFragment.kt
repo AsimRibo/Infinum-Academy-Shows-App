@@ -75,12 +75,14 @@ class LoginFragment : Fragment() {
             }
         }
 
-        viewModel.emailValid.observe(viewLifecycleOwner){ valid ->
-            if (valid){
+        viewModel.formValid.observe(viewLifecycleOwner){ form ->
+            if (form.isValid){
                 viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
             }
             else{
-                showEmailMessage(getString(R.string.invalid_email))
+                form.messageId?.let{ id ->
+                    showEmailMessage(getString(id))
+                }
             }
         }
 
@@ -108,7 +110,7 @@ class LoginFragment : Fragment() {
 
     private fun initButtonLogin() {
         binding.btnLogin.setOnClickListener {
-            viewModel.validateEmail(binding.etEmail.text.toString())
+            viewModel.validateForm(binding.etEmail.text.toString())
         }
     }
 

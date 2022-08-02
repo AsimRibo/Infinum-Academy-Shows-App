@@ -5,6 +5,8 @@ import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import hr.asimr.shows_asim.R
+import hr.asimr.shows_asim.models.FormDataStatus
 import hr.asimr.shows_asim.models.api.request.LoginRequest
 import hr.asimr.shows_asim.models.api.response.UserResponse
 import hr.asimr.shows_asim.networking.ACCESS_TOKEN
@@ -29,14 +31,19 @@ class LoginViewModel : ViewModel() {
         return loginResultLiveData
     }
 
-    private val _emailValid: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
-    val emailValid: LiveData<Boolean> = _emailValid
+    private val _formValid: MutableLiveData<FormDataStatus> by lazy { MutableLiveData<FormDataStatus>() }
+    val formValid: LiveData<FormDataStatus> = _formValid
 
     private val _loading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     val loading: LiveData<Boolean> = _loading
 
-    fun validateEmail(email: String){
-        _emailValid.value = email.isEmailValid()
+    fun validateForm(email: String){
+        if (email.isEmailValid()){
+            _formValid.value = FormDataStatus(true, null)
+        }
+        else{
+            _formValid.value = FormDataStatus(false, R.string.invalid_email)
+        }
     }
 
     fun loginUser(email: String, password: String, preferences: SharedPreferences) {

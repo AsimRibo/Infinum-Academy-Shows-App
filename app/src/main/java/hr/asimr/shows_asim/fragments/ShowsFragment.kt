@@ -26,13 +26,16 @@ import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
+import hr.asimr.shows_asim.networking.DeviceInternetConnection
 import hr.asimr.shows_asim.utils.FileUtils
+import hr.asimr.shows_asim.utils.getDatabase
 import hr.asimr.shows_asim.utils.loadImageFrom
 import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN_VALUE
 import hr.asimr.shows_asim.viewModels.CLIENT_VALUE
 import hr.asimr.shows_asim.viewModels.ShowsViewModel
 import hr.asimr.shows_asim.viewModels.UID_VALUE
 import hr.asimr.shows_asim.viewModels.USER_IMAGE
+import hr.asimr.shows_asim.viewModels.factories.ShowsViewModelFactory
 import java.io.File
 
 class ShowsFragment : Fragment() {
@@ -43,7 +46,9 @@ class ShowsFragment : Fragment() {
     private lateinit var email: String
 
     private lateinit var loginPreferences: SharedPreferences
-    private val viewModel by viewModels<ShowsViewModel>()
+    private val viewModel: ShowsViewModel by viewModels {
+        ShowsViewModelFactory((requireActivity().getDatabase()))
+    }
 
     private val args by navArgs<ShowsFragmentArgs>()
 
@@ -74,7 +79,8 @@ class ShowsFragment : Fragment() {
 
         initShowsRecycler()
         initListeners()
-        viewModel.getAllShows()
+        DeviceInternetConnection.isAvailable(requireContext())
+        viewModel.getAllShows(DeviceInternetConnection.isAvailable(requireContext()))
         (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).loadImageFrom(
             FileUtils.getImageFile(requireContext()).toString(),
             R.drawable.ic_profile_placeholder
@@ -101,7 +107,12 @@ class ShowsFragment : Fragment() {
 
     private fun initShowsObserving() {
         viewModel.showsLiveData.observe(viewLifecycleOwner) { shows ->
-            adapter.updateShows(shows)
+            if (shows.isNotEmpty()) {
+                adapter.updateShows(shows)
+            } else {
+                binding.groupEmptyState.isVisible = true
+                binding.groupFullState.isVisible = false
+            }
         }
     }
 
