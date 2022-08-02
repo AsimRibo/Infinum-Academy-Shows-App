@@ -6,6 +6,15 @@
         <item name="colorControlActivated">@color/purple_background</item>
     </style>
 
+    <style name="FormTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="errorTextColor">@color/error_color_for_purple_background</item>
+        <item name="errorIconTint">@color/error_color_for_purple_background</item>
+        <item name="boxStrokeErrorColor">@color/error_color_for_purple_background</item>
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="hintTextColor">@color/white</item>
+    </style>
+
     <style name="RoundedImageCorners">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8%</item>
