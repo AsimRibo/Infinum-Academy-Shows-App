@@ -3,6 +3,8 @@ package hr.asimr.shows_asim.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import hr.asimr.shows_asim.R
+import hr.asimr.shows_asim.models.FormDataStatus
 import hr.asimr.shows_asim.models.api.request.RegisterRequest
 import hr.asimr.shows_asim.models.api.response.RegisterResponse
 import hr.asimr.shows_asim.networking.ApiModule
@@ -18,14 +20,29 @@ class RegisterViewModel: ViewModel() {
         return registrationResultLiveData
     }
 
-    private val _emailValid: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
-    val emailValid: LiveData<Boolean> = _emailValid
+    private val _formValid: MutableLiveData<FormDataStatus> by lazy { MutableLiveData<FormDataStatus>() }
+    val formValid: LiveData<FormDataStatus> = _formValid
 
     private val _loading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     val loading: LiveData<Boolean> = _loading
 
-    fun validateEmail(email: String){
-        _emailValid.value = email.isEmailValid()
+    fun validateForm(email: String, password: String, passwordRepeated: String){
+        if (email.isEmailValid()){
+            checkPasswordsMatch(password, passwordRepeated)
+        }
+        else{
+            _formValid.value?.isValid = false
+            _formValid.value?.messageId = R.string.invalid_email
+        }
+    }
+
+    private fun checkPasswordsMatch(password: String, passwordRepeated: String) {
+        if (password == passwordRepeated) {
+            _formValid.value?.isValid = true
+        } else {
+            _formValid.value?.isValid = false
+            _formValid.value?.messageId = R.string.password_mismatch
+        }
     }
 
     fun registerUser(email: String, password: String, passwordRepeated: String) {

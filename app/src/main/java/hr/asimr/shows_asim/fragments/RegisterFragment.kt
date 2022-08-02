@@ -47,20 +47,16 @@ class RegisterFragment : Fragment() {
             }
         }
 
-        viewModel.emailValid.observe(viewLifecycleOwner) { valid ->
-            if (valid){
-                if (binding.etPassword.text.toString() == binding.etPasswordRepeat.text.toString()) {
-                    viewModel.registerUser(
-                        binding.etEmail.text.toString(),
-                        binding.etPassword.text.toString(),
-                        binding.etPasswordRepeat.text.toString()
-                    )
-                } else {
-                    showErrorMessage(getString(R.string.password_mismatch), binding.tilPassword)
+        viewModel.formValid.observe(viewLifecycleOwner) { formData ->
+            if (formData.isValid) {
+                viewModel.registerUser(
+                    binding.etEmail.text.toString(),
+                    binding.etPassword.text.toString(),
+                    binding.etPasswordRepeat.text.toString())
+            } else {
+                formData.messageId?.let { id ->
+                    showErrorMessage(getString(id), binding.tilEmail)
                 }
-            }
-            else{
-                showErrorMessage(getString(R.string.invalid_email), binding.tilEmail)
             }
         }
 
@@ -76,7 +72,11 @@ class RegisterFragment : Fragment() {
 
     private fun initButtonListeners() {
         binding.btnRegister.setOnClickListener {
-            viewModel.validateEmail(binding.etEmail.text.toString())
+            viewModel.validateForm(
+                binding.etEmail.text.toString(),
+                binding.etPassword.text.toString(),
+                binding.etPasswordRepeat.text.toString()
+            )
         }
     }
 
