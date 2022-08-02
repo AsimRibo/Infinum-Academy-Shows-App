@@ -80,7 +80,9 @@ class LoginFragment : Fragment() {
                 viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
             }
             else{
-                showEmailMessage(getString(form.messageId))
+                form.messageId?.let{ id ->
+                    showEmailMessage(getString(id))
+                }
             }
         }
 
