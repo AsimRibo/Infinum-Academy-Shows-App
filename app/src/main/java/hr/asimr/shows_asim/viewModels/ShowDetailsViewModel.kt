@@ -86,6 +86,13 @@ class ShowDetailsViewModel(private val id: String, private val database: ShowsDa
                     override fun onResponse(call: Call<ShowReviewsResponse>, response: Response<ShowReviewsResponse>) {
                         _loadingReviews.value = false
                         _success.value = true
+                        Executors.newSingleThreadExecutor().execute {
+                            val reviewsToAddToApi = database.reviewDao().getReviewsNotSyncedWithApi()
+                            reviewsToAddToApi.forEach{r ->
+                                ApiModule.retrofit.addReview(ReviewRequest(r.comment, r.rating, id))
+                            }
+                            database.reviewDao().deleteReviewsAfterSyncedWithApi()
+                        }
                         val reviews = response.body()?.reviews
                         _showReviewsLiveData.value = reviews
                         if (reviews != null) {

@@ -8,11 +8,17 @@ import hr.asimr.shows_asim.models.Review
 
 @Dao
 interface ReviewDao {
-    @Query("SELECT DISTINCT * FROM reviews WHERE show_id = :idShow")
+    @Query("SELECT * FROM reviews WHERE show_id = :idShow")
     fun getAllReviews(idShow: String): List<Review>
 
     @Query("SELECT * FROM reviews WHERE idReview IS :idReview")
     fun getReview(idReview: Int): Review
+
+    @Query("SELECT * FROM reviews WHERE id IS -1")
+    fun getReviewsNotSyncedWithApi(): List<Review>
+
+    @Query("DELETE FROM reviews WHERE id IS -1")
+    fun deleteReviewsAfterSyncedWithApi()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertReview(review: Review)
