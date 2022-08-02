@@ -8,7 +8,7 @@ import hr.asimr.shows_asim.models.Review
 
 @Dao
 interface ReviewDao {
-    @Query("SELECT DISTINCT * FROM reviews INNER JOIN shows ON show_id = :idShow")
+    @Query("SELECT DISTINCT * FROM reviews WHERE show_id = :idShow")
     fun getAllReviews(idShow: String): List<Review>
 
     @Query("SELECT * FROM reviews WHERE idReview IS :idReview")
