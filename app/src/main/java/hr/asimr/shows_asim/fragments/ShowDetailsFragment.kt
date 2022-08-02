@@ -16,11 +16,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import hr.asimr.shows_asim.R
-import hr.asimr.shows_asim.ShowsApplication
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
 import hr.asimr.shows_asim.networking.DeviceInternetConnection
+import hr.asimr.shows_asim.utils.getDatabase
 import hr.asimr.shows_asim.utils.loadImageFrom
 import hr.asimr.shows_asim.viewModels.ShowDetailsViewModel
 import hr.asimr.shows_asim.viewModels.factories.ShowDetailsViewModelFactory
@@ -32,8 +32,8 @@ class ShowDetailsFragment : Fragment() {
 
     private lateinit var loginPreferences: SharedPreferences
     private val args by navArgs<ShowDetailsFragmentArgs>()
-    private val viewModel by viewModels<ShowDetailsViewModel>{
-        ShowDetailsViewModelFactory(args.showId, (activity?.application as ShowsApplication).showsDatabase)
+    private val viewModel by viewModels<ShowDetailsViewModel> {
+        ShowDetailsViewModelFactory(args.showId, requireActivity().getDatabase())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -68,15 +68,15 @@ class ShowDetailsFragment : Fragment() {
     }
 
     private fun observeSuccess() {
-        viewModel.success.observe(viewLifecycleOwner){ success ->
-            if (!success){
+        viewModel.success.observe(viewLifecycleOwner) { success ->
+            if (!success) {
                 Toast.makeText(requireContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun initReviewsObserving() {
-        viewModel.showReviewsLiveData.observe(viewLifecycleOwner){ reviews ->
+        viewModel.showReviewsLiveData.observe(viewLifecycleOwner) { reviews ->
             if (reviews.isNotEmpty()) {
                 reviewsAdapter.updateReviews(reviews)
                 updateGroupsVisibility()
@@ -136,8 +136,11 @@ class ShowDetailsFragment : Fragment() {
     }
 
     private fun handleReview(rating: Int, reviewDetails: String) {
-        viewModel.addReview(rating, reviewDetails, DeviceInternetConnection.isAvailable(requireContext()), loginPreferences.getString(
-            USER_EMAIL, "").orEmpty())
+        viewModel.addReview(
+            rating, reviewDetails, DeviceInternetConnection.isAvailable(requireContext()), loginPreferences.getString(
+                USER_EMAIL, ""
+            ).orEmpty()
+        )
     }
 
     private fun updateGroupsVisibility() {

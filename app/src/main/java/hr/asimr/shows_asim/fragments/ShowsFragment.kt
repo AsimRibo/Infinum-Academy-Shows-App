@@ -22,13 +22,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.imageview.ShapeableImageView
 import hr.asimr.shows_asim.BuildConfig
 import hr.asimr.shows_asim.R
-import hr.asimr.shows_asim.ShowsApplication
 import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.networking.DeviceInternetConnection
 import hr.asimr.shows_asim.utils.FileUtils
+import hr.asimr.shows_asim.utils.getDatabase
 import hr.asimr.shows_asim.utils.loadImageFrom
 import hr.asimr.shows_asim.viewModels.ACCESS_TOKEN_VALUE
 import hr.asimr.shows_asim.viewModels.CLIENT_VALUE
@@ -47,7 +47,7 @@ class ShowsFragment : Fragment() {
 
     private lateinit var loginPreferences: SharedPreferences
     private val viewModel: ShowsViewModel by viewModels {
-        ShowsViewModelFactory((activity?.application as ShowsApplication).showsDatabase)
+        ShowsViewModelFactory((requireActivity().getDatabase()))
     }
 
     private val args by navArgs<ShowsFragmentArgs>()
