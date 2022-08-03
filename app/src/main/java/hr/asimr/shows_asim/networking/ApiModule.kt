@@ -27,7 +27,7 @@ object ApiModule {
             .addInterceptor(HttpLoggingInterceptor())
             .addInterceptor(ChuckerInterceptor.Builder(context).build())
 
-            if (pref.getString(ACCESS_TOKEN, "").orEmpty().isNotEmpty()){
+            if (pref.getString(ACCESS_TOKEN_VALUE, "").orEmpty().isNotEmpty()){
                 okhttpBuilder.addInterceptor{ chain ->
                     chain.request().newBuilder()
                         .addHeader(TOKEN_TYPE, TOKEN_TYPE_VALUE)
