@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.core.view.setPadding
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.ViewShowItemBinding
 import hr.asimr.shows_asim.models.Show
@@ -22,9 +23,6 @@ class ShowCardView @JvmOverloads constructor(
             clipToPadding = false
 
             setPadding(
-                context.resources.getDimensionPixelSize(R.dimen.spacing_8),
-                context.resources.getDimensionPixelSize(R.dimen.spacing_8),
-                context.resources.getDimensionPixelSize(R.dimen.spacing_8),
                 context.resources.getDimensionPixelSize(R.dimen.spacing_8)
             )
         }
