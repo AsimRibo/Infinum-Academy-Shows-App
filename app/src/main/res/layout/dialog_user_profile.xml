@@ -38,8 +38,7 @@
         android:layout_marginStart="@dimen/spacing_24"
         android:layout_marginTop="@dimen/spacing_24"
         android:layout_marginEnd="@dimen/spacing_24"
-        android:text="@string/change_profile_photo"
-        android:textAllCaps="false"/>
+        android:text="@string/change_profile_photo"/>
 
     <Button
         android:id="@+id/btnLogout"

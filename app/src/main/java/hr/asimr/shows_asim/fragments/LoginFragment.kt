@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.BounceInterpolator
+import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.edit
@@ -42,6 +44,8 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentLoginBinding.inflate(layoutInflater)
+        animateTriangleImageView()
+        animateShowsTitle()
         return binding.root
     }
 
@@ -55,7 +59,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initListeners()
         initObserving()
     }
@@ -142,6 +145,29 @@ class LoginFragment : Fragment() {
 
     private fun handleButtonOpacity(enabled: Boolean, button: Button) {
         button.alpha = if (enabled) 1f else 0.5f
+    }
+
+    private fun animateTriangleImageView() = with(binding.ivTriangle){
+        translationY= -1600f
+        animate()
+            .translationY(0f)
+            .setInterpolator(BounceInterpolator())
+            .setDuration(1000)
+            .start()
+    }
+
+    private fun animateShowsTitle() = with(binding.tvShowsHeader){
+        alpha = 0f
+        scaleX = 0.5f
+        scaleY = 0.5f
+        animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setInterpolator(OvershootInterpolator())
+            .setDuration(500)
+            .setStartDelay(1000)
+            .start()
     }
 
     override fun onDestroyView() {

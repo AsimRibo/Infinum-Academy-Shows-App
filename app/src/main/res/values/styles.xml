@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.ShowsAsim</item>
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+    </style>
+
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/purple_background</item>
         <item name="colorControlActivated">@color/purple_background</item>
+    </style>
+
+    <style name="FormTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="errorTextColor">@color/error_color_for_purple_background</item>
+        <item name="errorIconTint">@color/error_color_for_purple_background</item>
+        <item name="boxStrokeErrorColor">@color/error_color_for_purple_background</item>
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="hintTextColor">@color/white</item>
     </style>
 
     <style name="RoundedImageCorners">
