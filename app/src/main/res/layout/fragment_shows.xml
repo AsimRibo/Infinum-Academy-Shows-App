@@ -43,7 +43,7 @@
         android:id="@+id/rvShows"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/spacing_0"
         android:layout_height="@dimen/spacing_0"
         android:layout_marginTop="@dimen/spacing_40"
         android:layout_marginBottom="@dimen/spacing_24"
