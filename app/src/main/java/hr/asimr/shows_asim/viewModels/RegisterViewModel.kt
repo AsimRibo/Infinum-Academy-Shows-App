@@ -40,7 +40,7 @@ class RegisterViewModel: ViewModel() {
         if (password == passwordRepeated) {
             _formValid.value = FormDataStatus(true, FormFields.USER_EMAIL)
         } else {
-            FormDataStatus(false, FormFields.USER_PASSWORD)
+            _formValid.value = FormDataStatus(false, FormFields.USER_PASSWORD)
         }
     }
 

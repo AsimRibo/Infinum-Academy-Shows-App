@@ -58,7 +58,7 @@ class RegisterFragment : Fragment() {
             } else {
                 when(formData.field){
                     FormFields.USER_EMAIL -> showErrorMessage(getString(R.string.invalid_email), binding.tilEmail)
-                    FormFields.USER_PASSWORD -> showErrorMessage(getString(R.string.password_mismatch), binding.tilEmail)
+                    FormFields.USER_PASSWORD -> showErrorMessage(getString(R.string.password_mismatch), binding.tilPassword)
                 }
             }
         }
