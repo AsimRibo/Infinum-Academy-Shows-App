@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.models.FormDataStatus
+import hr.asimr.shows_asim.models.FormFields
 import hr.asimr.shows_asim.models.api.request.RegisterRequest
 import hr.asimr.shows_asim.models.api.response.RegisterResponse
 import hr.asimr.shows_asim.networking.ApiModule
@@ -31,15 +32,15 @@ class RegisterViewModel: ViewModel() {
             checkPasswordsMatch(password, passwordRepeated)
         }
         else{
-            _formValid.value = FormDataStatus(false, R.string.invalid_email)
+            _formValid.value = FormDataStatus(false, FormFields.USER_EMAIL)
         }
     }
 
     private fun checkPasswordsMatch(password: String, passwordRepeated: String) {
         if (password == passwordRepeated) {
-            _formValid.value = FormDataStatus(true, null)
+            _formValid.value = FormDataStatus(true, FormFields.USER_EMAIL)
         } else {
-            FormDataStatus(false, R.string.password_mismatch)
+            FormDataStatus(false, FormFields.USER_PASSWORD)
         }
     }
 

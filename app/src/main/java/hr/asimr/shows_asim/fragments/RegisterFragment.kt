@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentRegisterBinding
+import hr.asimr.shows_asim.models.FormFields
 import hr.asimr.shows_asim.viewModels.RegisterViewModel
 
 class RegisterFragment : Fragment() {
@@ -52,10 +53,12 @@ class RegisterFragment : Fragment() {
                 viewModel.registerUser(
                     binding.etEmail.text.toString(),
                     binding.etPassword.text.toString(),
-                    binding.etPasswordRepeat.text.toString())
+                    binding.etPasswordRepeat.text.toString()
+                )
             } else {
-                formData.messageId?.let { id ->
-                    showErrorMessage(getString(id), binding.tilEmail)
+                when(formData.field){
+                    FormFields.USER_EMAIL -> showErrorMessage(getString(R.string.invalid_email), binding.tilEmail)
+                    FormFields.USER_PASSWORD -> showErrorMessage(getString(R.string.invalid_email), binding.tilEmail)
                 }
             }
         }
