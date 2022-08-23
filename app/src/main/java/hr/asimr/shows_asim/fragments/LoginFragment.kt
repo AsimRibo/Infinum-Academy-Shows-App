@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentLoginBinding
+import hr.asimr.shows_asim.managers.SharedPreferencesManager
 import hr.asimr.shows_asim.viewModels.LoginViewModel
 
 const val MIN_PASSWORD_LENGTH = 6
@@ -29,15 +30,12 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var loginPreferences: SharedPreferences
-
     private val viewModel by viewModels<LoginViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
-        if (loginPreferences.getBoolean(REMEMBER_ME, false)) {
-            val email = loginPreferences.getString(USER_EMAIL, "").orEmpty()
+        if (SharedPreferencesManager.readBoolean(REMEMBER_ME)) {
+            val email = SharedPreferencesManager.readString(USER_EMAIL, "").orEmpty()
             if (email.isNotEmpty()) goToShows(email)
         }
     }
@@ -66,12 +64,9 @@ class LoginFragment : Fragment() {
     private fun initObserving() {
         viewModel.getLoginResultLiveData().observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
-                loginPreferences.edit {
-                    putBoolean(REMEMBER_ME, binding.chbRememberMe.isChecked)
-                    if (binding.chbRememberMe.isChecked) {
-                        putString(USER_EMAIL, binding.etEmail.text.toString())
-                    }
-                }
+                SharedPreferencesManager.writeBoolean(REMEMBER_ME, binding.chbRememberMe.isChecked)
+                SharedPreferencesManager.writeString(USER_EMAIL, binding.etEmail.text.toString())
+
                 goToShows(binding.etEmail.text.toString())
             } else {
                 Toast.makeText(requireContext(), R.string.invalid_credentials, Toast.LENGTH_SHORT).show()
@@ -80,7 +75,7 @@ class LoginFragment : Fragment() {
 
         viewModel.formValid.observe(viewLifecycleOwner) { form ->
             if (form.isValid) {
-                viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
+                viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString())
             } else {
                 showEmailMessage(getString(R.string.invalid_email))
             }

@@ -12,7 +12,7 @@ object SharedPreferencesManager {
         sharedPrefs = context.getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
     }
 
-    fun writeString(key: String, value: String) {
+    fun writeString(key: String, value: String?) {
         sharedPrefs.edit {
             putString(key, value)
         }
