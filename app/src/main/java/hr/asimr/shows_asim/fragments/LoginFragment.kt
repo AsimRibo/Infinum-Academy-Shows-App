@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
         loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
         if (loginPreferences.getBoolean(REMEMBER_ME, false)) {
             val email = loginPreferences.getString(USER_EMAIL, "").orEmpty()
-            if(email.isNotEmpty()) goToShows(email)
+            if (email.isNotEmpty()) goToShows(email)
         }
     }
 
@@ -78,14 +78,11 @@ class LoginFragment : Fragment() {
             }
         }
 
-        viewModel.formValid.observe(viewLifecycleOwner){ form ->
-            if (form.isValid){
+        viewModel.formValid.observe(viewLifecycleOwner) { form ->
+            if (form.isValid) {
                 viewModel.loginUser(binding.etEmail.text.toString(), binding.etPassword.text.toString(), loginPreferences)
-            }
-            else{
-                form.messageId?.let{ id ->
-                    showEmailMessage(getString(id))
-                }
+            } else {
+                showEmailMessage(getString(R.string.invalid_email))
             }
         }
 
@@ -147,8 +144,8 @@ class LoginFragment : Fragment() {
         button.alpha = if (enabled) 1f else 0.5f
     }
 
-    private fun animateTriangleImageView() = with(binding.ivTriangle){
-        translationY= -1600f
+    private fun animateTriangleImageView() = with(binding.ivTriangle) {
+        translationY = -1600f
         animate()
             .translationY(0f)
             .setInterpolator(BounceInterpolator())
@@ -156,7 +153,7 @@ class LoginFragment : Fragment() {
             .start()
     }
 
-    private fun animateShowsTitle() = with(binding.tvShowsHeader){
+    private fun animateShowsTitle() = with(binding.tvShowsHeader) {
         alpha = 0f
         scaleX = 0.5f
         scaleY = 0.5f

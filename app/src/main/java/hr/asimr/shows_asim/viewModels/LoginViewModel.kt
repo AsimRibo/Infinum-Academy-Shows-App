@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.models.FormDataStatus
+import hr.asimr.shows_asim.models.FormFields
 import hr.asimr.shows_asim.models.api.request.LoginRequest
 import hr.asimr.shows_asim.models.api.response.UserResponse
 import hr.asimr.shows_asim.networking.ACCESS_TOKEN
@@ -39,10 +40,10 @@ class LoginViewModel : ViewModel() {
 
     fun validateForm(email: String){
         if (email.isEmailValid()){
-            _formValid.value = FormDataStatus(true, null)
+            _formValid.value = FormDataStatus(true, FormFields.USER_EMAIL)
         }
         else{
-            _formValid.value = FormDataStatus(false, R.string.invalid_email)
+            _formValid.value = FormDataStatus(false, FormFields.USER_EMAIL)
         }
     }
 
