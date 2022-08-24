@@ -1,7 +1,5 @@
 package hr.asimr.shows_asim.fragments
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +17,7 @@ import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ReviewsAdapter
 import hr.asimr.shows_asim.databinding.DialogAddReviewBinding
 import hr.asimr.shows_asim.databinding.FragmentShowDetailsBinding
+import hr.asimr.shows_asim.managers.SharedPreferencesManager
 import hr.asimr.shows_asim.networking.DeviceInternetConnection
 import hr.asimr.shows_asim.utils.getDatabase
 import hr.asimr.shows_asim.utils.loadImageFrom
@@ -30,7 +29,6 @@ class ShowDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var reviewsAdapter: ReviewsAdapter
 
-    private lateinit var loginPreferences: SharedPreferences
     private val args by navArgs<ShowDetailsFragmentArgs>()
     private val viewModel by viewModels<ShowDetailsViewModel> {
         ShowDetailsViewModelFactory(args.showId, requireActivity().getDatabase())
@@ -38,7 +36,6 @@ class ShowDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShowDetailsBinding.inflate(layoutInflater, container, false)
-        loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
         return binding.root
     }
 
@@ -137,7 +134,7 @@ class ShowDetailsFragment : Fragment() {
 
     private fun handleReview(rating: Int, reviewDetails: String) {
         viewModel.addReview(
-            rating, reviewDetails, DeviceInternetConnection.isAvailable(requireContext()), loginPreferences.getString(
+            rating, reviewDetails, DeviceInternetConnection.isAvailable(requireContext()), SharedPreferencesManager.readString(
                 USER_EMAIL, ""
             ).orEmpty()
         )
