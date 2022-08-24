@@ -1,11 +1,10 @@
 package hr.asimr.shows_asim.viewModels
 
-import android.content.SharedPreferences
-import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hr.asimr.shows_asim.dao.ShowsDatabase
+import hr.asimr.shows_asim.managers.SharedPreferencesManager
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.models.api.response.ShowsResponse
 import hr.asimr.shows_asim.models.api.response.UserResponse
@@ -34,10 +33,9 @@ class ShowsViewModel(private val database: ShowsDatabase) : ViewModel() {
 
     fun getAllShows(internetAvailable: Boolean) {
         _loading.value = true
-        if(internetAvailable){
+        if (internetAvailable) {
             getShowsFromApi()
-        }
-        else{
+        } else {
             getShowsFromDb()
         }
 
@@ -76,18 +74,16 @@ class ShowsViewModel(private val database: ShowsDatabase) : ViewModel() {
             })
     }
 
-    fun updateUserImage(path: String, pref: SharedPreferences) {
+    fun updateUserImage(path: String) {
         val file = File(path)
         val requestData = file.asRequestBody("multipart/form-data".toMediaType())
         ApiModule.retrofit.updateUserImage(
             MultipartBody.Part.createFormData("image", file.name, requestData)
         )
-            .enqueue(object: Callback<UserResponse> {
+            .enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                    if (response.isSuccessful){
-                        pref.edit {
-                            putString(USER_IMAGE, response.body()?.user?.imageUrl)
-                        }
+                    if (response.isSuccessful) {
+                        SharedPreferencesManager.writeString(USER_IMAGE, response.body()?.user?.imageUrl)
                     }
                 }
 

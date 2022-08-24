@@ -2,7 +2,6 @@ package hr.asimr.shows_asim.fragments
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +24,7 @@ import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.adapters.ShowsAdapter
 import hr.asimr.shows_asim.databinding.DialogUserProfileBinding
 import hr.asimr.shows_asim.databinding.FragmentShowsBinding
+import hr.asimr.shows_asim.managers.SharedPreferencesManager
 import hr.asimr.shows_asim.models.Show
 import hr.asimr.shows_asim.networking.DeviceInternetConnection
 import hr.asimr.shows_asim.utils.FileUtils
@@ -45,7 +45,6 @@ class ShowsFragment : Fragment() {
     private lateinit var adapter: ShowsAdapter
     private lateinit var email: String
 
-    private lateinit var loginPreferences: SharedPreferences
     private val viewModel: ShowsViewModel by viewModels {
         ShowsViewModelFactory((requireActivity().getDatabase()))
     }
@@ -56,7 +55,7 @@ class ShowsFragment : Fragment() {
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
-            viewModel.updateUserImage(FileUtils.getImageFile(requireContext()).toString(), loginPreferences)
+            viewModel.updateUserImage(FileUtils.getImageFile(requireContext()).toString())
             (binding.toolbarShows.findViewById(R.id.toolbarProfileImage) as ShapeableImageView).loadImageFrom(
                 FileUtils.getImageFile(requireContext()).toString(),
                 R.drawable.ic_profile_placeholder
@@ -69,7 +68,6 @@ class ShowsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
         _binding = FragmentShowsBinding.inflate(layoutInflater)
-        loginPreferences = requireContext().getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
         return binding.root
     }
 
@@ -127,7 +125,7 @@ class ShowsFragment : Fragment() {
         val bottomSheet = DialogUserProfileBinding.inflate(layoutInflater)
         dialog.setContentView(bottomSheet.root)
 
-        bottomSheet.ivUserProfile.loadImageFrom(loginPreferences.getString(USER_IMAGE, ""), R.drawable.ic_profile_placeholder)
+        bottomSheet.ivUserProfile.loadImageFrom(SharedPreferencesManager.readString(USER_IMAGE, ""), R.drawable.ic_profile_placeholder)
         bottomSheet.tvEmail.text = email
         bottomSheet.btnLogout.setOnClickListener {
             dialog.dismiss()
