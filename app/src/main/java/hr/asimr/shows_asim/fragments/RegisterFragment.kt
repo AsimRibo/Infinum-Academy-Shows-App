@@ -14,9 +14,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import hr.asimr.shows_asim.R
 import hr.asimr.shows_asim.databinding.FragmentRegisterBinding
+import hr.asimr.shows_asim.managers.SharedPreferencesManager
 import hr.asimr.shows_asim.models.FormFields
 import hr.asimr.shows_asim.viewModels.RegisterViewModel
 
+const val JUST_REGISTERED = "JustRegistered"
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
@@ -42,6 +44,7 @@ class RegisterFragment : Fragment() {
     private fun initObserving() {
         viewModel.getRegistrationResultLiveData().observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
+                SharedPreferencesManager.writeBoolean(JUST_REGISTERED, true)
                 findNavController().popBackStack()
             } else {
                 Toast.makeText(requireContext(), R.string.registration_fail, Toast.LENGTH_SHORT).show()

@@ -1,7 +1,6 @@
 package hr.asimr.shows_asim.fragments
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.view.animation.BounceInterpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.Toast
-import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -57,8 +55,16 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkIfJustRegistered()
         initListeners()
         initObserving()
+    }
+
+    private fun checkIfJustRegistered() {
+        if(SharedPreferencesManager.readBoolean(JUST_REGISTERED)){
+            binding.tvLoginHeader.text = getString(R.string.registration_successful)
+            SharedPreferencesManager.writeBoolean(JUST_REGISTERED, false)
+        }
     }
 
     private fun initObserving() {

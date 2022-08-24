@@ -34,5 +34,6 @@
     <string name="invalid_email">Please provide a valid email address</string>
     <string name="password_mismatch">Passwords don\'t match</string>
     <string name="registration_fail">Registration failed</string>
+    <string name="registration_successful">Registration successful!</string>
     <string name="something_went_wrong">Something went wrong</string>
 </resources>
