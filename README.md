@@ -7,6 +7,8 @@ It is built as part of Infinum Academy - Android course 2022, in Android Studio 
 ## Key features
  - Activites and fragments
  - Recycler view
+ - Bottom sheet
+ - Navigation component
  - Shared Preferences 
  - Use of camera for setting profile picture
  - Networking
